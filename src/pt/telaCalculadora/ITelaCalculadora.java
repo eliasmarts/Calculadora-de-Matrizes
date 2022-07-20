@@ -1,5 +1,5 @@
 package pt.telaCalculadora;
 
-public interface ITelaCalculadora extends IRCalculoMatriz {
+public interface ITelaCalculadora extends IRCalculoMatriz, ITela {
 
 }
