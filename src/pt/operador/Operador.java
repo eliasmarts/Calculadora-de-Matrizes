@@ -3,6 +3,7 @@ package pt.operador;
 import java.util.HashMap;
 import java.util.Map;
 
+import pt.operador.matriz.IMatriz;
 import pt.separador.MatrizVirtual;
 
 public class Operador implements IOperador {
@@ -45,6 +46,11 @@ public class Operador implements IOperador {
 	@Override
 	public String[][] getMatriz(char nome) {
 		return matrizes.get(nome);
+	}
+	
+	
+	private IMatriz converterPraMatriz(String[][] matrizRepresentacao) {
+		
 	}
 
 }

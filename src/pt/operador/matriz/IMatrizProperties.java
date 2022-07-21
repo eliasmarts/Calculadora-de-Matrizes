@@ -9,5 +9,5 @@ public interface IMatrizProperties {
 	public void setColunas(int numColunas);
 	
 	
-	public void setElemento(int x, int y, IOperavel elemento);
+	public void setElemento(int x, int y, String elemento);
 }
