@@ -14,4 +14,12 @@ public interface ICalculoMatriz {
 	 * @return a representacao da matriz
 	 */
 	public String[][] getMatriz(char nome);
+	
+	
+	/**
+	 * armazena uma matriz
+	 * @param nome a letra de 'A' a 'Z' que representa a matriz
+	 * @param matriz a representacao da matriz
+	 */
+	public void armazenaMatriz(char nome, String[][] matriz);
 }

@@ -16,13 +16,15 @@ public class TelaCalculadora implements ITelaCalculadora {
 	@Override
 	public void iniciar() {
 		System.out.println("Iniciando calculadora");
-		String[][] teste = {
-				{"12", "2", "3"},
-				{"57", "3", "22"},
-				{"12", "0", "7"}
-		};
+		String[][] teste = lerMatrizEntrada();
 		
-		imprimirMatriz(teste);
+		controleCalculo.armazenaMatriz('A', teste);
+		
+		
+		String[][] testeRetorno = controleCalculo.getMatriz('A');
+		
+		
+		imprimirMatriz(testeRetorno);
 	}
 
 	@Override
@@ -39,5 +41,16 @@ public class TelaCalculadora implements ITelaCalculadora {
 			}
 			System.out.println();
 		}
+	}
+	
+	
+	private String[][] lerMatrizEntrada() {
+		String[][] teste = {
+				{"12", "2", "3"},
+				{"57", "3", "22"},
+				{"12", "0", "7"}
+		};
+		
+		return teste;
 	}
 }
