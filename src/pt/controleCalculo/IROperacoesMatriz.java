@@ -1,7 +1,7 @@
 package pt.controleCalculo;
 
-import pt.operador.IOperacoesMatriz;
+import pt.operador.IOperacoes;
 
 public interface IROperacoesMatriz {
-	public void connect(IOperacoesMatriz operador);
+	public void connect(IOperacoes operador);
 }

@@ -1,6 +1,4 @@
-package pt.operador.matriz;
-
-import pt.operador.IOperacoesMatriz;
+package pt.matriz;
 
 public interface IMatriz extends IOperacoesMatriz, IMatrizProperties, IROperacoesElemento {
 

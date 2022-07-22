@@ -1,4 +1,5 @@
-package pt.operador.operavel;
+package pt.operavel;
+
 
 public interface IOperavel extends IOperacoesElemento {
 

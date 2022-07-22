@@ -1,4 +1,4 @@
-package pt.operador.operavel;
+package pt.operavel;
 
 public class OperavelFactory {
 	public static IOperavel criarOperavel(String representacao) {
