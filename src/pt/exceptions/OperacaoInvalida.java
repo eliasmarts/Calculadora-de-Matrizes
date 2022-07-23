@@ -5,6 +5,7 @@ public class OperacaoInvalida extends RuntimeException {
 	
 	
 	public OperacaoInvalida(String message) {
+		super();
 		this.message = message;
 	}
 	

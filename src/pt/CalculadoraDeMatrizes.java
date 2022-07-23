@@ -36,6 +36,5 @@ public class CalculadoraDeMatrizes {
 		tela.connect(controle);
 		controle.connect(separador);
 		controle.connect(operador);
-		separador.connect(operador);
 	}
 }

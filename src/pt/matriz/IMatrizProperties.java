@@ -22,6 +22,8 @@ public interface IMatrizProperties {
 	
 	
 	public IOperavel[] getLinha(int numLinha);
+	
+	public IOperavel[] getColuna(int numColuna);
 
 	public int getNumLinhas();
 

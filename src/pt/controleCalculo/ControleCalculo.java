@@ -32,8 +32,6 @@ public class ControleCalculo implements IControleCalculo {
 	@Override
 	public String[][] getMatriz(char nome) {
 		IOperavel[][] matrizOperavel = matrizes.get(nome).getValores();
-		
-		
 		return convertePraRepresentacao(matrizOperavel);
 	}
 
@@ -57,10 +55,11 @@ public class ControleCalculo implements IControleCalculo {
 	
 	
 	public String[][] getTeste() {
-		IMatriz resp = matrizes.get('A').somar(matrizes.get('B'));
+		IMatriz resp = matrizes.get('A').multiplicar(matrizes.get('B'));
 		
 		return convertePraRepresentacao(resp.getValores());
 	}
+
 	
 	private IMatriz criaMatriz(String[][] matriz) {
 		IMatriz matrizComp = new Matriz();

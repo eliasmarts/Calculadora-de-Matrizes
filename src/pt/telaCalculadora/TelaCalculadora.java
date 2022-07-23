@@ -19,8 +19,9 @@ public class TelaCalculadora implements ITelaCalculadora {
 		System.out.println("Iniciando calculadora");
 		String[][] teste = lerMatrizEntrada();
 		String[][] teste2 = {
-				{"12", "2", "3"},
-				{"57", "3", "-22"}
+				{"2", "9"},
+				{"5", "4"},
+				{"7", "12"}
 		};
 		
 		controleCalculo.armazenaMatriz('A', teste);
@@ -58,8 +59,7 @@ public class TelaCalculadora implements ITelaCalculadora {
 	private String[][] lerMatrizEntrada() {
 		String[][] teste = {
 				{"12", "2", "3"},
-				{"57", "3", "22"},
-				{"12", "0", "7"}
+				{"57", "3", "22"}
 		};
 		
 		return teste;

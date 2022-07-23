@@ -9,6 +9,8 @@ public interface IOperacoesElemento extends IOperacoesEspecificas {
 	
 	public IOperavel multiplicar(IOperacoesElemento outro);
 	
+	public IOperavel inverso();
 	
+	public IOperavel negativo();
 	
 }

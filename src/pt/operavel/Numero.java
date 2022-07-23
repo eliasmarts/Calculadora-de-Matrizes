@@ -62,12 +62,12 @@ public class Numero implements IOperavel {
 
 	@Override
 	public IOperavel subtrair(IOperacoesElemento outro) {
-		return outro.subtrair(this);
+		return outro.subtrair(this).negativo();
 	}
 
 	@Override
 	public IOperavel multiplicar(IOperacoesElemento outro) {
-		return outro.subtrair(this);
+		return outro.multiplicar(this);
 	}
 
 	@Override
@@ -91,15 +91,39 @@ public class Numero implements IOperavel {
 		Numero resposta;
 		
 		if (this.tipo == 'd' || outro.tipo == 'd') {
-			double resp = this.getNumero().doubleValue() - outro.getNumero().doubleValue();
+			double resp = this.getNumero().doubleValue() * outro.getNumero().doubleValue();
 			resposta = new Numero(resp);
 		}
 		else {
-			int respI = this.getNumero().intValue() - outro.getNumero().intValue();
+			int respI = this.getNumero().intValue() * outro.getNumero().intValue();
 			resposta = new Numero(respI);
 		}
 		
 		return resposta;
+	}
+
+	@Override
+	public IOperavel inverso() {
+		Numero inverso = null;
+		
+		if (tipo == 'd')
+			inverso = new Numero(1 / numero.doubleValue());
+		else
+			inverso = new Numero((double) 1 / numero.intValue());
+		
+		return inverso;
+	}
+
+	@Override
+	public IOperavel negativo() {
+		Numero negativo = null;
+		
+		if (tipo == 'd')
+			negativo = new Numero(- numero.doubleValue());
+		else
+			negativo = new Numero(- numero.intValue());
+		
+		return negativo;
 	}
 
 }
