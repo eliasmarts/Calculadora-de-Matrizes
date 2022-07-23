@@ -112,9 +112,21 @@ public class Matriz implements IMatriz {
 	}
 
 	@Override
-	public IMatriz subtrair(IMatriz matriz) {
-		// TODO Auto-generated method stub
-		return null;
+	public IMatriz subtrair(IMatriz outra) {
+		if (outra.getNumLinhas() != this.linhas || outra.getNumColunas() != this.colunas)
+			throw new OperacaoInvalida("Tamanho incompativel");
+		
+		IOperavel[][] resp = new IOperavel[linhas][colunas], outraMatriz = outra.getValores();
+		
+		for (int i = 0; i < this.linhas; i++)
+			for (int j = 0; j < this.colunas; j++)
+				resp[i][j] = this.valores[i][j].subtrair(outraMatriz[i][j]);
+		
+		IMatriz resultado = new Matriz();
+		
+		resultado.setMatriz(resp);
+		
+		return resultado;
 	}
 
 	@Override

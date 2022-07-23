@@ -1,5 +1,5 @@
 package pt.separador;
 
-public interface ISeparador extends IAvaliaExpressao, IRValidaOperacao {
+public interface ISeparador extends IAvaliaExpressao {
 
 }

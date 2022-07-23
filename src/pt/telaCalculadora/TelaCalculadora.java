@@ -1,6 +1,7 @@
 package pt.telaCalculadora;
 
 import pt.controleCalculo.ICalculoMatriz;
+import pt.exceptions.OperacaoInvalida;
 
 public class TelaCalculadora implements ITelaCalculadora {
 	private ICalculoMatriz controleCalculo;
@@ -26,11 +27,15 @@ public class TelaCalculadora implements ITelaCalculadora {
 		
 		controleCalculo.armazenaMatriz('B', teste2);
 		
+		try {
+			String[][] test = controleCalculo.getTeste();
+			imprimirMatriz(test);
+		} catch (OperacaoInvalida e) {
+			System.err.println("Erro: " + e.getMessage());
+		}
 		
-		String[][] test = controleCalculo.getTeste();
 		
 		
-		imprimirMatriz(test);
 	}
 
 	@Override

@@ -34,10 +34,5 @@ public class Separador implements ISeparador {
 		return null;
 	}
 
-	@Override
-	public void connect(IValidaOperacao validador) {
-		// TODO Auto-generated method stub
-
-	}
 
 }

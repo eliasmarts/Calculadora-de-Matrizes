@@ -62,12 +62,44 @@ public class Numero implements IOperavel {
 
 	@Override
 	public IOperavel subtrair(IOperacoesElemento outro) {
-		
+		return outro.subtrair(this);
 	}
 
 	@Override
 	public IOperavel multiplicar(IOperacoesElemento outro) {
+		return outro.subtrair(this);
+	}
+
+	@Override
+	public IOperavel subtrair(Numero outro) {
+		Numero resposta;
 		
+		if (this.tipo == 'd' || outro.tipo == 'd') {
+			double resp = this.getNumero().doubleValue() - outro.getNumero().doubleValue();
+			resposta = new Numero(resp);
+		}
+		else {
+			int respI = this.getNumero().intValue() - outro.getNumero().intValue();
+			resposta = new Numero(respI);
+		}
+		
+		return resposta;
+	}
+
+	@Override
+	public IOperavel multiplicar(Numero outro) {
+		Numero resposta;
+		
+		if (this.tipo == 'd' || outro.tipo == 'd') {
+			double resp = this.getNumero().doubleValue() - outro.getNumero().doubleValue();
+			resposta = new Numero(resp);
+		}
+		else {
+			int respI = this.getNumero().intValue() - outro.getNumero().intValue();
+			resposta = new Numero(respI);
+		}
+		
+		return resposta;
 	}
 
 }
