@@ -1,14 +1,14 @@
 package pt.operavel;
 
-public interface IOperacoesElemento {
+public interface IOperacoesElemento extends IOperacoesEspecificas {
 	public String getRepresentacao();
+
+	public IOperavel somar(IOperacoesElemento outro);
+	
+	public IOperavel subtrair(IOperacoesElemento outro);
+	
+	public IOperavel multiplicar(IOperacoesElemento outro);
 	
 	
-	public IOperacoesElemento somar(IOperacoesElemento outro);
 	
-	
-	public IOperacoesElemento subtrair(IOperacoesElemento outro);
-	
-	
-	public IOperacoesElemento multiplicar(IOperacoesElemento outro);
 }

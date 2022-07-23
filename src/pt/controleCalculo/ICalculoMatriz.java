@@ -22,4 +22,7 @@ public interface ICalculoMatriz {
 	 * @param matriz a representacao da matriz
 	 */
 	public void armazenaMatriz(char nome, String[][] matriz);
+	
+	
+	public String[][] getTeste();
 }

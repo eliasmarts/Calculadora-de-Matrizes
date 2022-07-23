@@ -1,5 +1,6 @@
 package pt.matriz;
 
+import pt.exceptions.OperacaoInvalida;
 import pt.operavel.IOperavel;
 import pt.operavel.OperavelFactory;
 
@@ -79,14 +80,53 @@ public class Matriz implements IMatriz {
 
 	@Override
 	public int getNumLinhas() {
-		// TODO Auto-generated method stub
-		return 0;
+		return linhas;
 	}
 
 	@Override
 	public int getNumColunas() {
+		return colunas;
+	}
+	
+	
+	public Matriz clone() {
+		return null;
+	}
+
+	@Override
+	public IMatriz somar(IMatriz outra) {
+		if (outra.getNumLinhas() != this.linhas || outra.getNumColunas() != this.colunas)
+			throw new OperacaoInvalida("Tamanho incompativel");
+		
+		IOperavel[][] resp = new IOperavel[linhas][colunas], outraMatriz = outra.getValores();
+		
+		for (int i = 0; i < this.linhas; i++)
+			for (int j = 0; j < this.colunas; j++)
+				resp[i][j] = this.valores[i][j].somar(outraMatriz[i][j]);
+		
+		IMatriz resultado = new Matriz();
+		
+		resultado.setMatriz(resp);
+		
+		return resultado;
+	}
+
+	@Override
+	public IMatriz subtrair(IMatriz matriz) {
 		// TODO Auto-generated method stub
-		return 0;
+		return null;
+	}
+
+	@Override
+	public IMatriz multiplicar(IMatriz matriz) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public IMatriz multiplicar(IOperavel operavel) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 }

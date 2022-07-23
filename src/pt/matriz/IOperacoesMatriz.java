@@ -15,5 +15,5 @@ public interface IOperacoesMatriz {
 	public IMatriz multiplicar(IOperavel operavel);
 	
 	
-	public IMatriz clone();
+	public Matriz clone();
 }

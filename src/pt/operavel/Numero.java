@@ -14,6 +14,16 @@ public class Numero implements IOperavel {
 		this.numero = valor;
 		tipo = 'd';
 	}
+	
+	
+	protected char getTipo() {
+		return tipo;
+	}
+	
+	
+	protected Number getNumero() {
+		return numero;
+	}
 
 	@Override
 	public String getRepresentacao() {
@@ -30,23 +40,34 @@ public class Numero implements IOperavel {
 	}
 
 	@Override
-	public IOperacoesElemento somar(IOperacoesElemento outro) {
-		// TODO Auto-generated method stub
-		return null;
+	public IOperavel somar(IOperacoesElemento outro) {
+		return outro.somar(this);
 	}
-
-	@Override
-	public IOperacoesElemento subtrair(IOperacoesElemento outro) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public IOperacoesElemento multiplicar(IOperacoesElemento outro) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 	
+	
+	public IOperavel somar(Numero outro) {
+		Numero resposta;
+		
+		if (this.tipo == 'd' || outro.tipo == 'd') {
+			double resp = this.getNumero().doubleValue() + outro.getNumero().doubleValue();
+			resposta = new Numero(resp);
+		}
+		else {
+			int respI = this.getNumero().intValue() + outro.getNumero().intValue();
+			resposta = new Numero(respI);
+		}
+		
+		return resposta;
+	}
+
+	@Override
+	public IOperavel subtrair(IOperacoesElemento outro) {
+		
+	}
+
+	@Override
+	public IOperavel multiplicar(IOperacoesElemento outro) {
+		
+	}
 
 }

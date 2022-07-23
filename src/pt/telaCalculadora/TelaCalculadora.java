@@ -17,14 +17,20 @@ public class TelaCalculadora implements ITelaCalculadora {
 	public void iniciar() {
 		System.out.println("Iniciando calculadora");
 		String[][] teste = lerMatrizEntrada();
+		String[][] teste2 = {
+				{"12", "2", "3"},
+				{"57", "3", "-22"}
+		};
 		
 		controleCalculo.armazenaMatriz('A', teste);
 		
+		controleCalculo.armazenaMatriz('B', teste2);
 		
-		String[][] testeRetorno = controleCalculo.getMatriz('A');
+		
+		String[][] test = controleCalculo.getTeste();
 		
 		
-		imprimirMatriz(testeRetorno);
+		imprimirMatriz(test);
 	}
 
 	@Override
