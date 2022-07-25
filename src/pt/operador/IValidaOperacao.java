@@ -1,6 +1,6 @@
 package pt.operador;
 
-import pt.separador.MatrizVirtual;
+import pt.avaliador.MatrizVirtual;
 
 public interface IValidaOperacao {
 	/**

@@ -1,7 +1,7 @@
 package pt.telaCalculadora;
 
 import pt.controleCalculo.ICalculoMatriz;
-import pt.exceptions.OperacaoInvalida;
+import pt.exceptions.ErroDeCalculo;
 
 public class TelaCalculadora implements ITelaCalculadora {
 	private ICalculoMatriz controleCalculo;
@@ -20,8 +20,7 @@ public class TelaCalculadora implements ITelaCalculadora {
 		String[][] teste = lerMatrizEntrada();
 		String[][] teste2 = {
 				{"2", "9"},
-				{"5", "4"},
-				{"7", "12"}
+				{"5", "4"}
 		};
 		
 		controleCalculo.armazenaMatriz('A', teste);
@@ -31,8 +30,11 @@ public class TelaCalculadora implements ITelaCalculadora {
 		try {
 			String[][] test = controleCalculo.getTeste();
 			imprimirMatriz(test);
-		} catch (OperacaoInvalida e) {
-			System.err.println("Erro: " + e.getMessage());
+			controleCalculo.realizarExpressao("C == A");
+			String[][] test2 = controleCalculo.getMatriz('C');
+			imprimirMatriz(test2);
+		} catch (ErroDeCalculo e) {
+			System.err.printf("Erro: " + e.getMessage());
 		}
 		
 		
@@ -58,8 +60,8 @@ public class TelaCalculadora implements ITelaCalculadora {
 	
 	private String[][] lerMatrizEntrada() {
 		String[][] teste = {
-				{"12", "2", "3"},
-				{"57", "3", "22"}
+				{"12", "2"},
+				{"57", "3"}
 		};
 		
 		return teste;

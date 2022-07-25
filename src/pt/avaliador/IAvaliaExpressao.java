@@ -1,6 +1,11 @@
-package pt.separador;
+package pt.avaliador;
 
 public interface IAvaliaExpressao {
+	public final int ATRIBUICAO = 0;
+	public final int COMPARACAO = 1;
+	public final int CALCULO = 2;
+
+
 	/**
 	 * Checa a validade de uma expressao
 	 * @param expressao a expressao
@@ -8,6 +13,9 @@ public interface IAvaliaExpressao {
 	 * um texto descrevendo o erro
 	 */
 	public String checarValidade(String expressao);
+	
+	
+	public int getTipoExpressao(String expressao);
 	
 	
 	/**

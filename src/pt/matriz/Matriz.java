@@ -1,5 +1,6 @@
 package pt.matriz;
 
+import pt.exceptions.ErroDeTamanho;
 import pt.exceptions.OperacaoInvalida;
 import pt.operavel.IOperavel;
 import pt.operavel.OperavelFactory;
@@ -122,8 +123,16 @@ public class Matriz implements IMatriz {
 
 	@Override
 	public IMatriz somar(IMatriz outra) {
-		if (outra.getNumLinhas() != this.linhas || outra.getNumColunas() != this.colunas)
-			throw new OperacaoInvalida("Tamanho incompativel");
+		if (outra.getNumLinhas() != this.linhas || outra.getNumColunas() != this.colunas) {
+			ErroDeTamanho erro = new ErroDeTamanho("+");
+
+			if (outra.getNumLinhas() != this.linhas)
+				erro.setMotivo("Numero de linhas diferente");
+			else if (outra.getNumColunas() != this.colunas)
+				erro.setMotivo("Numero de coluans diferente");
+			
+			throw erro;
+		}
 		
 		IOperavel[][] resp = new IOperavel[linhas][colunas], outraMatriz = outra.getValores();
 		

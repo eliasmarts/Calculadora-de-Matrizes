@@ -3,16 +3,17 @@ package pt.controleCalculo;
 import java.util.HashMap;
 import java.util.Map;
 
+import pt.avaliador.IAvaliaExpressao;
+import pt.exceptions.ExpressaoInvalida;
 import pt.matriz.IMatriz;
 import pt.matriz.Matriz;
 import pt.operador.IOperacoes;
 import pt.operavel.IOperavel;
 import pt.operavel.OperavelFactory;
-import pt.separador.IAvaliaExpressao;
 
 public class ControleCalculo implements IControleCalculo {
 	private IOperacoes operador;
-	private IAvaliaExpressao separador;
+	private IAvaliaExpressao avaliador;
 	
 	private Map<Character, IMatriz> matrizes;
 	
@@ -24,8 +25,41 @@ public class ControleCalculo implements IControleCalculo {
 	
 	@Override
 	public void realizarExpressao(String expressao) {
+		int tipo = avaliador.getTipoExpressao(expressao);
+		
+		if (tipo == IAvaliaExpressao.ATRIBUICAO) {
+			atribuicao(expressao);
+		} else if (tipo == IAvaliaExpressao.COMPARACAO) {
+			comparacao(expressao);
+		} else
+			calculo(expressao);
+	}
+	
+	
+	private void atribuicao(String expressao) {
+		String[] atribuicao = expressao.split("=");
+		String matriz = atribuicao[0].trim();
+		String expressaoAtribuida = atribuicao[1].trim();
+		
+		if (matriz.length() != 1 || !(Character.isLetter(matriz.charAt(0)) && Character.isUpperCase(matriz.charAt(0))) ) {
+			ExpressaoInvalida erro = new ExpressaoInvalida(expressao);
+			erro.setMotivo(atribuicao[0] + "nao e uma matriz");
+			throw erro;
+		}
+		
+		matrizes.put(matriz.charAt(0), calculo(expressaoAtribuida));
+	}
+	
+	
+	private void comparacao(String expressao) {
 		// TODO Auto-generated method stub
-
+		
+	}
+	
+	private IMatriz calculo(String expressao) {
+		// TODO
+		return matrizes.get('A').somar(matrizes.get('B'));
+		
 	}
 
 
@@ -44,7 +78,7 @@ public class ControleCalculo implements IControleCalculo {
 
 	@Override
 	public void connect(IAvaliaExpressao separador) {
-		this.separador = separador;
+		this.avaliador = separador;
 	}
 
 	
@@ -55,7 +89,7 @@ public class ControleCalculo implements IControleCalculo {
 	
 	
 	public String[][] getTeste() {
-		IMatriz resp = matrizes.get('A').multiplicar(matrizes.get('B'));
+		IMatriz resp = matrizes.get('A').somar(matrizes.get('B'));
 		
 		return convertePraRepresentacao(resp.getValores());
 	}

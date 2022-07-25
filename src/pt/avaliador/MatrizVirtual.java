@@ -1,4 +1,4 @@
-package pt.separador;
+package pt.avaliador;
 
 public class MatrizVirtual {
 

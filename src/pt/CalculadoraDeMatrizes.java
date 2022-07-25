@@ -1,17 +1,17 @@
 package pt;
 
+import pt.avaliador.IAvaliador;
+import pt.avaliador.Avaliador;
 import pt.controleCalculo.ControleCalculo;
 import pt.controleCalculo.IControleCalculo;
 import pt.operador.IOperador;
 import pt.operador.Operador;
-import pt.separador.ISeparador;
-import pt.separador.Separador;
 import pt.telaCalculadora.ITelaCalculadora;
 import pt.telaCalculadora.TelaCalculadora;
 
 public class CalculadoraDeMatrizes {
 	private static ITelaCalculadora tela;
-	private static ISeparador separador;
+	private static IAvaliador separador;
 	private static IOperador operador;
 	private static IControleCalculo controle;
 
@@ -25,7 +25,7 @@ public class CalculadoraDeMatrizes {
 	
 	public static void build() {
 		tela = new TelaCalculadora();
-		separador = Separador.getInstance();
+		separador = Avaliador.getInstance();
 		operador = new Operador();
 		controle = new ControleCalculo();
 		connectComponents();

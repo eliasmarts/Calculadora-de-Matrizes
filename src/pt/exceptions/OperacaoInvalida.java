@@ -1,7 +1,12 @@
 package pt.exceptions;
 
-public class OperacaoInvalida extends RuntimeException {
+public class OperacaoInvalida extends ErroDeCalculo {
 	private String message;
+	
+	
+	public OperacaoInvalida() {
+		super();
+	}
 	
 	
 	public OperacaoInvalida(String message) {
