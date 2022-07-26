@@ -5,16 +5,12 @@ public class ErroDeTamanho extends OperacaoInvalida {
 	private int tipoOperacao;
 	
 	public ErroDeTamanho() {
-		super();
-		matriz1 = "";
-		matriz2 = "";
-		operacao = "";
-		tipoOperacao = 0;
-		motivo = "";
+		this("");
 	}
 	
 	
 	public ErroDeTamanho(String operacao) {
+		super();
 		this.operacao = operacao;
 		matriz1 = "";
 		matriz2 = "";

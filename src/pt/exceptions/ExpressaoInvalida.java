@@ -8,9 +8,7 @@ public class ExpressaoInvalida extends ErroDeCalculo {
 	private Set<Integer> localizacoesDoErro;
 	
 	public ExpressaoInvalida() {
-		super();
-		motivo = "";
-		localizacoesDoErro = new HashSet<Integer>();
+		this("");
 	}
 	
 	
@@ -19,12 +17,6 @@ public class ExpressaoInvalida extends ErroDeCalculo {
 		this.expressao = expressao;
 		motivo = "";
 		localizacoesDoErro = new HashSet<Integer>();
-	}
-	
-	
-	public ExpressaoInvalida(String expressao, int localizacaoDoErro) {
-		super();
-		this.expressao = expressao;
 	}
 	
 	
