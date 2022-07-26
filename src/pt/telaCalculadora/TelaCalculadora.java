@@ -1,5 +1,7 @@
 package pt.telaCalculadora;
 
+import java.util.Scanner;
+
 import pt.controleCalculo.ICalculoMatriz;
 import pt.exceptions.ErroDeCalculo;
 
@@ -27,18 +29,30 @@ public class TelaCalculadora implements ITelaCalculadora {
 		
 		controleCalculo.armazenaMatriz('B', teste2);
 		
-		try {
-			String[][] test = controleCalculo.getTeste();
-			imprimirMatriz(test);
-			controleCalculo.realizarExpressao("C == A");
-			String[][] test2 = controleCalculo.getMatriz('C');
-			imprimirMatriz(test2);
-		} catch (ErroDeCalculo e) {
-			System.err.printf("Erro: " + e.getMessage());
+		Scanner sc = new Scanner(System.in);
+		System.out.print("Digite a expressao: ");
+		String expressao = sc.nextLine();
+		
+		while (expressao != "exit") {
+			try {
+				String[][] test = controleCalculo.getTeste();
+				imprimirMatriz(test);
+				controleCalculo.realizarExpressao(expressao);
+				/*
+				String[][] test2 = controleCalculo.getMatriz('C');
+				imprimirMatriz(test2);
+				*/
+			} catch (ErroDeCalculo e) {
+				System.err.printf("Erro: " + e.getMessage());
+			} catch (Exception erroinesperado) {
+				System.err.println(erroinesperado.getMessage());
+				erroinesperado.printStackTrace();
+			}
+			
+			System.out.print("Digite a expressao: ");
+			expressao = sc.nextLine();
 		}
-		
-		
-		
+		sc.close();
 	}
 
 	@Override

@@ -57,8 +57,13 @@ public class ControleCalculo implements IControleCalculo {
 	}
 	
 	private IMatriz calculo(String expressao) {
-		// TODO
-		return matrizes.get('A').somar(matrizes.get('B'));
+		String[] expressaoSeparada = avaliador.separaExpressao(expressao);
+		
+		
+		for (int i = 0; i < expressaoSeparada.length; i++) {
+			System.out.print(expressaoSeparada[i] + " ; ");
+		}
+		return matrizes.get('A');
 		
 	}
 

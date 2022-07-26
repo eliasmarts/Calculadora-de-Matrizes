@@ -1,15 +1,23 @@
 package pt.avaliador;
 
+import java.util.ArrayList;
+import java.util.Map;
+import java.util.Set;
+
 import pt.exceptions.ExpressaoInvalida;
-import pt.operador.IValidaOperacao;
+import pt.exceptions.OperacaoInvalida;
 
 public class Avaliador implements IAvaliador {
 	private static final Avaliador instance = new Avaliador();
+	private Set<String> operacoes;
+	private Map<String, Integer> prioridadesOperacoes;
+	private char divisorDecimal;
 	
 
 	
 	private Avaliador() {
-		
+		operacoes = Set.of("+", "-", "*", "/", "det", "^", "inv", "(", ")");
+		divisorDecimal = '.';
 	}
 	
 	
@@ -17,17 +25,187 @@ public class Avaliador implements IAvaliador {
 		return instance;
 	}
 
-	@Override
-	public String checarValidade(String expressao) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+
+	
 
 	@Override
-	public String[] separaExpressao(String expressao) {
-		// TODO Auto-generated method stub
-		return null;
+	public String[] separaExpressao(String expressao) throws ExpressaoInvalida  {
+		checarValidade(expressao);
+		
+		
+		ArrayList<String> expressaoSeparada = new ArrayList<String>();
+		String acumulador = "";
+		
+		for (int i = 0; i < expressao.length(); i++) {
+			if (!isNumeric(expressao.charAt(i)))
+				if (verificaAcumulador(acumulador, expressaoSeparada))
+					acumulador = "";
+			if (!isBlank(expressao.charAt(i)))
+				acumulador += expressao.charAt(i);
+			
+		}
+		
+		verificaAcumulador(acumulador, expressaoSeparada);
+		
+		
+		String[] resposta = new String[expressaoSeparada.size()];
+		
+		for (int i = 0; i < expressaoSeparada.size(); i++)
+			resposta[i] = expressaoSeparada.get(i);
+		
+		return resposta;
 	}
+	
+	
+	private boolean isNumeric(char charAt) {
+		return Character.isDigit(charAt) || charAt == divisorDecimal;
+	}
+
+
+	private boolean isBlank(char charAt) {
+		return Character.isWhitespace(charAt);
+	}
+
+
+	private boolean isNumber(char charAt) {
+		return Character.isDigit(charAt);
+	}
+	
+	
+	private boolean isNumber(String acumulador) {
+		int countPonto = 0;
+		boolean number = true;
+		
+		for (int i = 0; i < acumulador.length(); i++) {
+			if (acumulador.charAt(i) == divisorDecimal) {
+				countPonto++;
+				if (countPonto > 1) {
+					number = false;
+					break;
+				}
+			}
+			
+			else if (!isNumber(acumulador.charAt(i))) {
+				number = false;
+				break;
+			}
+		}
+		
+		return number;
+	}
+
+
+	private boolean isMatriz(String acumulador) {
+		return acumulador.length() == 1 && (Character.isLetter(acumulador.charAt(0)) && Character.isUpperCase(acumulador.charAt(0)));
+	}
+	
+	
+	private boolean isOperacao(String acumulador) {
+		return operacoes.contains(acumulador);
+	}
+
+
+	private boolean verificaAcumulador(String acumulador, ArrayList<String> expressaoSeparada) {
+		boolean separou = false;
+		String ultimaEntrada = "";
+		
+		if (expressaoSeparada.size() > 0)
+			ultimaEntrada = expressaoSeparada.get(expressaoSeparada.size() - 1);
+
+
+		if (acumulador.length() == 0)
+			separou = false;
+		// matriz
+		else if (isMatriz(acumulador)) {
+			separou = true;
+		}
+		// numero
+		else if (isNumber(acumulador)) {
+			separou = true;
+		}
+		// operacao
+		else if (isOperacao(acumulador)) {
+			separou = true;
+		}
+		
+		else if (acumulador.length() > 3) {
+			OperacaoInvalida erro = new OperacaoInvalida();
+			erro.setMotivo("Nao foi possivel interpretar: '" + acumulador + "'");
+			throw erro;
+		}
+		
+		if (separou) {
+			verificaMultiplicacao(ultimaEntrada, acumulador, expressaoSeparada);
+			expressaoSeparada.add(acumulador);
+		}
+		
+		return separou;
+	}
+
+
+	
+
+
+	private void verificaMultiplicacao(String ultimaEntrada, String acumulador, ArrayList<String> expressaoSeparada) {
+		boolean temMult = false;
+		
+		if (ultimaEntrada.length() < 1)
+			temMult = false;
+
+		else if (ultimaEntrada.charAt(0) == ')')
+			temMult = true;
+		else if ((isMatriz(ultimaEntrada) || isNumber(ultimaEntrada)) && isMatriz(acumulador))
+			temMult = true;
+		else if ((isMatriz(ultimaEntrada) || isNumber(ultimaEntrada)) && acumulador.charAt(0) == '(')
+			temMult = true;
+		
+		if (temMult)
+			expressaoSeparada.add("*");
+	}
+
+
+	private void checarValidade(String expressao) throws ExpressaoInvalida {
+		checarBalanceamentoParenteses(expressao);
+	}
+
+	
+	private void checarBalanceamentoParenteses(String expressao) throws ExpressaoInvalida {
+		int countParenteses = 0;
+		
+		for (int i = 0; i < expressao.length(); i++) {
+			if (expressao.charAt(i) == '(')
+				countParenteses++;
+			else if (expressao.charAt(i) == ')') {
+				countParenteses--;
+				if (countParenteses < 0) {
+					ExpressaoInvalida erro = new ExpressaoInvalida(expressao);
+					erro.setMotivo("Parenteses desbalanceados");
+					erro.adicionaErro(i);
+					throw erro;
+				}
+			}
+		}
+		
+		if (countParenteses > 0) {
+			ExpressaoInvalida erro = new ExpressaoInvalida(expressao);
+			erro.setMotivo("Parenteses desbalanceados");
+			localizarParentesesAbertos(expressao, erro, countParenteses);
+			throw erro;
+		}
+	}
+
+
+	private void localizarParentesesAbertos(String expressao, ExpressaoInvalida erro, int numParenteses) {
+		for (int i = expressao.length() - 1; i >= 0; i--) {
+			if (expressao.charAt(i) == '(') {
+				erro.adicionaErro(i);
+				numParenteses--;
+				if (numParenteses == 0)
+					break;
+			}
+		}
+	}
+
 
 	@Override
 	public String[] converterPraPosFixa(String[] expressaoInfixa) {
