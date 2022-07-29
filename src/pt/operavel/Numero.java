@@ -1,7 +1,7 @@
 package pt.operavel;
 
 
-public class Numero implements IOperavel {
+public class Numero extends Operavel {
 	private Number numero;
 	private char tipo;
 	

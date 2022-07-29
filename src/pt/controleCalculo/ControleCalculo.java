@@ -2,12 +2,16 @@ package pt.controleCalculo;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Stack;
+
+import javax.script.Compilable;
 
 import pt.avaliador.IAvaliaExpressao;
 import pt.exceptions.ExpressaoInvalida;
+import pt.exceptions.OperacaoInvalida;
 import pt.matriz.IMatriz;
+import pt.matriz.IOperacoes;
 import pt.matriz.Matriz;
-import pt.operador.IOperacoes;
 import pt.operavel.IOperavel;
 import pt.operavel.OperavelFactory;
 
@@ -63,8 +67,83 @@ public class ControleCalculo implements IControleCalculo {
 		for (int i = 0; i < expressaoPosfixa.length; i++) {
 			System.out.print(expressaoPosfixa[i] + " ; ");
 		}
-		return matrizes.get('A');
+		return realizarExpressao(expressaoPosfixa);
 		
+	}
+	
+	
+
+
+	private IMatriz realizarExpressao(String[] expressaoPosfixa) {
+		Stack<IOperacoes> pilhaOperandos = new Stack<IOperacoes>();
+		
+		
+		for (int i = 0; i < expressaoPosfixa.length; i++) {
+			if (avaliador.isOperacao(expressaoPosfixa[i]))
+				realizarOperacao(pilhaOperandos, expressaoPosfixa[i]);
+			else if (avaliador.isNumber(expressaoPosfixa[i])) {
+				pilhaOperandos.add(OperavelFactory.criarOperavel(expressaoPosfixa[i]));
+			} else if (avaliador.isMatriz(expressaoPosfixa[i])) {
+				pilhaOperandos.add(pegaMatriz(expressaoPosfixa[i].charAt(0)));
+			}
+		}
+		
+		if (pilhaOperandos.size() != 1) {
+			OperacaoInvalida erro = new OperacaoInvalida();
+			erro.setMotivo("operacoes desbalanceadas");
+			throw erro;
+		}
+		
+		return (IMatriz) pilhaOperandos.pop();
+	}
+
+
+	private IMatriz pegaMatriz(char charAt) {
+		if (matrizes.containsKey(charAt))
+			return matrizes.get(charAt);
+		else
+			throw new OperacaoInvalida();
+	}
+
+
+	private void realizarOperacao(Stack<IOperacoes> pilhaOperandos, String operacao) {
+		IOperacoes operando1, operando2;
+		OperacaoInvalida erro = new OperacaoInvalida();
+		
+		if (operacao.equals("+")) {
+			if (pilhaOperandos.size() < 2) {
+				erro.setMotivo("operacoes desbalanceadas");
+				throw erro;
+			}
+			operando1 = pilhaOperandos.peek();
+			operando2 = pilhaOperandos.peek();
+			
+			pilhaOperandos.add(operando2.somarOp(operando1));
+		} 
+		else if (operacao.equals("-")) {
+			if (pilhaOperandos.size() < 2) {
+				erro.setMotivo("operacoes desbalanceadas");
+				throw erro;
+			}
+			operando1 = pilhaOperandos.peek();
+			operando2 = pilhaOperandos.peek();
+			
+			pilhaOperandos.add(operando2.subtrairOP(operando1));
+		}
+		else if (operacao.equals("*")) {
+			if (pilhaOperandos.size() < 2) {
+				erro.setMotivo("operacoes desbalanceadas");
+				throw erro;
+			}
+			operando1 = pilhaOperandos.peek();
+			operando2 = pilhaOperandos.peek();
+			
+			pilhaOperandos.add(operando2.multiplicarOp(operando1));
+		} else if (operacao.equals("/")) {
+			
+		} else if (operacao.equals("-")) {
+			
+		}
 	}
 
 

@@ -21,4 +21,13 @@ public interface IAvaliaExpressao {
 	
 	
 	public String[] converterPraPosFixa(String[] expressaoInfixa) throws ExpressaoInvalida;
+	
+	
+	public boolean isOperacao(String acumulador);
+	
+	
+	public boolean isMatriz(String ac);
+	
+	
+	public boolean isNumber(String ac);
 }

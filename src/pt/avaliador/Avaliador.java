@@ -92,7 +92,7 @@ public class Avaliador implements IAvaliador {
 	}
 	
 	
-	private boolean isNumber(String acumulador) {
+	public boolean isNumber(String acumulador) {
 		int countPonto = 0;
 		boolean number = true;
 		
@@ -115,12 +115,12 @@ public class Avaliador implements IAvaliador {
 	}
 
 
-	private boolean isMatriz(String acumulador) {
+	public boolean isMatriz(String acumulador) {
 		return acumulador.length() == 1 && (Character.isLetter(acumulador.charAt(0)) && Character.isUpperCase(acumulador.charAt(0)));
 	}
 	
 	
-	private boolean isOperacao(String acumulador) {
+	public boolean isOperacao(String acumulador) {
 		return operacoes.contains(acumulador);
 	}
 
@@ -263,7 +263,7 @@ public class Avaliador implements IAvaliador {
 	}
 
 	
-	private boolean isOperavel(String string) {
+	public boolean isOperavel(String string) {
 		return isNumber(string) || isMatriz(string);
 	}
 
