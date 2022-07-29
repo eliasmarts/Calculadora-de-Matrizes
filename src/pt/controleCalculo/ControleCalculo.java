@@ -12,7 +12,6 @@ import pt.operavel.IOperavel;
 import pt.operavel.OperavelFactory;
 
 public class ControleCalculo implements IControleCalculo {
-	private IOperacoes operador;
 	private IAvaliaExpressao avaliador;
 	
 	private Map<Character, IMatriz> matrizes;
@@ -84,12 +83,6 @@ public class ControleCalculo implements IControleCalculo {
 	@Override
 	public void connect(IAvaliaExpressao separador) {
 		this.avaliador = separador;
-	}
-
-	
-	@Override
-	public void connect(IOperacoes operador) {
-		this.operador = operador;
 	}
 	
 	

@@ -12,7 +12,6 @@ import pt.telaCalculadora.TelaCalculadora;
 public class CalculadoraDeMatrizes {
 	private static ITelaCalculadora tela;
 	private static IAvaliador separador;
-	private static IOperador operador;
 	private static IControleCalculo controle;
 
 
@@ -26,7 +25,6 @@ public class CalculadoraDeMatrizes {
 	public static void build() {
 		tela = new TelaCalculadora();
 		separador = Avaliador.getInstance();
-		operador = new Operador();
 		controle = new ControleCalculo();
 		connectComponents();
 	}
@@ -35,6 +33,5 @@ public class CalculadoraDeMatrizes {
 	public static void connectComponents() {
 		tela.connect(controle);
 		controle.connect(separador);
-		controle.connect(operador);
 	}
 }

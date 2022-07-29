@@ -1,5 +1,5 @@
 package pt.controleCalculo;
 
-public interface IControleCalculo extends ICalculoMatriz, IRAvaliaExpressao, IROperacoesMatriz {
+public interface IControleCalculo extends ICalculoMatriz, IRAvaliaExpressao {
 
 }
