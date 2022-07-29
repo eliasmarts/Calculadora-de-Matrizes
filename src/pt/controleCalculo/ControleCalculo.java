@@ -57,10 +57,11 @@ public class ControleCalculo implements IControleCalculo {
 	
 	private IMatriz calculo(String expressao) {
 		String[] expressaoSeparada = avaliador.separaExpressao(expressao);
+		String[] expressaoPosfixa = avaliador.converterPraPosFixa(expressaoSeparada);
 		
 		
-		for (int i = 0; i < expressaoSeparada.length; i++) {
-			System.out.print(expressaoSeparada[i] + " ; ");
+		for (int i = 0; i < expressaoPosfixa.length; i++) {
+			System.out.print(expressaoPosfixa[i] + " ; ");
 		}
 		return matrizes.get('A');
 		

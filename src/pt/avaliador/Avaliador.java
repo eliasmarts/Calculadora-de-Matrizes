@@ -3,6 +3,7 @@ package pt.avaliador;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.Set;
+import java.util.Stack;
 
 import pt.exceptions.ExpressaoInvalida;
 import pt.exceptions.OperacaoInvalida;
@@ -17,6 +18,17 @@ public class Avaliador implements IAvaliador {
 	
 	private Avaliador() {
 		operacoes = Set.of("+", "-", "*", "/", "det", "^", "inv", "(", ")");
+		prioridadesOperacoes = Map.of(
+										"+", 1,
+										"-", 1,
+										"*", 2,
+										"/", 2,
+										"det", 3,
+										"^", 3,
+										"inv", 3,
+										"(", -1,
+										")", -1
+										);
 		divisorDecimal = '.';
 	}
 	
@@ -42,18 +54,26 @@ public class Avaliador implements IAvaliador {
 					acumulador = "";
 			if (!isBlank(expressao.charAt(i)))
 				acumulador += expressao.charAt(i);
+			if (!isNumeric(expressao.charAt(i)))
+				if (verificaAcumulador(acumulador, expressaoSeparada))
+					acumulador = "";
 			
 		}
 		
 		verificaAcumulador(acumulador, expressaoSeparada);
 		
 		
-		String[] resposta = new String[expressaoSeparada.size()];
+		return toStringVec(expressaoSeparada);
+	}
+	
+	
+	private String[] toStringVec(ArrayList<String> array) {
+		String[] v = new String[array.size()];
 		
-		for (int i = 0; i < expressaoSeparada.size(); i++)
-			resposta[i] = expressaoSeparada.get(i);
+		for (int i = 0; i < array.size(); i++)
+			v[i] = array.get(i);
 		
-		return resposta;
+		return v;
 	}
 	
 	
@@ -115,15 +135,15 @@ public class Avaliador implements IAvaliador {
 
 		if (acumulador.length() == 0)
 			separou = false;
-		// matriz
+
 		else if (isMatriz(acumulador)) {
 			separou = true;
 		}
-		// numero
+
 		else if (isNumber(acumulador)) {
 			separou = true;
 		}
-		// operacao
+
 		else if (isOperacao(acumulador)) {
 			separou = true;
 		}
@@ -143,16 +163,13 @@ public class Avaliador implements IAvaliador {
 	}
 
 
-	
-
-
 	private void verificaMultiplicacao(String ultimaEntrada, String acumulador, ArrayList<String> expressaoSeparada) {
 		boolean temMult = false;
 		
 		if (ultimaEntrada.length() < 1)
 			temMult = false;
 
-		else if (ultimaEntrada.charAt(0) == ')')
+		else if (ultimaEntrada.charAt(0) == ')' && !isOperacao(acumulador))
 			temMult = true;
 		else if ((isMatriz(ultimaEntrada) || isNumber(ultimaEntrada)) && isMatriz(acumulador))
 			temMult = true;
@@ -209,11 +226,48 @@ public class Avaliador implements IAvaliador {
 
 	@Override
 	public String[] converterPraPosFixa(String[] expressaoInfixa) {
-		// TODO Auto-generated method stub
-		return null;
+		ArrayList<String> expressaoPosfixa = new ArrayList<String>();
+		int k = 0;
+		Stack<String> pilhaOperandos = new Stack<String>();
+		
+		for (int i = 0; i < expressaoInfixa.length; i++) {
+			if (isOperavel(expressaoInfixa[i]))
+				expressaoPosfixa.add(expressaoInfixa[i]);
+			else if (expressaoInfixa[i].equals("("))
+				pilhaOperandos.add(expressaoInfixa[i]);
+			else if (expressaoInfixa[i].equals(")")) {
+				String op = pilhaOperandos.pop();
+				while (!op.equals("(")) {
+					expressaoPosfixa.add(op);
+					op = pilhaOperandos.pop();
+				}
+			}
+			else {
+				// se e operacao
+				while (!pilhaOperandos.isEmpty()) {
+					if (prioridadesOperacoes.get(pilhaOperandos.peek()) >= prioridadesOperacoes.get(expressaoInfixa[i]))
+						expressaoPosfixa.add(pilhaOperandos.pop());
+					else
+						break;
+				}
+				pilhaOperandos.add(expressaoInfixa[i]);
+			}
+		}
+		
+		// adiciona o resto das operacoes
+		while(!pilhaOperandos.isEmpty())
+			expressaoPosfixa.add(pilhaOperandos.pop());
+		
+		
+		return toStringVec(expressaoPosfixa);
 	}
 
 	
+	private boolean isOperavel(String string) {
+		return isNumber(string) || isMatriz(string);
+	}
+
+
 	private int contarIgual(String expressao) {
 		int igual = 0;
 		for (int i = 0; i < expressao.length(); i++)

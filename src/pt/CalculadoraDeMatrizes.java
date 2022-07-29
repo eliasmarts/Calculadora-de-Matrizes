@@ -33,5 +33,7 @@ public class CalculadoraDeMatrizes {
 	public static void connectComponents() {
 		tela.connect(controle);
 		controle.connect(separador);
+		
+		
 	}
 }

@@ -33,7 +33,7 @@ public class TelaCalculadora implements ITelaCalculadora {
 		System.out.print("Digite a expressao: ");
 		String expressao = sc.nextLine();
 		
-		while (expressao != "exit") {
+		while (!(expressao.equals("exit"))) {
 			try {
 				String[][] test = controleCalculo.getTeste();
 				imprimirMatriz(test);
