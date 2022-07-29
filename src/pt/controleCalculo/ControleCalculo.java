@@ -12,6 +12,7 @@ import pt.exceptions.OperacaoInvalida;
 import pt.matriz.IMatriz;
 import pt.matriz.IOperacoes;
 import pt.matriz.Matriz;
+import pt.operavel.IOperacoesElemento;
 import pt.operavel.IOperavel;
 import pt.operavel.OperavelFactory;
 
@@ -115,8 +116,8 @@ public class ControleCalculo implements IControleCalculo {
 				erro.setMotivo("operacoes desbalanceadas");
 				throw erro;
 			}
-			operando1 = pilhaOperandos.peek();
-			operando2 = pilhaOperandos.peek();
+			operando1 = pilhaOperandos.pop();
+			operando2 = pilhaOperandos.pop();
 			
 			pilhaOperandos.add(operando2.somarOp(operando1));
 		} 
@@ -125,8 +126,8 @@ public class ControleCalculo implements IControleCalculo {
 				erro.setMotivo("operacoes desbalanceadas");
 				throw erro;
 			}
-			operando1 = pilhaOperandos.peek();
-			operando2 = pilhaOperandos.peek();
+			operando1 = pilhaOperandos.pop();
+			operando2 = pilhaOperandos.pop();
 			
 			pilhaOperandos.add(operando2.subtrairOP(operando1));
 		}
@@ -135,8 +136,8 @@ public class ControleCalculo implements IControleCalculo {
 				erro.setMotivo("operacoes desbalanceadas");
 				throw erro;
 			}
-			operando1 = pilhaOperandos.peek();
-			operando2 = pilhaOperandos.peek();
+			operando1 = pilhaOperandos.pop();
+			operando2 = pilhaOperandos.pop();
 			
 			pilhaOperandos.add(operando2.multiplicarOp(operando1));
 		} else if (operacao.equals("/")) {
@@ -149,7 +150,7 @@ public class ControleCalculo implements IControleCalculo {
 
 	@Override
 	public String[][] getMatriz(char nome) {
-		IOperavel[][] matrizOperavel = matrizes.get(nome).getValores();
+		IOperacoesElemento[][] matrizOperavel = matrizes.get(nome).getValores();
 		return convertePraRepresentacao(matrizOperavel);
 	}
 
@@ -175,7 +176,7 @@ public class ControleCalculo implements IControleCalculo {
 	
 	private IMatriz criaMatriz(String[][] matriz) {
 		IMatriz matrizComp = new Matriz();
-		IOperavel[][] matrizOperavel = convertePraOperavel(matriz);
+		IOperacoesElemento[][] matrizOperavel = convertePraOperavel(matriz);
 		
 		matrizComp.setMatriz(matrizOperavel);
 		
@@ -183,8 +184,8 @@ public class ControleCalculo implements IControleCalculo {
 	}
 
 	
-	private IOperavel[][] convertePraOperavel(String[][] matriz) {
-		IOperavel[][] matrizOperavel = new IOperavel[matriz.length][matriz[0].length];
+	private IOperacoesElemento[][] convertePraOperavel(String[][] matriz) {
+		IOperacoesElemento[][] matrizOperavel = new IOperavel[matriz.length][matriz[0].length];
 		
 		for (int i = 0; i < matriz.length; i++) {
 			for (int j = 0; j < matriz[0].length; j++) {
@@ -196,7 +197,7 @@ public class ControleCalculo implements IControleCalculo {
 	}
 	
 	
-	private String[][] convertePraRepresentacao(IOperavel[][] matrizOperavel) {
+	private String[][] convertePraRepresentacao(IOperacoesElemento[][] matrizOperavel) {
 		String[][] matriz = new String[matrizOperavel.length][matrizOperavel[0].length];
 		
 		for (int i = 0; i < matriz.length; i++) {

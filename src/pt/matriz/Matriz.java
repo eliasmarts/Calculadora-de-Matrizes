@@ -2,12 +2,13 @@ package pt.matriz;
 
 import pt.exceptions.ErroDeTamanho;
 import pt.exceptions.OperacaoInvalida;
+import pt.operavel.IOperacoesElemento;
 import pt.operavel.IOperavel;
 import pt.operavel.OperavelFactory;
 
 public class Matriz implements IMatriz {
 	public static IMatriz matrizIdentidade(int n) {
-		IOperavel[][] valoresId = new IOperavel[n][n];
+		IOperacoesElemento[][] valoresId = new IOperavel[n][n];
 		
 		for (int i = 0; i < n; i++)
 			for (int j = 0; j < n; j++) {
@@ -20,7 +21,7 @@ public class Matriz implements IMatriz {
 		return new Matriz(valoresId);
 	}
 	
-	private IOperavel[][] valores;
+	private IOperacoesElemento[][] valores;
 	private int linhas, colunas;
 
 
@@ -31,8 +32,8 @@ public class Matriz implements IMatriz {
 	}
 	
 	
-	private Matriz(IOperavel[][] valores) {
-		this.setMatriz(valores);
+	private Matriz(IOperacoesElemento[][] resp) {
+		this.setMatriz(resp);
 	}
 
 	@Override
@@ -48,7 +49,7 @@ public class Matriz implements IMatriz {
 	}
 
 	
-	public IOperavel[][] getValores() {
+	public IOperacoesElemento[][] getValores() {
 		return valores;
 	}
 
@@ -65,40 +66,40 @@ public class Matriz implements IMatriz {
 		valores = new IOperavel[linhas][colunas];
 		
 		
-		for (IOperavel[] linha : valores) {
-			for (IOperavel valor : linha) {
+		for (IOperacoesElemento[] linha : valores) {
+			for (IOperacoesElemento valor : linha) {
 				valor = null;
 			}
 		}
 	}
 
 	@Override
-	public void setElemento(int x, int y, IOperavel elemento) {
+	public void setElemento(int x, int y, IOperacoesElemento elemento) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void setMatriz(IOperavel[][] matriz) {
-		valores = matriz;
-		linhas = matriz.length;
-		colunas = matriz[0].length;
+	public void setMatriz(IOperacoesElemento[][] resp) {
+		valores = resp;
+		linhas = resp.length;
+		colunas = resp[0].length;
 	}
 
 	@Override
-	public void setLinha(int numLinha, IOperavel[] linha) {
+	public void setLinha(int numLinha, IOperacoesElemento[] linha) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public IOperavel[] getLinha(int numLinha) {
+	public IOperacoesElemento[] getLinha(int numLinha) {
 		return valores[numLinha];
 	}
 	
 	
-	public IOperavel[] getColuna(int numColuna) {
-		IOperavel[] resp = new IOperavel[this.linhas];
+	public IOperacoesElemento[] getColuna(int numColuna) {
+		IOperacoesElemento[] resp = new IOperavel[this.linhas];
 		
 		for (int i = 0; i < linhas; i++) 
 			resp[i] = valores[i][numColuna];
@@ -134,7 +135,7 @@ public class Matriz implements IMatriz {
 			throw erro;
 		}
 		
-		IOperavel[][] resp = new IOperavel[linhas][colunas], outraMatriz = outra.getValores();
+		IOperacoesElemento[][] resp = new IOperacoesElemento[linhas][colunas], outraMatriz = outra.getValores();
 		
 		for (int i = 0; i < this.linhas; i++)
 			for (int j = 0; j < this.colunas; j++)
@@ -148,7 +149,7 @@ public class Matriz implements IMatriz {
 		if (outra.getNumLinhas() != this.linhas || outra.getNumColunas() != this.colunas)
 			throw new OperacaoInvalida("Tamanho incompativel");
 		
-		IOperavel[][] resp = new IOperavel[linhas][colunas], outraMatriz = outra.getValores();
+		IOperacoesElemento[][] resp = new IOperavel[linhas][colunas], outraMatriz = outra.getValores();
 		
 		for (int i = 0; i < this.linhas; i++)
 			for (int j = 0; j < this.colunas; j++)
@@ -164,7 +165,7 @@ public class Matriz implements IMatriz {
 		
 		int colunasOutra = outra.getNumColunas();
 	
-		IOperavel[][] resp = new IOperavel[this.linhas][colunasOutra];
+		IOperacoesElemento[][] resp = new IOperavel[this.linhas][colunasOutra];
 		
 		for (int i = 0; i < this.linhas; i++)
 			for (int j = 0; j < colunasOutra; j++)
@@ -174,11 +175,11 @@ public class Matriz implements IMatriz {
 	}
 
 	
-	private IOperavel multiplicar(IOperavel[] linha, IOperavel[] coluna) {
-		IOperavel result = OperavelFactory.criarOperavel(0);
+	private IOperacoesElemento multiplicar(IOperacoesElemento[] iOperacoesElementos, IOperacoesElemento[] coluna) {
+		IOperacoesElemento result = OperavelFactory.criarOperavel(0);
 		
-		for (int i = 0; i < linha.length; i++) {
-			result = result.somarOp(linha[i].multiplicar(coluna[i]));
+		for (int i = 0; i < iOperacoesElementos.length; i++) {
+			result = result.somar(iOperacoesElementos[i].multiplicar(coluna[i]));
 		}
 		
 		return result;
@@ -187,8 +188,13 @@ public class Matriz implements IMatriz {
 
 	@Override
 	public IMatriz multiplicar(IOperavel operavel) {
-		// TODO Auto-generated method stub
-		return null;
+		IOperacoesElemento[][] resp = new IOperavel[linhas][colunas];
+		
+		for (int i = 0; i < linhas; i++)
+			for (int j = 0; j < colunas; j++)
+				resp[i][j] = valores[i][j].multiplicar(operavel);
+		
+		return new Matriz(resp);
 	}
 
 
