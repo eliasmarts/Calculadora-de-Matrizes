@@ -4,8 +4,6 @@ import pt.avaliador.IAvaliador;
 import pt.avaliador.Avaliador;
 import pt.controleCalculo.ControleCalculo;
 import pt.controleCalculo.IControleCalculo;
-import pt.operador.IOperador;
-import pt.operador.Operador;
 import pt.telaCalculadora.ITelaCalculadora;
 import pt.telaCalculadora.TelaCalculadora;
 

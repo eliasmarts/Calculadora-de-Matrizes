@@ -29,9 +29,7 @@ public class ErroDeTamanho extends OperacaoInvalida {
 	}
 
 	
-	public void setOperacao(String operacao) {
-		this.operacao = operacao;
-	}
+	
 
 	
 	public void setTipoOperacao(int tipoOperacao) {

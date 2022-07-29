@@ -10,7 +10,7 @@ import pt.avaliador.IAvaliaExpressao;
 import pt.exceptions.ExpressaoInvalida;
 import pt.exceptions.OperacaoInvalida;
 import pt.matriz.IMatriz;
-import pt.matriz.IOperacoes;
+import pt.matriz.IOperacoesStrategy;
 import pt.matriz.Matriz;
 import pt.operavel.IOperacoesElemento;
 import pt.operavel.IOperavel;
@@ -28,15 +28,8 @@ public class ControleCalculo implements IControleCalculo {
 
 	
 	@Override
-	public void realizarExpressao(String expressao) {
-		int tipo = avaliador.getTipoExpressao(expressao);
-		
-		if (tipo == IAvaliaExpressao.ATRIBUICAO) {
-			atribuicao(expressao);
-		} else if (tipo == IAvaliaExpressao.COMPARACAO) {
-			comparacao(expressao);
-		} else
-			calculo(expressao);
+	public void armazenaMatriz(char nome, String[][] matriz) {
+		matrizes.put(nome, criaMatriz(matriz));
 	}
 	
 	
@@ -55,28 +48,99 @@ public class ControleCalculo implements IControleCalculo {
 	}
 	
 	
+	private IMatriz calculo(String expressao) {
+		String[] expressaoSeparada = avaliador.separaExpressao(expressao);
+		String[] expressaoPosfixa = avaliador.converterPraPosFixa(expressaoSeparada);
+		return realizarExpressao(expressaoPosfixa);
+	}
+	
 	private void comparacao(String expressao) {
 		// TODO Auto-generated method stub
 		
 	}
 	
-	private IMatriz calculo(String expressao) {
-		String[] expressaoSeparada = avaliador.separaExpressao(expressao);
-		String[] expressaoPosfixa = avaliador.converterPraPosFixa(expressaoSeparada);
+	
+
+
+	@Override
+	public void connect(IAvaliaExpressao separador) {
+		this.avaliador = separador;
+	}
+
+
+	private IOperacoesElemento[][] convertePraOperavel(String[][] matriz) {
+		IOperacoesElemento[][] matrizOperavel = new IOperavel[matriz.length][matriz[0].length];
 		
-		
-		for (int i = 0; i < expressaoPosfixa.length; i++) {
-			System.out.print(expressaoPosfixa[i] + " ; ");
+		for (int i = 0; i < matriz.length; i++) {
+			for (int j = 0; j < matriz[0].length; j++) {
+				matrizOperavel[i][j] = OperavelFactory.criarOperavel(matriz[i][j]);
+			}
 		}
-		return realizarExpressao(expressaoPosfixa);
 		
+		return matrizOperavel;
+	}
+
+
+	private String[][] convertePraRepresentacao(IOperacoesElemento[][] matrizOperavel) {
+		String[][] matriz = new String[matrizOperavel.length][matrizOperavel[0].length];
+		
+		for (int i = 0; i < matriz.length; i++) {
+			for (int j = 0; j < matriz[0].length; j++) {
+				matriz[i][j] = matrizOperavel[i][j].getRepresentacao();
+			}
+		}
+		
+		return matriz;
+	}
+
+
+	private IMatriz criaMatriz(String[][] matriz) {
+		IMatriz matrizComp = new Matriz();
+		IOperacoesElemento[][] matrizOperavel = convertePraOperavel(matriz);
+		
+		matrizComp.setMatriz(matrizOperavel);
+		
+		return matrizComp;
+	}
+
+
+	@Override
+	public String[][] getMatriz(char nome) {
+		IOperacoesElemento[][] matrizOperavel = matrizes.get(nome).getValores();
+		return convertePraRepresentacao(matrizOperavel);
+	}
+
+
+	public String[][] getTeste() {
+		IMatriz resp = matrizes.get('A').somar(matrizes.get('B'));
+		
+		return convertePraRepresentacao(resp.getValores());
+	}
+
+
+	private IMatriz pegaMatriz(char charAt) {
+		if (matrizes.containsKey(charAt))
+			return matrizes.get(charAt);
+		else
+			throw new OperacaoInvalida();
+	}
+
+
+	@Override
+	public void realizarExpressao(String expressao) {
+		int tipo = avaliador.getTipoExpressao(expressao);
+		
+		if (tipo == IAvaliaExpressao.ATRIBUICAO) {
+			atribuicao(expressao);
+		} else if (tipo == IAvaliaExpressao.COMPARACAO) {
+			comparacao(expressao);
+		} else
+			calculo(expressao);
 	}
 	
 	
-
-
 	private IMatriz realizarExpressao(String[] expressaoPosfixa) {
-		Stack<IOperacoes> pilhaOperandos = new Stack<IOperacoes>();
+		Stack<IOperacoesStrategy> pilhaOperandos = new Stack<IOperacoesStrategy>();
 		
 		
 		for (int i = 0; i < expressaoPosfixa.length; i++) {
@@ -98,114 +162,63 @@ public class ControleCalculo implements IControleCalculo {
 		return (IMatriz) pilhaOperandos.pop();
 	}
 
-
-	private IMatriz pegaMatriz(char charAt) {
-		if (matrizes.containsKey(charAt))
-			return matrizes.get(charAt);
-		else
-			throw new OperacaoInvalida();
-	}
-
-
-	private void realizarOperacao(Stack<IOperacoes> pilhaOperandos, String operacao) {
-		IOperacoes operando1, operando2;
-		OperacaoInvalida erro = new OperacaoInvalida();
+	
+	private void realizarOperacao(Stack<IOperacoesStrategy> pilhaOperandos, String operacao) {
 		
 		if (operacao.equals("+")) {
-			if (pilhaOperandos.size() < 2) {
-				erro.setMotivo("operacoes desbalanceadas");
-				throw erro;
-			}
-			operando1 = pilhaOperandos.pop();
-			operando2 = pilhaOperandos.pop();
-			
-			pilhaOperandos.add(operando2.somarOp(operando1));
+			soma(pilhaOperandos);
 		} 
 		else if (operacao.equals("-")) {
-			if (pilhaOperandos.size() < 2) {
-				erro.setMotivo("operacoes desbalanceadas");
-				throw erro;
-			}
-			operando1 = pilhaOperandos.pop();
-			operando2 = pilhaOperandos.pop();
-			
-			pilhaOperandos.add(operando2.subtrairOP(operando1));
+			subtracao(pilhaOperandos);
 		}
 		else if (operacao.equals("*")) {
-			if (pilhaOperandos.size() < 2) {
-				erro.setMotivo("operacoes desbalanceadas");
-				throw erro;
-			}
-			operando1 = pilhaOperandos.pop();
+			multiplicacao(pilhaOperandos);
+		}
+	}
+
+	
+	private void soma(Stack<IOperacoesStrategy> pilhaOperandos) {
+		IOperacoesStrategy operando1, operando2;
+		if (pilhaOperandos.size() < 2) {
+			OperacaoInvalida erro = new OperacaoInvalida();
+			erro.setMotivo("operacoes desbalanceadas");
+			throw erro;
+		}
+		operando1 = pilhaOperandos.pop();
+		operando2 = pilhaOperandos.pop();
+		
+		pilhaOperandos.add(operando2.somarOp(operando1));
+	}
+	
+	
+	private void subtracao(Stack<IOperacoesStrategy> pilhaOperandos) {
+		IOperacoesStrategy operando1, operando2;
+		if (pilhaOperandos.size() < 1) {
+			OperacaoInvalida erro = new OperacaoInvalida();
+			erro.setMotivo("operacoes desbalanceadas");
+			throw erro;
+		}
+		
+		operando1 = pilhaOperandos.pop();
+		if (pilhaOperandos.size() == 0) {
+			pilhaOperandos.add(operando1.negativo());
+		} else {
 			operando2 = pilhaOperandos.pop();
-			
-			pilhaOperandos.add(operando2.multiplicarOp(operando1));
-		} else if (operacao.equals("/")) {
-			
-		} else if (operacao.equals("-")) {
-			
+			pilhaOperandos.add(operando2.subtrairOp(operando1));
 		}
 	}
-
-
-	@Override
-	public String[][] getMatriz(char nome) {
-		IOperacoesElemento[][] matrizOperavel = matrizes.get(nome).getValores();
-		return convertePraRepresentacao(matrizOperavel);
-	}
-
-	
-	@Override
-	public void armazenaMatriz(char nome, String[][] matriz) {
-		matrizes.put(nome, criaMatriz(matriz));
-	}
-
-
-	@Override
-	public void connect(IAvaliaExpressao separador) {
-		this.avaliador = separador;
-	}
 	
 	
-	public String[][] getTeste() {
-		IMatriz resp = matrizes.get('A').somar(matrizes.get('B'));
-		
-		return convertePraRepresentacao(resp.getValores());
-	}
-
-	
-	private IMatriz criaMatriz(String[][] matriz) {
-		IMatriz matrizComp = new Matriz();
-		IOperacoesElemento[][] matrizOperavel = convertePraOperavel(matriz);
-		
-		matrizComp.setMatriz(matrizOperavel);
-		
-		return matrizComp;
-	}
-
-	
-	private IOperacoesElemento[][] convertePraOperavel(String[][] matriz) {
-		IOperacoesElemento[][] matrizOperavel = new IOperavel[matriz.length][matriz[0].length];
-		
-		for (int i = 0; i < matriz.length; i++) {
-			for (int j = 0; j < matriz[0].length; j++) {
-				matrizOperavel[i][j] = OperavelFactory.criarOperavel(matriz[i][j]);
-			}
+	private void multiplicacao(Stack<IOperacoesStrategy> pilhaOperandos) {
+		IOperacoesStrategy operando1, operando2;
+		if (pilhaOperandos.size() < 2) {
+			OperacaoInvalida erro = new OperacaoInvalida();
+			erro.setMotivo("operacoes desbalanceadas");
+			throw erro;
 		}
+		operando1 = pilhaOperandos.pop();
+		operando2 = pilhaOperandos.pop();
 		
-		return matrizOperavel;
-	}
-	
-	
-	private String[][] convertePraRepresentacao(IOperacoesElemento[][] matrizOperavel) {
-		String[][] matriz = new String[matrizOperavel.length][matrizOperavel[0].length];
-		
-		for (int i = 0; i < matriz.length; i++) {
-			for (int j = 0; j < matriz[0].length; j++) {
-				matriz[i][j] = matrizOperavel[i][j].getRepresentacao();
-			}
-		}
-		
-		return matriz;
+		pilhaOperandos.add(operando2.multiplicarOp(operando1));
 	}
 }

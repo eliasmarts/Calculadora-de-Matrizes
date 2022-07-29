@@ -1,52 +1,56 @@
 package pt.operavel;
 
+import pt.exceptions.ErroDeTipo;
 import pt.matriz.IMatriz;
-import pt.matriz.IOperacoes;
+import pt.matriz.IOperacoesStrategy;
 
 public abstract class Operavel implements IOperavel {
 	@Override
-	public IOperacoes somarOp(IOperacoes op) {
+	public IOperacoesStrategy somarOp(IOperacoesStrategy op) {
 		return op.somar(this);
 	}
 
 	@Override
-	public IOperacoes subtrairOP(IOperacoes op) {
+	public IOperacoesStrategy subtrairOp(IOperacoesStrategy op) {
 		return op.subtrair(this).negativo();
 	}
 
 	@Override
-	public IOperacoes multiplicarOp(IOperacoes op) {
+	public IOperacoesStrategy multiplicarOp(IOperacoesStrategy op) {
 		return op.multiplicar(this);
 	}
 
 	@Override
-	public IOperacoes somar(IMatriz matriz) {
-		// TODO Auto-generated method stub
-		return null;
+	public IOperacoesStrategy somar(IMatriz matriz) {
+		ErroDeTipo erro = new ErroDeTipo("numero", "matriz");
+		erro.setOperacao("+");
+		throw erro;
 	}
 
 	@Override
-	public IOperacoes somar(IOperavel operavel) {
+	public IOperacoesStrategy somar(IOperavel operavel) {
 		return operavel.somar(this);
 	}
 
 	@Override
-	public IOperacoes subtrair(IMatriz matriz) {
-		return null;
+	public IOperacoesStrategy subtrair(IMatriz matriz) {
+		ErroDeTipo erro = new ErroDeTipo("numero", "matriz");
+		erro.setOperacao("-");
+		throw erro;
 	}
 
 	@Override
-	public IOperacoes subtrair(IOperavel operavel) {
+	public IOperacoesStrategy subtrair(IOperavel operavel) {
 		return operavel.subtrair(this);
 	}
 
 	@Override
-	public IOperacoes multiplicar(IMatriz matriz) {
+	public IOperacoesStrategy multiplicar(IMatriz matriz) {
 		return matriz.multiplicar(this);
 	}
 
 	@Override
-	public IOperacoes multiplicar(IOperavel operavel) {
+	public IOperacoesStrategy multiplicar(IOperavel operavel) {
 		return operavel.multiplicar(this);
 	}
 

@@ -1,7 +1,7 @@
 package pt.operavel;
 
-import pt.matriz.IOperacoes;
+import pt.matriz.IOperacoesStrategy;
 
-public interface IOperavel extends IOperacoesElemento, IOperacoes {
+public interface IOperavel extends IOperacoesElemento, IOperacoesStrategy {
 
 }

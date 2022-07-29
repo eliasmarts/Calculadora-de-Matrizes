@@ -3,19 +3,19 @@ package pt.matriz;
 import pt.operavel.IOperavel;
 
 public interface IOperacoesEsp {
-	public IOperacoes somar(IMatriz matriz);
+	public IOperacoesStrategy somar(IMatriz matriz);
 	
-	public IOperacoes somar(IOperavel operavel);
-	
-	
-	public IOperacoes subtrair(IMatriz matriz);
-	
-	public IOperacoes subtrair(IOperavel operavel);
+	public IOperacoesStrategy somar(IOperavel operavel);
 	
 	
-	public IOperacoes multiplicar(IMatriz matriz);
+	public IOperacoesStrategy subtrair(IMatriz matriz);
 	
-	public IOperacoes multiplicar(IOperavel operavel);
+	public IOperacoesStrategy subtrair(IOperavel operavel);
+	
+	
+	public IOperacoesStrategy multiplicar(IMatriz matriz);
+	
+	public IOperacoesStrategy multiplicar(IOperavel operavel);
 	
 	
 }
