@@ -43,20 +43,27 @@ public class ControleCalculo implements IControleCalculo {
 			erro.setMotivo(atribuicao[0] + "nao e uma matriz");
 			throw erro;
 		}
+		Resposta resp = calculo(expressaoAtribuida);
 		
-		matrizes.put(matriz.charAt(0), calculo(expressaoAtribuida));
+		if (resp.getTipo().equals("matriz"))
+			matrizes.put(matriz.charAt(0), (IMatriz) calculo(expressaoAtribuida));
+		else {
+			ExpressaoInvalida erro = new ExpressaoInvalida(expressao);
+			erro.setMotivo("o resultado nao e uma matriz");
+			throw erro;
+		}
 	}
 	
 	
-	private IMatriz calculo(String expressao) {
+	private Resposta calculo(String expressao) {
 		String[] expressaoSeparada = avaliador.separaExpressao(expressao);
 		String[] expressaoPosfixa = avaliador.converterPraPosFixa(expressaoSeparada);
 		return realizarExpressao(expressaoPosfixa);
 	}
 	
-	private void comparacao(String expressao) {
+	private Resposta comparacao(String expressao) {
 		// TODO Auto-generated method stub
-		
+		return null;
 	}
 	
 	
@@ -127,19 +134,23 @@ public class ControleCalculo implements IControleCalculo {
 
 
 	@Override
-	public void realizarExpressao(String expressao) {
+	public Resposta realizarExpressao(String expressao) {
 		int tipo = avaliador.getTipoExpressao(expressao);
+		Resposta resp;
 		
 		if (tipo == IAvaliaExpressao.ATRIBUICAO) {
 			atribuicao(expressao);
+			resp = new RespostaTexto("0");
 		} else if (tipo == IAvaliaExpressao.COMPARACAO) {
-			comparacao(expressao);
+			resp = comparacao(expressao);
 		} else
-			calculo(expressao);
+			resp = calculo(expressao);
+	
+		return resp;
 	}
 	
 	
-	private IMatriz realizarExpressao(String[] expressaoPosfixa) {
+	private Resposta realizarExpressao(String[] expressaoPosfixa) {
 		Stack<IOperacoesStrategy> pilhaOperandos = new Stack<IOperacoesStrategy>();
 		
 		
@@ -159,7 +170,7 @@ public class ControleCalculo implements IControleCalculo {
 			throw erro;
 		}
 		
-		return (IMatriz) pilhaOperandos.pop();
+		return (Resposta) pilhaOperandos.pop();
 	}
 
 	

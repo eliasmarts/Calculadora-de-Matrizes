@@ -1,5 +1,6 @@
 package pt.telaCalculadora;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 import pt.controleCalculo.ICalculoMatriz;
@@ -30,17 +31,20 @@ public class TelaCalculadora implements ITelaCalculadora {
 			
 			char comando = sc.next().charAt(0);
 			sc.nextLine();
-			
-			if (comando == 'x') {
-				encerrar();
-				break;
+			try {
+				if (comando == 'x') {
+					encerrar();
+					break;
+				}
+				else if (comando == 'l')
+					lerMatriz();
+				else if (comando == 'e')
+					lerExpressao();
+				else if (comando == 'p')
+					lerImpressao();
+			} catch (InputMismatchException e) {
+				System.out.println("Entrada invalida");
 			}
-			else if (comando == 'l')
-				lerMatriz();
-			else if (comando == 'e')
-				lerExpressao();
-			else if (comando == 'p')
-				lerImpressao();
 		}
 	}
 
@@ -57,7 +61,7 @@ public class TelaCalculadora implements ITelaCalculadora {
 		String expressao = sc.nextLine();
 		
 		try {
-			controleCalculo.realizarExpressao(expressao);
+			System.out.printf(controleCalculo.realizarExpressao(expressao).toString());
 		} catch (ErroDeCalculo e) {
 			System.err.println("Erro no calculo: ");
 			System.err.print(e.getMessage());

@@ -5,7 +5,7 @@ public interface ICalculoMatriz {
 	 * Realiza um comando, que pode ser calculo e atribuicao
 	 * @param expressao a expressao que representa o comando
 	 */
-	public void realizarExpressao(String expressao);
+	public Resposta realizarExpressao(String expressao);
 	
 	
 	/**

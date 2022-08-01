@@ -53,5 +53,14 @@ public abstract class Operavel implements IOperavel {
 	public IOperacoesStrategy multiplicar(IOperavel operavel) {
 		return operavel.multiplicar(this);
 	}
+	
+	
+	public String toString() {
+		return getRepresentacao();
+	}
 
+	
+	public String getTipo() {
+		return "operavel";
+	}
 }

@@ -256,5 +256,24 @@ public class Matriz implements IMatriz {
 		erro.setOperacao("-");
 		throw erro;
 	}
+
+
+	@Override
+	public String getTipo() {
+		return "matriz";
+	}
 	
+	
+	public String toString() {
+		String matr = "";
+		
+		for (IOperacoesElemento[] linha : valores) {
+			for (IOperacoesElemento valor : linha) {
+				matr += valor.getRepresentacao() + " ";
+			}
+			matr += "%n";
+		}
+		
+		return matr;
+	}
 }

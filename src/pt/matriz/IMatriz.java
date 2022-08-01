@@ -1,5 +1,7 @@
 package pt.matriz;
 
-public interface IMatriz extends IOperacoesMatriz, IMatrizProperties, IROperacoesElemento, IOperacoesStrategy {
+import pt.controleCalculo.Resposta;
+
+public interface IMatriz extends IOperacoesMatriz, IMatrizProperties, IROperacoesElemento, IOperacoesStrategy, Resposta {
 
 }
