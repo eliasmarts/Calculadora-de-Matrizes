@@ -14,4 +14,8 @@ public class ErroDeCalculo extends RuntimeException {
 	public String getMotivo() {
 		return motivo;
 	}
+	
+	public String getMessage() {
+		return motivo;
+	}
 }

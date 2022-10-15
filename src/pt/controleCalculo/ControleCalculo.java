@@ -4,8 +4,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Stack;
 
-import javax.script.Compilable;
-
 import pt.avaliador.IAvaliaExpressao;
 import pt.exceptions.ExpressaoInvalida;
 import pt.exceptions.OperacaoInvalida;
@@ -15,6 +13,8 @@ import pt.matriz.Matriz;
 import pt.operavel.IOperacoesElemento;
 import pt.operavel.IOperavel;
 import pt.operavel.OperavelFactory;
+import pt.visual.Imprimivel;
+import pt.visual.ImprimivelFactory;
 
 public class ControleCalculo implements IControleCalculo {
 	private IAvaliaExpressao avaliador;
@@ -43,10 +43,11 @@ public class ControleCalculo implements IControleCalculo {
 			erro.setMotivo(atribuicao[0] + "nao e uma matriz");
 			throw erro;
 		}
-		Resposta resp = calculo(expressaoAtribuida);
+		IOperacoesStrategy resp = calculo(expressaoAtribuida);
+		IMatriz m = resp.getMatriz();
 		
-		if (resp.getTipo().equals("matriz"))
-			matrizes.put(matriz.charAt(0), (IMatriz) calculo(expressaoAtribuida));
+		if (m != null)
+			matrizes.put(matriz.charAt(0), m);
 		else {
 			ExpressaoInvalida erro = new ExpressaoInvalida(expressao);
 			erro.setMotivo("o resultado nao e uma matriz");
@@ -55,13 +56,13 @@ public class ControleCalculo implements IControleCalculo {
 	}
 	
 	
-	private Resposta calculo(String expressao) {
+	private IOperacoesStrategy calculo(String expressao) {
 		String[] expressaoSeparada = avaliador.separaExpressao(expressao);
 		String[] expressaoPosfixa = avaliador.converterPraPosFixa(expressaoSeparada);
 		return realizarExpressao(expressaoPosfixa);
 	}
 	
-	private Resposta comparacao(String expressao) {
+	private IOperacoesStrategy comparacao(String expressao) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -134,23 +135,23 @@ public class ControleCalculo implements IControleCalculo {
 
 
 	@Override
-	public Resposta realizarExpressao(String expressao) {
+	public Imprimivel realizarExpressao(String expressao) {
 		int tipo = avaliador.getTipoExpressao(expressao);
-		Resposta resp;
+		IOperacoesStrategy resp;
 		
 		if (tipo == IAvaliaExpressao.ATRIBUICAO) {
 			atribuicao(expressao);
-			resp = new RespostaTexto("0");
+			resp = null;
 		} else if (tipo == IAvaliaExpressao.COMPARACAO) {
 			resp = comparacao(expressao);
 		} else
 			resp = calculo(expressao);
 	
-		return resp;
+		return ImprimivelFactory.criaImprimivel(resp);
 	}
 	
 	
-	private Resposta realizarExpressao(String[] expressaoPosfixa) {
+	private IOperacoesStrategy realizarExpressao(String[] expressaoPosfixa) {
 		Stack<IOperacoesStrategy> pilhaOperandos = new Stack<IOperacoesStrategy>();
 		
 		
@@ -170,7 +171,7 @@ public class ControleCalculo implements IControleCalculo {
 			throw erro;
 		}
 		
-		return (Resposta) pilhaOperandos.pop();
+		return pilhaOperandos.pop();
 	}
 
 	

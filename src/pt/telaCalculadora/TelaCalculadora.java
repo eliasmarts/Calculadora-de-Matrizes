@@ -61,7 +61,7 @@ public class TelaCalculadora implements ITelaCalculadora {
 		String expressao = sc.nextLine();
 		
 		try {
-			System.out.printf(controleCalculo.realizarExpressao(expressao).toString());
+			controleCalculo.realizarExpressao(expressao).draw(System.out);
 		} catch (ErroDeCalculo e) {
 			System.err.println("Erro no calculo: ");
 			System.err.print(e.getMessage());

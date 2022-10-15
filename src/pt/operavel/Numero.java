@@ -16,11 +16,6 @@ public class Numero extends Operavel {
 	}
 	
 	
-	protected char getTipo() {
-		return tipo;
-	}
-	
-	
 	protected Number getNumero() {
 		return numero;
 	}

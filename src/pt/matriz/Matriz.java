@@ -256,12 +256,6 @@ public class Matriz implements IMatriz {
 		erro.setOperacao("-");
 		throw erro;
 	}
-
-
-	@Override
-	public String getTipo() {
-		return "matriz";
-	}
 	
 	
 	public String toString() {
@@ -275,5 +269,15 @@ public class Matriz implements IMatriz {
 		}
 		
 		return matr;
+	}
+	
+	
+	public IMatriz getMatriz() {
+		return this;
+	}
+	
+	
+	public IOperavel getOperavel() {
+		return null;
 	}
 }

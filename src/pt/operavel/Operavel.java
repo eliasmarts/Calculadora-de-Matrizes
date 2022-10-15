@@ -58,9 +58,14 @@ public abstract class Operavel implements IOperavel {
 	public String toString() {
 		return getRepresentacao();
 	}
-
 	
-	public String getTipo() {
-		return "operavel";
+	
+	public IMatriz getMatriz()	{
+		return null;
+	}
+	
+	
+	public IOperavel getOperavel() {
+		return this;
 	}
 }

@@ -1,7 +1,6 @@
 package pt.exceptions;
 
 public class OperacaoInvalida extends ErroDeCalculo {
-	private String message;
 	protected String operacao;
 	
 	
@@ -12,7 +11,7 @@ public class OperacaoInvalida extends ErroDeCalculo {
 	
 	public OperacaoInvalida(String message) {
 		super();
-		this.message = message;
+		this.motivo = message;
 	}
 	
 	
@@ -23,6 +22,6 @@ public class OperacaoInvalida extends ErroDeCalculo {
 	
 	@Override
 	public String getMessage() {
-		return message;
+		return motivo;
 	}
 }

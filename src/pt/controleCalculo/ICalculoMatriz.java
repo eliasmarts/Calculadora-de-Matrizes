@@ -1,11 +1,13 @@
 package pt.controleCalculo;
 
+import pt.visual.Imprimivel;
+
 public interface ICalculoMatriz {
 	/**
 	 * Realiza um comando, que pode ser calculo e atribuicao
 	 * @param expressao a expressao que representa o comando
 	 */
-	public Resposta realizarExpressao(String expressao);
+	public Imprimivel realizarExpressao(String expressao);
 	
 	
 	/**

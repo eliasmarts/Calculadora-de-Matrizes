@@ -1,5 +1,7 @@
 package pt.matriz;
 
+import pt.operavel.IOperavel;
+
 public interface IOperacoesStrategy extends IOperacoesEsp {
 	public IOperacoesStrategy somarOp(IOperacoesStrategy op);
 	
@@ -11,4 +13,10 @@ public interface IOperacoesStrategy extends IOperacoesEsp {
 	
 	
 	public IOperacoesStrategy negativo();
+	
+	
+	public IMatriz getMatriz();
+	
+	
+	public IOperavel getOperavel();
 }
