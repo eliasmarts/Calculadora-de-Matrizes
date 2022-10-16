@@ -2,17 +2,17 @@ package pt.visual;
 
 import java.io.PrintStream;
 
-import pt.operavel.IOperacoesElemento;
+import pt.elemento.IElemento;
 
-public class OperavelVisual implements Imprimivel {
-	private IOperacoesElemento op;
+public class OperavelVisual implements Visual {
+	private IElemento op;
 	@Override
 	public void draw(PrintStream out) {
 		out.print(op.getRepresentacao());
 	}
 	
 	
-	protected void connect(IOperacoesElemento op) {
+	protected void connect(IElemento op) {
 		this.op = op;
 	}
 

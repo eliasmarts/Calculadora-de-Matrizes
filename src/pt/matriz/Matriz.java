@@ -1,28 +1,25 @@
 package pt.matriz;
 
-import pt.exceptions.ErroDeTamanho;
-import pt.exceptions.ErroDeTipo;
-import pt.exceptions.OperacaoInvalida;
-import pt.operavel.IOperacoesElemento;
-import pt.operavel.IOperavel;
-import pt.operavel.OperavelFactory;
+import pt.elemento.ElementoFactory;
+import pt.elemento.IElemento;
+
 
 public class Matriz implements IMatriz {
 	public static IMatriz matrizIdentidade(int n) {
-		IOperacoesElemento[][] valoresId = new IOperavel[n][n];
+		IElemento[][] valoresId = new IElemento[n][n];
 		
 		for (int i = 0; i < n; i++)
 			for (int j = 0; j < n; j++) {
 				if (i == j)
-					valoresId[i][j] = OperavelFactory.criarOperavel("1");
+					valoresId[i][j] = ElementoFactory.criarOperavel("1");
 				else
-					valoresId[i][j] = OperavelFactory.criarOperavel("0");
+					valoresId[i][j] = ElementoFactory.criarOperavel("0");
 			}
 		
 		return new Matriz(valoresId);
 	}
 	
-	private IOperacoesElemento[][] valores;
+	private IElemento[][] valores;
 	private int linhas, colunas;
 
 
@@ -33,7 +30,7 @@ public class Matriz implements IMatriz {
 	}
 	
 	
-	private Matriz(IOperacoesElemento[][] resp) {
+	private Matriz(IElemento[][] resp) {
 		this.setMatriz(resp);
 	}
 
@@ -50,7 +47,7 @@ public class Matriz implements IMatriz {
 	}
 
 	
-	public IOperacoesElemento[][] getValores() {
+	public IElemento[][] getValores() {
 		return valores;
 	}
 
@@ -64,43 +61,36 @@ public class Matriz implements IMatriz {
 
 	
 	private void criarMatriz() {
-		valores = new IOperavel[linhas][colunas];
-		
-		
-		for (IOperacoesElemento[] linha : valores) {
-			for (IOperacoesElemento valor : linha) {
-				valor = null;
-			}
-		}
+		valores = new IElemento[linhas][colunas];
 	}
 
 	@Override
-	public void setElemento(int x, int y, IOperacoesElemento elemento) {
+	public void setElemento(int x, int y, IElemento elemento) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void setMatriz(IOperacoesElemento[][] resp) {
+	public void setMatriz(IElemento[][] resp) {
 		valores = resp;
 		linhas = resp.length;
 		colunas = resp[0].length;
 	}
 
 	@Override
-	public void setLinha(int numLinha, IOperacoesElemento[] linha) {
+	public void setLinha(int numLinha, IElemento[] linha) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public IOperacoesElemento[] getLinha(int numLinha) {
+	public IElemento[] getLinha(int numLinha) {
 		return valores[numLinha];
 	}
 	
 	
-	public IOperacoesElemento[] getColuna(int numColuna) {
-		IOperacoesElemento[] resp = new IOperavel[this.linhas];
+	public IElemento[] getColuna(int numColuna) {
+		IElemento[] resp = new IElemento[this.linhas];
 		
 		for (int i = 0; i < linhas; i++) 
 			resp[i] = valores[i][numColuna];
@@ -123,161 +113,13 @@ public class Matriz implements IMatriz {
 		return null;
 	}
 
-	@Override
-	public IMatriz somar(IMatriz outra) {
-		if (outra.getNumLinhas() != this.linhas || outra.getNumColunas() != this.colunas) {
-			ErroDeTamanho erro = new ErroDeTamanho("+");
 
-			if (outra.getNumLinhas() != this.linhas)
-				erro.setMotivo("Numero de linhas diferente");
-			else if (outra.getNumColunas() != this.colunas)
-				erro.setMotivo("Numero de coluans diferente");
-			
-			throw erro;
-		}
-		
-		IOperacoesElemento[][] resp = new IOperacoesElemento[linhas][colunas], outraMatriz = outra.getValores();
-		
-		for (int i = 0; i < this.linhas; i++)
-			for (int j = 0; j < this.colunas; j++)
-				resp[i][j] = this.valores[i][j].somar(outraMatriz[i][j]);
-		
-		return new Matriz(resp);
-	}
-
-	@Override
-	public IMatriz subtrair(IMatriz outra) {
-		if (outra.getNumLinhas() != this.linhas || outra.getNumColunas() != this.colunas) {
-			ErroDeTamanho erro = new ErroDeTamanho("-");
-
-			if (outra.getNumLinhas() != this.linhas)
-				erro.setMotivo("Numero de linhas diferente");
-			else if (outra.getNumColunas() != this.colunas)
-				erro.setMotivo("Numero de coluans diferente");
-			
-			throw erro;
-		}
-		
-		IOperacoesElemento[][] resp = new IOperavel[linhas][colunas], outraMatriz = outra.getValores();
-		
-		for (int i = 0; i < this.linhas; i++)
-			for (int j = 0; j < this.colunas; j++)
-				resp[i][j] = this.valores[i][j].subtrair(outraMatriz[i][j]);
-		
-		return new Matriz(resp);
-	}
-
-	@Override
-	public IMatriz multiplicar(IMatriz outra) {
-		if (outra.getNumLinhas() != this.colunas) {
-			ErroDeTamanho erro = new ErroDeTamanho("*");
-
-			erro.setMotivo("Numero de linhas da primeira diferente do numero de colunas da segunda");
-			
-			throw erro;
-		}
-		
-		int colunasOutra = outra.getNumColunas();
-	
-		IOperacoesElemento[][] resp = new IOperavel[this.linhas][colunasOutra];
-		
-		for (int i = 0; i < this.linhas; i++)
-			for (int j = 0; j < colunasOutra; j++)
-				resp[i][j] = multiplicar(this.getLinha(i), outra.getColuna(j));
-		
-		return new Matriz(resp);
-	}
-
-	
-	private IOperacoesElemento multiplicar(IOperacoesElemento[] iOperacoesElementos, IOperacoesElemento[] coluna) {
-		IOperacoesElemento result = OperavelFactory.criarOperavel(0);
-		
-		for (int i = 0; i < iOperacoesElementos.length; i++) {
-			result = result.somar(iOperacoesElementos[i].multiplicar(coluna[i]));
-		}
-		
-		return result;
-	}
-
-
-	@Override
-	public IMatriz multiplicar(IOperavel operavel) {
-		IOperacoesElemento[][] resp = new IOperavel[linhas][colunas];
-		
-		for (int i = 0; i < linhas; i++)
-			for (int j = 0; j < colunas; j++)
-				resp[i][j] = valores[i][j].multiplicar(operavel);
-		
-		return new Matriz(resp);
-	}
-
-
-	@Override
-	public IOperacoesStrategy somarOp(IOperacoesStrategy op) {
-		return op.somar(this);
-	}
-
-
-	@Override
-	public IOperacoesStrategy subtrairOp(IOperacoesStrategy op) {
-		return op.subtrair(this).negativo();
-	}
-
-
-	@Override
-	public IOperacoesStrategy multiplicarOp(IOperacoesStrategy op) {
-		return op.multiplicar(this);
-	}
-
-
-	@Override
-	public IOperacoesStrategy negativo() {
-		IOperacoesElemento[][] resp = new IOperavel[linhas][colunas];
-		
-		for (int i = 0; i < linhas; i++)
-			for (int j = 0; j < colunas; j++)
-				resp[i][j] = valores[i][j].negativo();
-	
-		return new Matriz(resp);
-	}
-
-
-	@Override
-	public IOperacoesStrategy somar(IOperavel operavel) {
-		ErroDeTipo erro = new ErroDeTipo("matriz", "numero");
-		erro.setOperacao("+");
-		throw erro;
-	}
-
-
-	@Override
-	public IOperacoesStrategy subtrair(IOperavel operavel) {
-		ErroDeTipo erro = new ErroDeTipo("matriz", "numero");
-		erro.setOperacao("-");
-		throw erro;
-	}
-	
-	
-	public String toString() {
-		String matr = "";
-		
-		for (IOperacoesElemento[] linha : valores) {
-			for (IOperacoesElemento valor : linha) {
-				matr += valor.getRepresentacao() + " ";
-			}
-			matr += "%n";
-		}
-		
-		return matr;
-	}
-	
-	
 	public IMatriz getMatriz() {
 		return this;
 	}
 	
 	
-	public IOperavel getOperavel() {
+	public IElemento getElemento() {
 		return null;
 	}
 }

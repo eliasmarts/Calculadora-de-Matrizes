@@ -2,7 +2,7 @@ package pt.visual;
 
 import java.io.PrintStream;
 
-public class Texto implements Imprimivel {
+public class Texto implements Visual {
 	private String str;
 	
 	

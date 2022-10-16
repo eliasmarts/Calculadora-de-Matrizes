@@ -2,11 +2,11 @@ package pt.visual;
 
 import java.io.PrintStream;
 
+import pt.elemento.IElemento;
 import pt.matriz.IMatriz;
-import pt.operavel.IOperacoesElemento;
 
-public class MatrizVisual implements Imprimivel {
-	private Imprimivel operaveis[][];
+public class MatrizVisual implements Visual {
+	private Visual operaveis[][];
 	@Override
 	public void draw(PrintStream out) {
 		for (int i = 0; i < operaveis.length; i++) {
@@ -20,9 +20,9 @@ public class MatrizVisual implements Imprimivel {
 	
 	
 	public void connect(IMatriz matriz) {
-		operaveis = new Imprimivel[matriz.getNumLinhas()][matriz.getNumColunas()];
+		operaveis = new Visual[matriz.getNumLinhas()][matriz.getNumColunas()];
 		OperavelVisual opv;
-		IOperacoesElemento valores[][] = matriz.getValores();
+		IElemento valores[][] = matriz.getValores();
 		
 		for (int i = 0; i < operaveis.length; i++)
 			for (int j = 0; j < operaveis[i].length; j++) {

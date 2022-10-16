@@ -1,13 +1,13 @@
 package pt.controleCalculo;
 
-import pt.visual.Imprimivel;
+import pt.visual.Visual;
 
 public interface ICalculoMatriz {
 	/**
 	 * Realiza um comando, que pode ser calculo e atribuicao
 	 * @param expressao a expressao que representa o comando
 	 */
-	public Imprimivel realizarExpressao(String expressao);
+	public Visual realizarExpressao(String expressao);
 	
 	
 	/**
@@ -15,7 +15,7 @@ public interface ICalculoMatriz {
 	 * @param nome a letra de 'A' a 'Z' que representa a matriz
 	 * @return a representacao da matriz
 	 */
-	public String[][] getMatriz(char nome);
+	public Visual getMatriz(char nome);
 	
 	
 	/**
@@ -24,7 +24,4 @@ public interface ICalculoMatriz {
 	 * @param matriz a representacao da matriz
 	 */
 	public void armazenaMatriz(char nome, String[][] matriz);
-	
-	
-	public String[][] getTeste();
 }

@@ -52,7 +52,7 @@ public class TelaCalculadora implements ITelaCalculadora {
 		System.out.print("Digite qual matriz deseja imprimir: ");
 		char matriz = sc.next().charAt(0);
 		
-		imprimirMatriz(controleCalculo.getMatriz(matriz));
+		controleCalculo.getMatriz(matriz).draw(System.out);;
 	}
 
 

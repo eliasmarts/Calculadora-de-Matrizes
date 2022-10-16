@@ -1,7 +1,6 @@
 package pt.matriz;
 
-import pt.operavel.IOperacoesElemento;
-import pt.operavel.IOperavel;
+import pt.elemento.IElemento;
 
 public interface IMatrizProperties {
 	public void setLinhas(int numLinhas);
@@ -10,21 +9,21 @@ public interface IMatrizProperties {
 	public void setColunas(int numColunas);
 	
 	
-	public void setElemento(int x, int y, IOperacoesElemento elemento);
+	public void setElemento(int x, int y, IElemento elemento);
 	
 	
-	public void setMatriz(IOperacoesElemento[][] matriz);
+	public void setMatriz(IElemento[][] matriz);
 	
 	
-	public void setLinha(int numLinha, IOperacoesElemento[] linha);
+	public void setLinha(int numLinha, IElemento[] linha);
 
 	
-	public IOperacoesElemento[][] getValores();
+	public IElemento[][] getValores();
 	
 	
-	public IOperacoesElemento[] getLinha(int numLinha);
+	public IElemento[] getLinha(int numLinha);
 	
-	public IOperacoesElemento[] getColuna(int numColuna);
+	public IElemento[] getColuna(int numColuna);
 
 	public int getNumLinhas();
 

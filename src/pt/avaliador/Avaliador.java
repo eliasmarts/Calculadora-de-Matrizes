@@ -227,7 +227,6 @@ public class Avaliador implements IAvaliador {
 	@Override
 	public String[] converterPraPosFixa(String[] expressaoInfixa) {
 		ArrayList<String> expressaoPosfixa = new ArrayList<String>();
-		int k = 0;
 		Stack<String> pilhaOperandos = new Stack<String>();
 		
 		for (int i = 0; i < expressaoInfixa.length; i++) {

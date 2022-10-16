@@ -1,19 +1,26 @@
 package pt.operador;
 
-import pt.matriz.IOperacoesStrategy;
-
+import pt.matriz.IOperavel;
+/**
+ * Interface de operacoes entre operaveis, que podem ser matrizes ou elementos
+ * @author elias
+ *
+ */
 public interface IOperador {
-	public IOperacoesStrategy somar(IOperacoesStrategy op1, IOperacoesStrategy op2);
+	public IOperavel somar(IOperavel op1, IOperavel op2);
 	
 	
-	public IOperacoesStrategy subtrair(IOperacoesStrategy op1, IOperacoesStrategy op2);
+	public IOperavel subtrair(IOperavel op1, IOperavel op2);
 	
 	
-	public IOperacoesStrategy multiplicar(IOperacoesStrategy op1, IOperacoesStrategy op2);
+	public IOperavel multiplicar(IOperavel op1, IOperavel op2);
 	
 	
-	public IOperacoesStrategy dividir(IOperacoesStrategy op1, IOperacoesStrategy op2);
+	public IOperavel dividir(IOperavel op1, IOperavel op2);
 	
 	
-	public IOperacoesStrategy inverso(IOperacoesStrategy op1);
+	public IOperavel inverso(IOperavel op1);
+	
+	
+	public IOperavel negativo(IOperavel op1);
 }
