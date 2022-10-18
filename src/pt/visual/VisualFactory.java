@@ -44,4 +44,9 @@ public class VisualFactory implements IVisualFactory {
 	public Visual criaVisual(String s) {
 		return new Texto(s);
 	}
+
+	@Override
+	public BarraDeComando criaBarraComando() {
+		return new BarraDeComando();
+	}
 }

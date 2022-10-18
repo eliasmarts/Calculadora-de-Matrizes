@@ -1,7 +1,7 @@
 package pt.visual;
 
-import java.io.PrintStream;
+import javax.swing.JFrame;
 
 public interface Visual {
-	public void draw(PrintStream out);
+	public void draw(JFrame frame, int x, int y);
 }

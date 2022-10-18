@@ -1,6 +1,7 @@
 package pt.visual;
 
-import java.io.PrintStream;
+import javax.swing.JFrame;
+import javax.swing.JTextArea;
 
 import pt.elemento.IElemento;
 import pt.matriz.IMatriz;
@@ -8,13 +9,12 @@ import pt.matriz.IMatriz;
 public class MatrizVisual implements Visual {
 	private Visual operaveis[][];
 	@Override
-	public void draw(PrintStream out) {
+	public void draw(JFrame frame, int x, int y) {
 		for (int i = 0; i < operaveis.length; i++) {
 			for (int j = 0; j < operaveis[i].length; j++) {
-				operaveis[i][j].draw(out);
-				out.print(" ");
+				operaveis[i][j].draw(frame, x + 20 * i, y + 20 * j);
 			}
-			out.print("\n");
+
 		}
 	}
 	

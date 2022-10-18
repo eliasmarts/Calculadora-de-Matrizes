@@ -1,36 +1,55 @@
 package pt.telaCalculadora;
 
+import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+import javax.swing.JFrame;
+
 import pt.controleCalculo.ICalculoMatriz;
 import pt.exceptions.ErroDeCalculo;
+import pt.visual.BarraDeComando;
+import pt.visual.IVisualFactory;
+import pt.visual.Visual;
+import pt.visual.VisualFactory;
 
 public class TelaCalculadora implements ITelaCalculadora {
 	private ICalculoMatriz controleCalculo;
 	private Scanner sc;
+	private JFrame frame;
+	private ArrayList<Visual> visuais;
+	private BarraDeComando barra;
+	private IVisualFactory visualFac;
 	
 	public TelaCalculadora() {
 		sc = new Scanner(System.in);
+		frame = new JFrame("Calculadora de matrizes");
+		
+		frame.setSize(800, 500);
+		frame.setLayout(null);
+		frame.setVisible(true);
+		
+		visualFac = VisualFactory.getInstance();
 	}
 
 
 	public void connect(ICalculoMatriz controleCalculo) {
 		this.controleCalculo = controleCalculo;
 	}
-	
-	
-	
+
 
 	@Override
 	public void iniciar() {
 		System.out.println("Iniciando calculadora");
+		barra = visualFac.criaBarraComando();
+		frame.update(frame.getGraphics());
+		
+		barra.draw(frame, 200, 500);
 		while (true) {
 			System.out.println("Escolha seu comando: ");
 			System.out.println("(l) ler matriz, (e) digitar expressao, (p) imprimir matriz, (x) sair");
 			
-			char comando = sc.next().charAt(0);
-			sc.nextLine();
+			char comando = barra.getText().charAt(0);
 			try {
 				if (comando == 'x') {
 					encerrar();
@@ -52,7 +71,8 @@ public class TelaCalculadora implements ITelaCalculadora {
 		System.out.print("Digite qual matriz deseja imprimir: ");
 		char matriz = sc.next().charAt(0);
 		
-		controleCalculo.getMatriz(matriz).draw(System.out);;
+		controleCalculo.getMatriz(matriz).draw(frame, 10, 10);
+		frame.update(frame.getGraphics());
 	}
 
 
@@ -61,7 +81,8 @@ public class TelaCalculadora implements ITelaCalculadora {
 		String expressao = sc.nextLine();
 		
 		try {
-			controleCalculo.realizarExpressao(expressao).draw(System.out);
+			controleCalculo.realizarExpressao(expressao).draw(frame, 10, 10);
+			frame.update(frame.getGraphics());
 		} catch (ErroDeCalculo e) {
 			System.err.println("Erro no calculo: ");
 			System.err.print(e.getMessage());
@@ -88,18 +109,6 @@ public class TelaCalculadora implements ITelaCalculadora {
 	@Override
 	public void encerrar() {
 		sc.close();
-	}
-
-	
-	private void imprimirMatriz(String[][] matriz) {
-		for (String[] linha : matriz) {
-			for (String valor : linha) {
-				System.out.print(valor + " ");
-			}
-			System.out.println();
-		}
-		
-		System.out.println();
 	}
 	
 	

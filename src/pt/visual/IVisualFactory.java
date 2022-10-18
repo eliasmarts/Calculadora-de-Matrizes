@@ -7,4 +7,7 @@ public interface IVisualFactory {
 	
 	
 	public Visual criaVisual(String s);
+	
+	
+	public BarraDeComando criaBarraComando();
 }
