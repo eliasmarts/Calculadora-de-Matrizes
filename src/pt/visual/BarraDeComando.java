@@ -1,39 +1,69 @@
 package pt.visual;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
-import javax.management.Notification;
-import javax.management.NotificationListener;
-import javax.swing.JFrame;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JTextField;
+import java.awt.*;
+import java.awt.event.*;
 
-public class BarraDeComando implements Visual, ActionListener {
-	private JTextField barra;
+import pt.comando.Comando;
+import pt.comando.IComando;
+import pt.controleCalculo.ControleCalculo;
+
+public class BarraDeComando extends JPanel implements Visual, ActionListener {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private IComando comando;
+	private JTextField leitor;
+	private JButton botao;
+	private JLabel texto;
+
+
 	public BarraDeComando() {
-		barra = new JTextField("Comando: ");
-		barra.addActionListener(this);
-	}
-	@Override
-	public void draw(JFrame frame, int x, int y) {
-		barra.setBounds(100, 100, 800, 110);
+		super();
+		leitor = new JTextField("digite aqui", 50);
+		botao = new JButton("=");
+		texto = new JLabel("TESTANDO 1 2 3");
 		
-		frame.add(barra);
-
+		comando = new Comando();
+		
+		texto.setText(comando.getMsg());
+		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+		
+		add(texto);
+		add(criaLinhaBaixo());
+		
+		botao.addActionListener(this);
 	}
 	
-	
+	private JPanel criaLinhaBaixo() {
+		JPanel linhaBaixo;
+		linhaBaixo = new JPanel();
+		linhaBaixo.setLayout(new FlowLayout());
+		linhaBaixo.add(leitor);
+		linhaBaixo.add(botao);
+		
+		return linhaBaixo;
+	}
 	
 	
 	public String getText() {
-		return barra.getText().substring(8);
+		return null;
 	}
-
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		String msg = leitor.getText();
+		leitor.setText("");
+
+		comando.realizaComando(msg, null);
 		
+		texto.setText(comando.getMsg());
 	}
 
 }

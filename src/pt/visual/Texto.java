@@ -12,11 +12,5 @@ public class Texto implements Visual {
 		this.str = str;
 		text = new JTextArea(str);
 	}
-	@Override
-	public void draw(JFrame frame, int x, int y) {
-		text.setBounds(x, y, x + 20, y + 20);
-		
-		frame.add(text);
-	}
 
 }

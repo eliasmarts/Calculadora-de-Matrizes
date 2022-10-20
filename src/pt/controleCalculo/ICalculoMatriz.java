@@ -1,13 +1,13 @@
 package pt.controleCalculo;
 
-import pt.visual.Visual;
+import javax.swing.JComponent;
 
 public interface ICalculoMatriz {
 	/**
 	 * Realiza um comando, que pode ser calculo e atribuicao
 	 * @param expressao a expressao que representa o comando
 	 */
-	public Visual realizarExpressao(String expressao);
+	public JComponent realizarExpressao(String expressao);
 	
 	
 	/**
@@ -15,7 +15,7 @@ public interface ICalculoMatriz {
 	 * @param nome a letra de 'A' a 'Z' que representa a matriz
 	 * @return a representacao da matriz
 	 */
-	public Visual getMatriz(char nome);
+	public JComponent getMatriz(char nome);
 	
 	
 	/**

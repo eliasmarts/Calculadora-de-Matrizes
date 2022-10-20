@@ -1,10 +1,14 @@
 package pt.telaCalculadora;
 
+import java.awt.BorderLayout;
+import java.awt.Container;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 import pt.controleCalculo.ICalculoMatriz;
 import pt.exceptions.ErroDeCalculo;
@@ -13,21 +17,44 @@ import pt.visual.IVisualFactory;
 import pt.visual.Visual;
 import pt.visual.VisualFactory;
 
-public class TelaCalculadora implements ITelaCalculadora {
+public class TelaCalculadora extends JFrame implements ITelaCalculadora {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private ICalculoMatriz controleCalculo;
 	private Scanner sc;
-	private JFrame frame;
 	private ArrayList<Visual> visuais;
 	private BarraDeComando barra;
 	private IVisualFactory visualFac;
+	private JPanel painelDeMatrizes;
+	private Container contentPane;
 	
 	public TelaCalculadora() {
-		sc = new Scanner(System.in);
-		frame = new JFrame("Calculadora de matrizes");
+		super("Calculadora de matrizes");
 		
-		frame.setSize(800, 500);
-		frame.setLayout(null);
-		frame.setVisible(true);
+		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+		
+		
+		
+		super.setSize(800, 500);
+		
+		
+		contentPane = getContentPane();
+		contentPane.setLayout(new BorderLayout());
+
+		barra = new BarraDeComando();
+		contentPane.add(barra, BorderLayout.SOUTH);
+		
+		painelDeMatrizes = new JPanel();
+		
+		contentPane.add(painelDeMatrizes, BorderLayout.CENTER);
+
+		setVisible(true);
+		
+		sc = new Scanner(System.in);
+		
+		
 		
 		visualFac = VisualFactory.getInstance();
 	}
@@ -42,14 +69,14 @@ public class TelaCalculadora implements ITelaCalculadora {
 	public void iniciar() {
 		System.out.println("Iniciando calculadora");
 		barra = visualFac.criaBarraComando();
-		frame.update(frame.getGraphics());
 		
-		barra.draw(frame, 200, 500);
+		repaint();
+		
 		while (true) {
 			System.out.println("Escolha seu comando: ");
 			System.out.println("(l) ler matriz, (e) digitar expressao, (p) imprimir matriz, (x) sair");
 			
-			char comando = barra.getText().charAt(0);
+			char comando = sc.next().charAt(0);
 			try {
 				if (comando == 'x') {
 					encerrar();
@@ -71,8 +98,13 @@ public class TelaCalculadora implements ITelaCalculadora {
 		System.out.print("Digite qual matriz deseja imprimir: ");
 		char matriz = sc.next().charAt(0);
 		
-		controleCalculo.getMatriz(matriz).draw(frame, 10, 10);
-		frame.update(frame.getGraphics());
+		painelDeMatrizes.add(controleCalculo.getMatriz(matriz));
+		
+		painelDeMatrizes.revalidate();
+		painelDeMatrizes.repaint();
+		
+		
+		repaint();
 	}
 
 
@@ -81,8 +113,10 @@ public class TelaCalculadora implements ITelaCalculadora {
 		String expressao = sc.nextLine();
 		
 		try {
-			controleCalculo.realizarExpressao(expressao).draw(frame, 10, 10);
-			frame.update(frame.getGraphics());
+			painelDeMatrizes.add(controleCalculo.realizarExpressao(expressao));
+			painelDeMatrizes.revalidate();
+			painelDeMatrizes.repaint();
+			repaint();
 		} catch (ErroDeCalculo e) {
 			System.err.println("Erro no calculo: ");
 			System.err.print(e.getMessage());
@@ -127,4 +161,6 @@ public class TelaCalculadora implements ITelaCalculadora {
 		
 		return entrada;
 	}
+
+
 }

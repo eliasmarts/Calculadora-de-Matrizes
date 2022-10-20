@@ -1,12 +1,14 @@
 package pt.visual;
 
+import javax.swing.JComponent;
+
 import pt.matriz.IOperavel;
 
 public interface IVisualFactory {
-	public Visual criaVisual(IOperavel op);
+	public JComponent criaVisual(IOperavel op);
 	
 	
-	public Visual criaVisual(String s);
+	public JComponent criaVisual(String s);
 	
 	
 	public BarraDeComando criaBarraComando();

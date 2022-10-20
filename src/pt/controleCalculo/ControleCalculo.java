@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Stack;
 
+import javax.swing.JComponent;
+
 import pt.avaliador.IAvaliaExpressao;
 import pt.elemento.ElementoFactory;
 import pt.elemento.IElemento;
@@ -15,7 +17,6 @@ import pt.matriz.Matriz;
 import pt.operador.IOperador;
 import pt.visual.IVisualFactory;
 import pt.visual.Visual;
-import pt.visual.VisualFactory;
 
 public class ControleCalculo implements IControleCalculo {
 	private IAvaliaExpressao avaliador;
@@ -114,7 +115,7 @@ public class ControleCalculo implements IControleCalculo {
 
 
 	@Override
-	public Visual getMatriz(char nome) {
+	public JComponent getMatriz(char nome) {
 		IMatriz m = matrizes.get(nome);
 		if (m == null)
 			throw new OperacaoInvalida();
@@ -132,7 +133,7 @@ public class ControleCalculo implements IControleCalculo {
 
 
 	@Override
-	public Visual realizarExpressao(String expressao) {
+	public JComponent realizarExpressao(String expressao) {
 		int tipo = avaliador.getTipoExpressao(expressao);
 		IOperavel resp;
 		
