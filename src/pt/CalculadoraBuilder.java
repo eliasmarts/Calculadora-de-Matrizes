@@ -2,6 +2,8 @@ package pt;
 
 import pt.avaliador.Avaliador;
 import pt.avaliador.IAvaliador;
+import pt.comando.Comando;
+import pt.comando.IComando;
 import pt.controleCalculo.ControleCalculo;
 import pt.controleCalculo.IControleCalculo;
 import pt.operador.IOperador;
@@ -17,6 +19,7 @@ public class CalculadoraBuilder {
 	private static IControleCalculo controle;
 	private static IOperador operador;
 	private static IVisualFactory visualFac;
+	private static IComando comando;
 
 	public static ITelaCalculadora build() {
 		tela = new TelaCalculadora();
@@ -24,6 +27,7 @@ public class CalculadoraBuilder {
 		controle = new ControleCalculo();
 		operador = Operador.getInstance();
 		visualFac = VisualFactory.getInstance();
+		comando = new Comando();
 		connectComponents();
 
 		return tela;
@@ -31,8 +35,13 @@ public class CalculadoraBuilder {
 
 	private static void connectComponents() {
 		tela.connect(controle);
+		tela.connect(comando);
+		tela.connect(visualFac);
+
 		controle.connect(separador);
 		controle.connect(operador);
 		controle.connect(visualFac);
+		
+		comando.connect(controle);
 	}
 }

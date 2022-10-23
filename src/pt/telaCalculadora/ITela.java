@@ -1,6 +1,6 @@
 package pt.telaCalculadora;
 
-public interface ITela {
+public interface ITela extends IRCalculoMatriz, IRComando, IRVisualFactory {
 	public void iniciar();
 	
 	

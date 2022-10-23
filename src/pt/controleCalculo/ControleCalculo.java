@@ -115,12 +115,12 @@ public class ControleCalculo implements IControleCalculo {
 
 
 	@Override
-	public JComponent getMatriz(char nome) {
+	public IMatriz getMatriz(char nome) {
 		IMatriz m = matrizes.get(nome);
 		if (m == null)
 			throw new OperacaoInvalida();
 		
-		return visualFac.criaVisual(m);
+		return m;
 	}
 
 
@@ -133,7 +133,7 @@ public class ControleCalculo implements IControleCalculo {
 
 
 	@Override
-	public JComponent realizarExpressao(String expressao) {
+	public IOperavel realizarExpressao(String expressao) {
 		int tipo = avaliador.getTipoExpressao(expressao);
 		IOperavel resp;
 		
@@ -145,7 +145,7 @@ public class ControleCalculo implements IControleCalculo {
 		} else
 			resp = calculo(expressao);
 	
-		return visualFac.criaVisual(resp);
+		return resp;
 	}
 	
 	

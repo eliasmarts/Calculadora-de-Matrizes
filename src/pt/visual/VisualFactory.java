@@ -6,6 +6,8 @@ import javax.swing.JLabel;
 import pt.elemento.IElemento;
 import pt.matriz.IMatriz;
 import pt.matriz.IOperavel;
+import pt.telaCalculadora.barraComando.BarraDeComando;
+import pt.visual.matrizVisual.MatrizVisual;
 
 public class VisualFactory implements IVisualFactory {
 	private static VisualFactory instance = null;
@@ -31,8 +33,7 @@ public class VisualFactory implements IVisualFactory {
 		
 		
 		if (matriz != null) {
-			MatrizVisual m = new MatrizVisual();
-			m.connect(matriz);
+			MatrizVisual m = new MatrizVisual(matriz);
 			ret = m;
 		} else if (operavel != null) {
 			OperavelVisual opv = new OperavelVisual();
@@ -45,10 +46,5 @@ public class VisualFactory implements IVisualFactory {
 	
 	public JComponent criaVisual(String s) {
 		return new JLabel(s);
-	}
-
-	@Override
-	public BarraDeComando criaBarraComando() {
-		return new BarraDeComando();
 	}
 }

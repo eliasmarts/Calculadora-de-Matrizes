@@ -13,7 +13,7 @@ public class OperavelVisual extends JLabel implements Visual {
 	}
 	
 	
-	protected void connect(IElemento op) {
+	public void connect(IElemento op) {
 		this.op = op;
 		
 		

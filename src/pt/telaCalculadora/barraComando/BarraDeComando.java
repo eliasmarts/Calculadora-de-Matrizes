@@ -1,4 +1,4 @@
-package pt.visual;
+package pt.telaCalculadora.barraComando;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -11,8 +11,9 @@ import java.awt.event.*;
 import pt.comando.Comando;
 import pt.comando.IComando;
 import pt.controleCalculo.ControleCalculo;
+import pt.visual.IVisualFactory;
 
-public class BarraDeComando extends JPanel implements Visual, ActionListener {
+public class BarraDeComando extends JPanel implements ActionListener {
 	
 	/**
 	 * 
@@ -22,17 +23,18 @@ public class BarraDeComando extends JPanel implements Visual, ActionListener {
 	private JTextField leitor;
 	private JButton botao;
 	private JLabel texto;
+	private JPanel telaMatriz;
 
 
-	public BarraDeComando() {
+	public BarraDeComando(JPanel telaMatriz) {
 		super();
 		leitor = new JTextField("digite aqui", 50);
 		botao = new JButton("=");
 		texto = new JLabel("TESTANDO 1 2 3");
 		
-		comando = new Comando();
+		this.telaMatriz = telaMatriz;
 		
-		texto.setText(comando.getMsg());
+		
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		
 		add(texto);
@@ -40,6 +42,19 @@ public class BarraDeComando extends JPanel implements Visual, ActionListener {
 		
 		botao.addActionListener(this);
 	}
+	
+	
+	public void connect(IComando comando) {
+		this.comando = comando;
+		
+		texto.setText(comando.getMsg());
+	}
+	
+	
+	public void connect(IVisualFactory visualFac) {
+		comando.connect(visualFac);
+	}
+
 	
 	private JPanel criaLinhaBaixo() {
 		JPanel linhaBaixo;
@@ -61,9 +76,11 @@ public class BarraDeComando extends JPanel implements Visual, ActionListener {
 		String msg = leitor.getText();
 		leitor.setText("");
 
-		comando.realizaComando(msg, null);
+		comando.realizaComando(msg, telaMatriz);
 		
 		texto.setText(comando.getMsg());
 	}
+
+	
 
 }

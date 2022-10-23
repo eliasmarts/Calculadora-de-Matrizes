@@ -10,9 +10,10 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import pt.comando.IComando;
 import pt.controleCalculo.ICalculoMatriz;
 import pt.exceptions.ErroDeCalculo;
-import pt.visual.BarraDeComando;
+import pt.telaCalculadora.barraComando.BarraDeComando;
 import pt.visual.IVisualFactory;
 import pt.visual.Visual;
 import pt.visual.VisualFactory;
@@ -29,6 +30,8 @@ public class TelaCalculadora extends JFrame implements ITelaCalculadora {
 	private IVisualFactory visualFac;
 	private JPanel painelDeMatrizes;
 	private Container contentPane;
+	private IVisualFactory visFac;
+	
 	
 	public TelaCalculadora() {
 		super("Calculadora de matrizes");
@@ -42,11 +45,14 @@ public class TelaCalculadora extends JFrame implements ITelaCalculadora {
 		
 		contentPane = getContentPane();
 		contentPane.setLayout(new BorderLayout());
-
-		barra = new BarraDeComando();
-		contentPane.add(barra, BorderLayout.SOUTH);
 		
 		painelDeMatrizes = new JPanel();
+
+		barra = new BarraDeComando(painelDeMatrizes);
+
+		contentPane.add(barra, BorderLayout.SOUTH);
+		
+		
 		
 		contentPane.add(painelDeMatrizes, BorderLayout.CENTER);
 
@@ -61,14 +67,40 @@ public class TelaCalculadora extends JFrame implements ITelaCalculadora {
 
 
 	public void connect(ICalculoMatriz controleCalculo) {
+		String[][] inicio = { {"1", "0"}, {"0", "1"}};
 		this.controleCalculo = controleCalculo;
+		controleCalculo.armazenaMatriz('A', inicio);
+		controleCalculo.armazenaMatriz('B', inicio);
+	}
+	
+	
+	@Override
+	public void connect(IComando comando) {
+		barra.connect(comando);
+	}
+	
+	
+	@Override
+	public void connect(IVisualFactory visualFac) {
+		this.visFac = visualFac;
+		barra.connect(visualFac);
+	}
+	
+	public void iniciar() {
+		setVisible(true);
 	}
 
 
 	@Override
+	public void encerrar() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	/*
+	@Override
 	public void iniciar() {
 		System.out.println("Iniciando calculadora");
-		barra = visualFac.criaBarraComando();
 		
 		repaint();
 		
@@ -98,7 +130,7 @@ public class TelaCalculadora extends JFrame implements ITelaCalculadora {
 		System.out.print("Digite qual matriz deseja imprimir: ");
 		char matriz = sc.next().charAt(0);
 		
-		painelDeMatrizes.add(controleCalculo.getMatriz(matriz));
+		painelDeMatrizes.add(visFac.criaVisual(controleCalculo.realizarExpressao(String.valueOf(matriz)));
 		
 		painelDeMatrizes.revalidate();
 		painelDeMatrizes.repaint();
@@ -161,6 +193,12 @@ public class TelaCalculadora extends JFrame implements ITelaCalculadora {
 		
 		return entrada;
 	}
+
+	*/
+	
+
+
+	
 
 
 }

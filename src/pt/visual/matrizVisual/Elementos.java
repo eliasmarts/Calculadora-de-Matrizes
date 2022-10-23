@@ -1,27 +1,26 @@
-package pt.visual;
-
-import java.awt.LayoutManager;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
+package pt.visual.matrizVisual;
 
 import java.awt.GridLayout;
+
+import javax.swing.JPanel;
+
 import pt.elemento.IElemento;
 import pt.matriz.IMatriz;
+import pt.visual.OperavelVisual;
+import pt.visual.Visual;
 
-public class MatrizVisual extends JPanel implements Visual {
+public class Elementos extends JPanel {
+	
+	private static final long serialVersionUID = 1L;
 	private Visual operaveis[][];
-	
-	public MatrizVisual() {
+
+	protected Elementos(IMatriz matriz) {
 		super();
-	}
-	
-	
-	public void connect(IMatriz matriz) {
+		
 		int linhas = matriz.getNumLinhas(), colunas = matriz.getNumColunas();
 		operaveis = new Visual[linhas][colunas];
 		
-		setLayout(new GridLayout(linhas, colunas));
+		setLayout(new GridLayout(linhas, colunas, 5, 5));
 		
 		OperavelVisual opv;
 		IElemento valores[][] = matriz.getValores();
@@ -34,7 +33,6 @@ public class MatrizVisual extends JPanel implements Visual {
 					add(opv);
 			}
 		
-		repaint();
 	}
-
 }
+
