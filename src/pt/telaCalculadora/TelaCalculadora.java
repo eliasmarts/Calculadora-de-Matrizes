@@ -31,6 +31,17 @@ public class TelaCalculadora extends JFrame implements ITelaCalculadora {
 	private JPanel painelDeMatrizes;
 	private Container contentPane;
 	private IVisualFactory visFac;
+	public JPanel getPainelDeMatrizes() {
+		return painelDeMatrizes;
+	}
+
+
+	public AreaDeResposta getAreaResp() {
+		return areaResp;
+	}
+
+
+	private AreaDeResposta areaResp;
 	
 	
 	public TelaCalculadora() {
@@ -40,27 +51,26 @@ public class TelaCalculadora extends JFrame implements ITelaCalculadora {
 		
 		
 		
-		super.setSize(800, 500);
+		super.setSize(1000, 500);
 		
 		
 		contentPane = getContentPane();
 		contentPane.setLayout(new BorderLayout());
 		
 		painelDeMatrizes = new JPanel();
-
-		barra = new BarraDeComando(painelDeMatrizes);
+		barra = new BarraDeComando(this);
+		areaResp = new AreaDeResposta();
 
 		contentPane.add(barra, BorderLayout.SOUTH);
 		
 		
-		
 		contentPane.add(painelDeMatrizes, BorderLayout.CENTER);
+		
+		contentPane.add(areaResp, BorderLayout.EAST);
 
 		setVisible(true);
 		
 		sc = new Scanner(System.in);
-		
-		
 		
 		visualFac = VisualFactory.getInstance();
 	}
@@ -85,6 +95,9 @@ public class TelaCalculadora extends JFrame implements ITelaCalculadora {
 		this.visFac = visualFac;
 		barra.connect(visualFac);
 	}
+	
+	
+
 	
 	public void iniciar() {
 		setVisible(true);

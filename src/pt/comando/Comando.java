@@ -1,8 +1,10 @@
 package pt.comando;
 
-import javax.swing.JPanel;
-
 import pt.controleCalculo.ICalculoMatriz;
+import pt.exceptions.ComandoInvalido;
+import pt.matriz.IMatriz;
+import pt.telaCalculadora.TelaCalculadora;
+import pt.telaCalculadora.leitorMatriz.LeitorDeMatriz;
 import pt.visual.IVisualFactory;
 
 public class Comando implements IComando {
@@ -28,19 +30,31 @@ public class Comando implements IComando {
 	}
 	
 	
-	public void realizaComando(String comando, JPanel telaMat) {
+	public void realizaComando(String comando, TelaCalculadora tela) {
 		if (estado == COMANDO) {
 			if (comando.charAt(0) == 'l') {
 				estado = LER_M;
-				msg = "LENDO MATRIZ";
+				msg = "NOME DA MATRIZ";
 			} else if (comando.charAt(0) == 'e') {
 				estado = LER_E;
 				msg = "DIGITE A EXPRESSAO";
 			}
 		}
 		else if (estado == LER_E) {
-			telaMat.add(visFac.criaVisual(controle.realizarExpressao(comando)));
+			tela.getAreaResp().insereResposta(visFac.criaVisual(controle.realizarExpressao(comando)));
 			reniciaEstado();
+		}
+		else if (estado == LER_M) {
+			if (Character.isUpperCase(comando.charAt(0))) {
+				IMatriz m = controle.getMatriz(comando.charAt(0));
+				
+				tela.getPainelDeMatrizes().add(new LeitorDeMatriz(tela, comando.charAt(0), m));
+				
+				tela.getPainelDeMatrizes().repaint();
+				
+				reniciaEstado();
+			} else
+				throw new ComandoInvalido();
 		}
 	}
 	

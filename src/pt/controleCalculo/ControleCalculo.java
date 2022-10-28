@@ -30,6 +30,9 @@ public class ControleCalculo implements IControleCalculo {
 	
 	public ControleCalculo() {
 		matrizes = new HashMap<Character, IMatriz>();
+		
+		for (char i = 'A'; i <= 'Z'; i++)
+			matrizes.put(i, new Matriz());
 	}
 
 	@Override

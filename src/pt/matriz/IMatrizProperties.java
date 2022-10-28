@@ -12,6 +12,9 @@ public interface IMatrizProperties {
 	public void setElemento(int x, int y, IElemento elemento);
 	
 	
+	public void setElemento(int x, int y, String elemento);
+	
+	
 	public void setMatriz(IElemento[][] matriz);
 	
 	

@@ -24,9 +24,10 @@ public class Matriz implements IMatriz {
 
 
 	public Matriz() {
-		valores = null;
+		valores = new IElemento[1][1];
 		linhas = 1;
 		colunas = 1;
+		valores[0][0] = ElementoFactory.criarOperavel(0);
 	}
 	
 	
@@ -37,13 +38,13 @@ public class Matriz implements IMatriz {
 	@Override
 	public void setLinhas(int numLinhas) {
 		this.linhas = numLinhas;
-		criarMatriz();
+		recriarMatriz();
 	}
 
 	@Override
 	public void setColunas(int numColunas) {
 		this.colunas = numColunas;
-		criarMatriz();
+		recriarMatriz();
 	}
 
 	
@@ -60,14 +61,27 @@ public class Matriz implements IMatriz {
 	}
 
 	
-	private void criarMatriz() {
+	private void recriarMatriz() {
+		IElemento[][] ant = valores;
+		
+		
 		valores = new IElemento[linhas][colunas];
+		
+		// copía os valores anteriores
+		for (int i = 0; i < ant.length && i < linhas; i++)
+			for (int j = 0; j < ant[i].length && j < colunas; j++)
+				valores[i][j] = ant[i][j];
+
+
+		// coloca 0 nas novas posicoes
+		for (int i = ant.length; i < linhas; i++)
+			for (int j = ant[0].length; j < colunas; j++)
+				valores[i][j] = ElementoFactory.criarOperavel(0);
 	}
 
 	@Override
 	public void setElemento(int x, int y, IElemento elemento) {
-		// TODO Auto-generated method stub
-		
+		valores[x][y] = elemento;
 	}
 
 	@Override
@@ -121,5 +135,11 @@ public class Matriz implements IMatriz {
 	
 	public IElemento getElemento() {
 		return null;
+	}
+
+
+	@Override
+	public void setElemento(int x, int y, String elemento) {
+		valores[x][y] = ElementoFactory.criarOperavel(elemento);
 	}
 }
