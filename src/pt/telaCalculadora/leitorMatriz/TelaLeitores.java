@@ -10,6 +10,24 @@ public class TelaLeitores extends JPanel {
 	private IMatriz m;
 	private int linhas, colunas;
 	private LeitorElemento[][] leitores;
+	
+	public TelaLeitores(IMatriz matriz, int linha, int coluna) {
+		super();
+		
+		setLayout(new GridLayout(linha, coluna, 5, 5));
+		
+		leitores = new LeitorElemento[linha][coluna];
+		m = matriz;
+		
+		for (int i = 0; i < linha; i++) 
+			for (int j = 0; j < coluna; j++) {
+				leitores[i][j] = new LeitorElemento(this, i, j);
+				add(leitores[i][j]);
+		}
+	
+		this.linhas = linha;
+		this.colunas = coluna;
+	}
 
 
 	public void setLinhas(int linhas) {
@@ -78,27 +96,27 @@ public class TelaLeitores extends JPanel {
 	}
 
 
-	public TelaLeitores(IMatriz matriz, int linha, int coluna) {
-		super();
-		
-		setLayout(new GridLayout(linha, coluna, 5, 5));
-		
-		leitores = new LeitorElemento[linha][coluna];
-		m = matriz;
-		
-		for (int i = 0; i < linha; i++) 
-			for (int j = 0; j < coluna; j++) {
-				leitores[i][j] = new LeitorElemento(this, i, j);
-				add(leitores[i][j]);
-		}
 	
-		this.linhas = linha;
-		this.colunas = coluna;
-	}
 
 
 	public IMatriz getM() {
 		return m;
+	}
+
+
+	public void atualiza() {
+		if (m.getNumLinhas() != linhas)
+			setLinhas(m.getNumLinhas());
+		if (m.getNumColunas() != colunas)
+			setColunas(m.getNumColunas());
+	
+		for (int i = 0; i < linhas; i++) 
+			for (int j = 0; j < colunas; j++) {
+				leitores[i][j].atualiza(this, i, j);
+		}
+		
+		revalidate();
+		repaint();
 	}
 	
 	

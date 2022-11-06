@@ -1,6 +1,6 @@
 package pt.telaCalculadora;
 
-import pt.comando.IComando;
+import pt.comandos.IComando;
 
 public interface IRComando {
 	public void connect(IComando comando);

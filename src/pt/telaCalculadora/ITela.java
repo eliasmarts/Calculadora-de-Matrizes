@@ -2,7 +2,7 @@ package pt.telaCalculadora;
 
 import javax.swing.JComponent;
 
-public interface ITela extends IRCalculoMatriz, IRComando, IRVisualFactory {
+public interface ITela extends IRCalculoMatriz, IRVisualFactory {
 	public void iniciar();
 	
 	

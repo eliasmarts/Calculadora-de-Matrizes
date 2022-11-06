@@ -38,13 +38,43 @@ public class Matriz implements IMatriz {
 	@Override
 	public void setLinhas(int numLinhas) {
 		this.linhas = numLinhas;
-		recriarMatriz();
+		
+		IElemento[][] ant = valores;
+		
+		
+		valores = new IElemento[linhas][colunas];
+		
+		// copía os valores anteriores
+		for (int i = 0; i < ant.length && i < linhas; i++)
+			for (int j = 0; j < ant[i].length && j < colunas; j++)
+				valores[i][j] = ant[i][j];
+
+
+		// coloca 0 nas novas posicoes
+		for (int i = ant.length; i < linhas; i++)
+			for (int j = 0; j < colunas; j++)
+				valores[i][j] = ElementoFactory.criarOperavel(0);
 	}
 
 	@Override
 	public void setColunas(int numColunas) {
 		this.colunas = numColunas;
-		recriarMatriz();
+		
+		IElemento[][] ant = valores;
+		
+		
+		valores = new IElemento[linhas][colunas];
+		
+		// copía os valores anteriores
+		for (int i = 0; i < ant.length && i < linhas; i++)
+			for (int j = 0; j < ant[i].length && j < colunas; j++)
+				valores[i][j] = ant[i][j];
+
+
+		// coloca 0 nas novas posicoes
+		for (int i = 0; i < linhas; i++)
+			for (int j = ant[0].length; j < colunas; j++)
+				valores[i][j] = ElementoFactory.criarOperavel(0);
 	}
 
 	

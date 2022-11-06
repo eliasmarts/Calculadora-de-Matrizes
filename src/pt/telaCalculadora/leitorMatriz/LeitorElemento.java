@@ -2,38 +2,24 @@ package pt.telaCalculadora.leitorMatriz;
 
 import java.awt.Color;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
-import javax.swing.JTextField;
 
 import pt.Configurations;
+import pt.comandos.SetValor;
 import pt.exceptions.ElementoInvalido;
+import pt.telaCalculadora.util.TextFieldCommand;
 
-public class LeitorElemento extends JTextField implements ActionListener {
-	private TelaLeitores t;
-	private int x, y;
+public class LeitorElemento extends TextFieldCommand {
 
 	public LeitorElemento(TelaLeitores t, int x, int y) {
-		super(3);
+		super();
 		
-		this.t = t;
+		setComando(new SetValor(t.getM(), x, y, this));
 		
-		this.x = x;
-		this.y = y;
-		
-		setText(t.getM().getValores()[x][y].getRepresentacao());
-		
-		addActionListener(this);
+		atualiza(t, x, y);
 	}
 
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		try {
-			t.getM().setElemento(x, y, getText());
-			
-			setBackground(Color.white);
-		} catch (ElementoInvalido err) {
-			setBackground(Configurations.COR_ERRO);
-		}
+	
+	public void atualiza(TelaLeitores t, int x, int y) {
+		setText(t.getM().getValores()[x][y].getRepresentacao());
 	}
 }

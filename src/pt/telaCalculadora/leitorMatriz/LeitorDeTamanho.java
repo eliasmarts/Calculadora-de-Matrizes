@@ -4,23 +4,38 @@ import java.awt.FlowLayout;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
-
 import pt.matriz.IMatriz;
+import pt.telaCalculadora.util.TextFieldCommand;
 
 public class LeitorDeTamanho extends JPanel {
-	private JTextField tamX, tamY;
+	private LeitorTam tamX, tamY;
 	private IMatriz matriz;
 	
 	
 	public LeitorDeTamanho(IMatriz matriz, LeitorDeMatriz leitor, int linhaI, int colunaI) {
 		super();
+		TextFieldCommand c;
 		
 		setLayout(new FlowLayout());
 		
 		add(new JLabel("Linhas: "));
-		add(new LeitorTam(matriz, leitor, 'y', linhaI));
+		
+		tamX = new LeitorTam(matriz, leitor, 'x', linhaI);
+		
+		add(tamX);
+		
 		add(new JLabel("Colunas: "));
-		add(new LeitorTam(matriz, leitor, 'x', colunaI));
+		
+		tamY = new LeitorTam(matriz, leitor, 'y', colunaI);
+		
+		add(tamY);
+		
+		this.matriz = matriz;
+	}
+	
+	
+	public void atualiza() {
+		tamX.update(matriz, 'x');
+		tamY.update(matriz, 'y');
 	}
 }

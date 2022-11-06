@@ -7,9 +7,11 @@ import java.awt.event.ActionListener;
 import javax.swing.JTextField;
 
 import pt.Configurations;
+import pt.comandos.SetDimensao;
 import pt.matriz.IMatriz;
+import pt.telaCalculadora.util.TextFieldCommand;
 
-public class LeitorTam extends JTextField implements ActionListener {
+public class LeitorTam extends TextFieldCommand {
 	private static final long serialVersionUID = 1L;
 	private IMatriz m;
 	private char direcao;
@@ -17,7 +19,8 @@ public class LeitorTam extends JTextField implements ActionListener {
 	
 	public LeitorTam(IMatriz m, LeitorDeMatriz lei, char direcao, int tamI) {
 		super(2);
-		addActionListener(this);
+		
+		setComando(new SetDimensao(m, this, lei, direcao));
 		
 		setText(String.valueOf(tamI));
 		
@@ -26,42 +29,18 @@ public class LeitorTam extends JTextField implements ActionListener {
 		this.m = m;
 		
 		this.lei = lei;
-		
-		setar(tamI);
-	}
-
-	@Override
-	public void actionPerformed(ActionEvent arg0) {
-		String s = getText();
-		int size;
-		
-		try {
-			size = Integer.parseInt(s);
-		} catch (NumberFormatException e) {
-			setBackground(Configurations.COR_ERRO);
-			return;
-		}
-		
-		if (size > 0 && size < Configurations.MAX_SIZE) {
-			setBackground(Color.white);
-			
-			setar(size);
-		} else {
-			setBackground(Configurations.COR_ERRO);
-		}
 	}
 	
 	
-	private void setar(int size) {
-		if (direcao == 'x') {
-			m.setColunas(size);
-			lei.getTelaLeitores().setColunas(size);
-		}
-		else {
-			m.setLinhas(size);
-			lei.getTelaLeitores().setLinhas(size);
-		}
+	public void update(IMatriz m, char direcao) {
+		int novoTam;
 		
-		lei.repaint();
+		if (direcao == 'x')
+			novoTam = m.getNumLinhas();
+		else
+			novoTam = m.getNumColunas();
+		
+		setText(String.valueOf(novoTam));
+		
 	}
 }

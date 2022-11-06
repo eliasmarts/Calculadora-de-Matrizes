@@ -1,4 +1,4 @@
-package pt.comando;
+package pt.comandos;
 
 import pt.controleCalculo.IControleCalculo;
 

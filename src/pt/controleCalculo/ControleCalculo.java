@@ -59,7 +59,7 @@ public class ControleCalculo implements IControleCalculo {
 	}
 	
 	
-	private void atribuicao(String expressao) {
+	private IOperavel atribuicao(String expressao) {
 		String[] atribuicao = expressao.split("=");
 		String matriz = atribuicao[0].trim();
 		String expressaoAtribuida = atribuicao[1].trim();
@@ -72,13 +72,18 @@ public class ControleCalculo implements IControleCalculo {
 		IOperavel resp = calculo(expressaoAtribuida);
 		IMatriz m = resp.getMatriz();
 		
-		if (m != null)
-			matrizes.put(matriz.charAt(0), m);
+		if (m != null) {
+			IMatriz ant = matrizes.get(matriz.charAt(0));
+			
+			ant.setMatriz(m.getValores());
+		}
 		else {
 			ExpressaoInvalida erro = new ExpressaoInvalida(expressao);
 			erro.setMotivo("o resultado nao e uma matriz");
 			throw erro;
 		}
+		
+		return m;
 	}
 	
 	
@@ -141,8 +146,7 @@ public class ControleCalculo implements IControleCalculo {
 		IOperavel resp;
 		
 		if (tipo == IAvaliaExpressao.ATRIBUICAO) {
-			atribuicao(expressao);
-			resp = null;
+			resp = atribuicao(expressao);
 		} else if (tipo == IAvaliaExpressao.COMPARACAO) {
 			resp = comparacao(expressao);
 		} else

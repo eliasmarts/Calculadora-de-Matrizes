@@ -12,9 +12,11 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import pt.comando.IComando;
+import pt.comandos.ComandoExpressao;
+import pt.comandos.Command;
+import pt.comandos.IComando;
+import pt.controleCalculo.ICalculoMatriz;
 import pt.exceptions.ErroDeCalculo;
-import pt.telaCalculadora.AreaDeResposta;
 import pt.telaCalculadora.TelaCalculadora;
 import pt.visual.IVisualFactory;
 
@@ -24,7 +26,7 @@ public class BarraDeComando extends JPanel implements ActionListener {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private IComando comando;
+	private ComandoExpressao comando;
 	private JTextField leitor;
 	private JButton botao;
 	private JLabel texto;
@@ -33,7 +35,7 @@ public class BarraDeComando extends JPanel implements ActionListener {
 	private Color corErro;
 
 
-	public BarraDeComando(TelaCalculadora tela) {
+	public BarraDeComando(TelaCalculadora tela, ICalculoMatriz controle, IVisualFactory visFac) {
 		super();
 		leitor = new JTextField("digite aqui", 50);
 		leitor.setFont(new Font("Arial", Font.BOLD, 15));
@@ -53,18 +55,8 @@ public class BarraDeComando extends JPanel implements ActionListener {
 		
 		// vermelho transparente
 		corErro = new Color(255, 170, 170);
-	}
-	
-	
-	public void connect(IComando comando) {
-		this.comando = comando;
 		
-		texto.setText(comando.getMsg());
-	}
-	
-	
-	public void connect(IVisualFactory visualFac) {
-		comando.connect(visualFac);
+		comando = new ComandoExpressao(controle, visFac, leitor, tela);
 	}
 
 	
@@ -85,12 +77,10 @@ public class BarraDeComando extends JPanel implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		String msg = leitor.getText();
 		
 
 		try {
-			
-			comando.realizaComando(msg, tela);
+			comando.execute();
 			leitor.setText("");
 			
 			leitor.setBackground(Color.WHITE);

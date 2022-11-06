@@ -10,6 +10,7 @@ import pt.telaCalculadora.TelaCalculadora;
 public class LeitorDeMatriz extends JPanel {
 	private TelaLeitores telaLeitores;
 	private TelaCalculadora tela;
+	private LeitorDeTamanho tamanho;
 	
 	public TelaLeitores getTelaLeitores() {
 		return telaLeitores;
@@ -26,11 +27,20 @@ public class LeitorDeMatriz extends JPanel {
 		
 		telaLeitores = new TelaLeitores(matriz, matriz.getNumLinhas(), matriz.getNumColunas());
 		
-		add(new LeitorDeTamanho(matriz, this, matriz.getNumLinhas(), matriz.getNumColunas()));
+		tamanho = new LeitorDeTamanho(matriz, this, matriz.getNumLinhas(), matriz.getNumColunas());
+		
+		add(tamanho);
 		
 		add(telaLeitores);
 		
 		
+	}
+	
+	
+	public void atualiza() {
+		telaLeitores.atualiza();
+		if (tamanho != null)
+			tamanho.atualiza();
 	}
 	
 

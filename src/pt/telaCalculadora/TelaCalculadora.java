@@ -10,7 +10,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import pt.comando.IComando;
+import pt.comandos.IComando;
 import pt.controleCalculo.ICalculoMatriz;
 import pt.exceptions.ErroDeCalculo;
 import pt.telaCalculadora.barraComando.BarraDeComando;
@@ -28,10 +28,10 @@ public class TelaCalculadora extends JFrame implements ITelaCalculadora {
 	private ArrayList<Visual> visuais;
 	private BarraDeComando barra;
 	private IVisualFactory visualFac;
-	private JPanel painelDeMatrizes;
+	private PainelDeMatrizes painelDeMatrizes;
 	private Container contentPane;
 	private IVisualFactory visFac;
-	public JPanel getPainelDeMatrizes() {
+	public PainelDeMatrizes getPainelDeMatrizes() {
 		return painelDeMatrizes;
 	}
 
@@ -57,11 +57,10 @@ public class TelaCalculadora extends JFrame implements ITelaCalculadora {
 		contentPane = getContentPane();
 		contentPane.setLayout(new BorderLayout());
 		
-		painelDeMatrizes = new JPanel();
-		barra = new BarraDeComando(this);
+		painelDeMatrizes = new PainelDeMatrizes();
 		areaResp = new AreaDeResposta();
 
-		contentPane.add(barra, BorderLayout.SOUTH);
+		
 		
 		
 		contentPane.add(painelDeMatrizes, BorderLayout.CENTER);
@@ -83,23 +82,17 @@ public class TelaCalculadora extends JFrame implements ITelaCalculadora {
 		controleCalculo.armazenaMatriz('B', inicio);
 	}
 	
-	
-	@Override
-	public void connect(IComando comando) {
-		barra.connect(comando);
-	}
-	
-	
 	@Override
 	public void connect(IVisualFactory visualFac) {
 		this.visFac = visualFac;
-		barra.connect(visualFac);
 	}
 	
 	
 
 	
 	public void iniciar() {
+		barra = new BarraDeComando(this, controleCalculo, visFac);
+		contentPane.add(barra, BorderLayout.SOUTH);
 		setVisible(true);
 	}
 
@@ -108,6 +101,11 @@ public class TelaCalculadora extends JFrame implements ITelaCalculadora {
 	public void encerrar() {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	
+	public void update() {
+		painelDeMatrizes.update();
 	}
 
 	/*

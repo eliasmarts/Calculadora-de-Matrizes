@@ -1,4 +1,6 @@
-package pt.comando;
+package pt.comandos;
+
+import javax.swing.JTextField;
 
 import pt.controleCalculo.ICalculoMatriz;
 import pt.exceptions.ComandoInvalido;
@@ -7,11 +9,13 @@ import pt.telaCalculadora.TelaCalculadora;
 import pt.telaCalculadora.leitorMatriz.LeitorDeMatriz;
 import pt.visual.IVisualFactory;
 
-public class Comando implements IComando {
+public class ComandoExpressao implements Command {
 	private String msg;
 	private int estado;
 	private ICalculoMatriz controle;
 	private IVisualFactory visFac;
+	private JTextField leitor;
+	private TelaCalculadora tela;
 	
 	private static final int COMANDO = 0;
 	private static final int LER_M = 1;
@@ -20,7 +24,11 @@ public class Comando implements IComando {
 	
 	
 	
-	public Comando() {
+	public ComandoExpressao(ICalculoMatriz controle, IVisualFactory visFac, JTextField leitor, TelaCalculadora tela) {
+		this.controle = controle;
+		this.visFac = visFac;
+		this.leitor = leitor;
+		this.tela = tela;
 		reniciaEstado();
 	}
 	
@@ -30,7 +38,8 @@ public class Comando implements IComando {
 	}
 	
 	
-	public void realizaComando(String comando, TelaCalculadora tela) {
+	public void execute() {
+		String comando = leitor.getText();
 		if (estado == COMANDO) {
 			if (comando.charAt(0) == 'l') {
 				estado = LER_M;
@@ -52,23 +61,16 @@ public class Comando implements IComando {
 				
 				tela.getPainelDeMatrizes().repaint();
 				
+				
+				
 				reniciaEstado();
 			} else
 				throw new ComandoInvalido();
 		}
+		
+		tela.update();
 	}
 	
-	
-	public void connect(ICalculoMatriz controle) {
-		this.controle = controle;
-	}
-	
-	
-	public void connect(IVisualFactory visualFac) {
-		this.visFac = visualFac;
-	}
-
-	@Override
 	public String getMsg() {
 		return msg;
 	}
