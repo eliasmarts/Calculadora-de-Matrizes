@@ -1,9 +1,13 @@
 package pt.telaCalculadora.leitorMatriz;
 
+import java.awt.Color;
+
+import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import pt.Configurations;
 import pt.matriz.IMatriz;
 import pt.telaCalculadora.TelaCalculadora;
 
@@ -33,7 +37,9 @@ public class LeitorDeMatriz extends JPanel {
 		
 		add(telaLeitores);
 		
+		setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		
+		setBackground(Configurations.BACKGROUND);
 	}
 	
 	

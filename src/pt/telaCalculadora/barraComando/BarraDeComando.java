@@ -37,18 +37,17 @@ public class BarraDeComando extends JPanel implements ActionListener {
 
 	public BarraDeComando(TelaCalculadora tela, ICalculoMatriz controle, IVisualFactory visFac) {
 		super();
-		leitor = new JTextField("digite aqui", 50);
+		leitor = new JTextField(50);
 		leitor.setFont(new Font("Arial", Font.BOLD, 15));
 		botao = new JButton("=");
-		texto = new JLabel("TESTANDO 1 2 3");
+		
 		
 		this.tela = tela;
 		
 		
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		
-		add(texto);
-		add(criaLinhaBaixo());
+		
 		
 		botao.addActionListener(this);
 		leitor.addActionListener(this);
@@ -57,6 +56,10 @@ public class BarraDeComando extends JPanel implements ActionListener {
 		corErro = new Color(255, 170, 170);
 		
 		comando = new ComandoExpressao(controle, visFac, leitor, tela);
+		texto = new JLabel(comando.getMsg());
+		
+		add(texto);
+		add(criaLinhaBaixo());
 	}
 
 	
@@ -77,8 +80,6 @@ public class BarraDeComando extends JPanel implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		
-
 		try {
 			comando.execute();
 			leitor.setText("");

@@ -57,12 +57,8 @@ public class ComandoExpressao implements Command {
 			if (Character.isUpperCase(comando.charAt(0))) {
 				IMatriz m = controle.getMatriz(comando.charAt(0));
 				
-				tela.getPainelDeMatrizes().add(new LeitorDeMatriz(tela, comando.charAt(0), m));
-				
-				tela.getPainelDeMatrizes().repaint();
-				
-				
-				
+				tela.getPainelDeMatrizes().add(new LeitorDeMatriz(tela, comando.charAt(0), m), comando.charAt(0));
+
 				reniciaEstado();
 			} else
 				throw new ComandoInvalido();
@@ -70,6 +66,7 @@ public class ComandoExpressao implements Command {
 		
 		tela.update();
 	}
+
 	
 	public String getMsg() {
 		return msg;
