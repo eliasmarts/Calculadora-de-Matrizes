@@ -14,7 +14,6 @@ public class LeitorDeTamanho extends JPanel {
 	
 	public LeitorDeTamanho(IMatriz matriz, LeitorDeMatriz leitor, int linhaI, int colunaI) {
 		super();
-		TextFieldCommand c;
 		
 		setLayout(new FlowLayout());
 		

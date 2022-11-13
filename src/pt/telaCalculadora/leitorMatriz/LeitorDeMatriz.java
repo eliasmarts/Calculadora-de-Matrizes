@@ -13,17 +13,14 @@ import pt.telaCalculadora.TelaCalculadora;
 
 public class LeitorDeMatriz extends JPanel {
 	private TelaLeitores telaLeitores;
-	private TelaCalculadora tela;
 	private LeitorDeTamanho tamanho;
 	
 	public TelaLeitores getTelaLeitores() {
 		return telaLeitores;
 	}
 
-	public LeitorDeMatriz(TelaCalculadora tela, char m, IMatriz matriz) {
+	public LeitorDeMatriz(char m, IMatriz matriz) {
 		super();
-		
-		this.tela = tela;
 		
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		

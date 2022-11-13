@@ -13,6 +13,7 @@ import javax.swing.JPanel;
 import pt.comandos.IComando;
 import pt.controleCalculo.ICalculoMatriz;
 import pt.exceptions.ErroDeCalculo;
+import pt.telaCalculadora.BotoesLeitores.BotoesLeitores;
 import pt.telaCalculadora.barraComando.BarraDeComando;
 import pt.visual.IVisualFactory;
 import pt.visual.Visual;
@@ -24,13 +25,11 @@ public class TelaCalculadora extends JFrame implements ITelaCalculadora {
 	 */
 	private static final long serialVersionUID = 1L;
 	private ICalculoMatriz controleCalculo;
-	private Scanner sc;
-	private ArrayList<Visual> visuais;
 	private BarraDeComando barra;
-	private IVisualFactory visualFac;
 	private PainelDeMatrizes painelDeMatrizes;
 	private Container contentPane;
 	private IVisualFactory visFac;
+
 	public PainelDeMatrizes getPainelDeMatrizes() {
 		return painelDeMatrizes;
 	}
@@ -68,10 +67,6 @@ public class TelaCalculadora extends JFrame implements ITelaCalculadora {
 		contentPane.add(areaResp, BorderLayout.EAST);
 
 		setVisible(true);
-		
-		sc = new Scanner(System.in);
-		
-		visualFac = VisualFactory.getInstance();
 	}
 
 
@@ -93,6 +88,8 @@ public class TelaCalculadora extends JFrame implements ITelaCalculadora {
 	public void iniciar() {
 		barra = new BarraDeComando(this, controleCalculo, visFac);
 		contentPane.add(barra, BorderLayout.SOUTH);
+		
+		contentPane.add(new BotoesLeitores(painelDeMatrizes, controleCalculo), BorderLayout.NORTH);
 		setVisible(true);
 	}
 
@@ -105,7 +102,7 @@ public class TelaCalculadora extends JFrame implements ITelaCalculadora {
 	
 	
 	public void update() {
-		painelDeMatrizes.update();
+		painelDeMatrizes.atualiza();
 	}
 
 	/*

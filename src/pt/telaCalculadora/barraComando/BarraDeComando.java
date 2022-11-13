@@ -26,11 +26,10 @@ public class BarraDeComando extends JPanel implements ActionListener {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private ComandoExpressao comando;
+	private Command comando;
 	private JTextField leitor;
 	private JButton botao;
 	private JLabel texto;
-	private TelaCalculadora tela;
 	
 	private Color corErro;
 
@@ -40,9 +39,6 @@ public class BarraDeComando extends JPanel implements ActionListener {
 		leitor = new JTextField(50);
 		leitor.setFont(new Font("Arial", Font.BOLD, 15));
 		botao = new JButton("=");
-		
-		
-		this.tela = tela;
 		
 		
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -56,7 +52,7 @@ public class BarraDeComando extends JPanel implements ActionListener {
 		corErro = new Color(255, 170, 170);
 		
 		comando = new ComandoExpressao(controle, visFac, leitor, tela);
-		texto = new JLabel(comando.getMsg());
+		texto = new JLabel("Digite sua expressao");
 		
 		add(texto);
 		add(criaLinhaBaixo());
@@ -72,11 +68,6 @@ public class BarraDeComando extends JPanel implements ActionListener {
 		
 		return linhaBaixo;
 	}
-	
-	
-	public String getText() {
-		return null;
-	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -85,7 +76,6 @@ public class BarraDeComando extends JPanel implements ActionListener {
 			leitor.setText("");
 			
 			leitor.setBackground(Color.WHITE);
-			texto.setText(comando.getMsg());
 		} catch (ErroDeCalculo err) {
 			leitor.setBackground(corErro); // vermelho transparente
 		}

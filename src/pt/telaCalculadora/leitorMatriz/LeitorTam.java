@@ -12,10 +12,6 @@ import pt.matriz.IMatriz;
 import pt.telaCalculadora.util.TextFieldCommand;
 
 public class LeitorTam extends TextFieldCommand {
-	private static final long serialVersionUID = 1L;
-	private IMatriz m;
-	private char direcao;
-	private LeitorDeMatriz lei;
 	
 	public LeitorTam(IMatriz m, LeitorDeMatriz lei, char direcao, int tamI) {
 		super(2);
@@ -23,12 +19,6 @@ public class LeitorTam extends TextFieldCommand {
 		setComando(new SetDimensao(m, this, lei, direcao));
 		
 		setText(String.valueOf(tamI));
-		
-		this.direcao = direcao;
-		
-		this.m = m;
-		
-		this.lei = lei;
 	}
 	
 	

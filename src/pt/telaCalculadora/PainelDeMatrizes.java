@@ -7,7 +7,6 @@ import pt.telaCalculadora.leitorMatriz.LeitorDeMatriz;
 
 public class PainelDeMatrizes extends JPanel {
 	private LeitorDeMatriz leitores[];
-	private char leitoresC[];
 	
 	public PainelDeMatrizes() {
 		super();
@@ -43,10 +42,13 @@ public class PainelDeMatrizes extends JPanel {
 	}
 	
 	
-	public void update() {
+	public void atualiza() {
 		for (LeitorDeMatriz leitorDeMatriz : leitores) {
 			if (leitorDeMatriz != null)
 				leitorDeMatriz.atualiza();
 		}
+		
+		revalidate();
+		repaint();
 	}
 }
