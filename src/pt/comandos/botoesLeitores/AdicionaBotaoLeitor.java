@@ -29,12 +29,7 @@ public class AdicionaBotaoLeitor implements Command {
 			throw new ComandoInvalido();
 		botoes.addBotao(entrada.charAt(0));
 		
-		Container c = leitor.getParent();
-		
-		c.remove(leitor);
-		
-		c.revalidate();
-		c.repaint();
+		botoes.toggleNovoBotao();
 	}
 
 }

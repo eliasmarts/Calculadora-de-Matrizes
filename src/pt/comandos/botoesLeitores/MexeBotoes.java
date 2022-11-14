@@ -21,12 +21,9 @@ public class MexeBotoes implements Command {
 	@Override
 	public void execute() {
 		if (mais) {
-			botoes.add(new NovoBotao(botoes));
+			botoes.toggleNovoBotao();
 		} else
 			botoes.removeUltimo();
-		
-		botoes.revalidate();
-		botoes.repaint();
 	}
 
 }

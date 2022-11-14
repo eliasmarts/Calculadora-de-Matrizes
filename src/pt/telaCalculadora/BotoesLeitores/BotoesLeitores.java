@@ -20,6 +20,8 @@ public class BotoesLeitores extends JPanel implements ActionListener {
 	private List<ButtonCommand> botoes;
 	private boolean botoesAtivos[];
 	private JPanel bot;
+	private NovoBotao novoB;
+	private boolean novoBativo;
 	
 	public BotoesLeitores(PainelDeMatrizes painel, ICalculoMatriz controle) {
 		super();
@@ -35,6 +37,11 @@ public class BotoesLeitores extends JPanel implements ActionListener {
 		
 		add(new ButtonCommand("+", new MexeBotoes(this, true)));
 		
+		novoB = new NovoBotao(this);
+		novoB.setVisible(novoBativo);
+		
+		add(novoB);
+		
 		add(new ButtonCommand("-", new MexeBotoes(this, false)));
 		
 		botoesAtivos = new boolean[26];
@@ -45,6 +52,7 @@ public class BotoesLeitores extends JPanel implements ActionListener {
 		
 		addBotao('A');
 		addBotao('B');
+		
 	}
 	
 	
@@ -59,8 +67,9 @@ public class BotoesLeitores extends JPanel implements ActionListener {
 			
 			bot.add(botao, botoes.indexOf(botao));
 			
-			revalidate();
-			repaint();
+			botao.actionPerformed(null);
+			
+			atualiza();
 			
 			botoesAtivos[c - 48] = true;
 		}
@@ -68,20 +77,39 @@ public class BotoesLeitores extends JPanel implements ActionListener {
 	
 	
 	public void removeUltimo() {
-		ButtonCommand botao = botoes.get(botoes.size() - 1);
-		botoes.remove(botoes.size() - 1);
-		
-		bot.remove(botao);
-		
-		botoesAtivos[botao.getText().charAt(0) - 48] = false;
-		
-		revalidate();
-		repaint();
+		if (botoes.size() > 0) {
+			ButtonCommand botao = botoes.get(botoes.size() - 1);
+			botoes.remove(botoes.size() - 1);
+			
+			bot.remove(botao);
+			
+			botoesAtivos[botao.getText().charAt(0) - 48] = false;
+			
+			atualiza();
+		}
 	}
 
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		painel.atualiza();
+	}
+	
+	
+	public void atualiza() {
+		revalidate();
+		repaint();
+	}
+	
+	
+	public void toggleNovoBotao() {
+		if (!novoB.isVisible())
+			novoB.setVisible(true);
+		else {
+			novoB.setText("");
+			novoB.setVisible(false);
+		}
+
+		atualiza();
 	}
 }

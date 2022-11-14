@@ -1,7 +1,8 @@
-package pt.comandos;
+package pt.comandos.barraComando;
 
 import javax.swing.JTextField;
 
+import pt.comandos.Command;
 import pt.controleCalculo.ICalculoMatriz;
 import pt.exceptions.ComandoInvalido;
 import pt.matriz.IMatriz;

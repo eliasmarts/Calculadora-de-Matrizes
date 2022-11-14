@@ -2,8 +2,8 @@ package pt;
 
 import pt.avaliador.Avaliador;
 import pt.avaliador.IAvaliador;
-import pt.comandos.ComandoExpressao;
 import pt.comandos.IComando;
+import pt.comandos.barraComando.ComandoExpressao;
 import pt.controleCalculo.ControleCalculo;
 import pt.controleCalculo.IControleCalculo;
 import pt.operador.IOperador;

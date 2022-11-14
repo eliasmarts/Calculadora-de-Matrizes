@@ -12,9 +12,9 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import pt.comandos.ComandoExpressao;
 import pt.comandos.Command;
 import pt.comandos.IComando;
+import pt.comandos.barraComando.ComandoExpressao;
 import pt.controleCalculo.ICalculoMatriz;
 import pt.exceptions.ErroDeCalculo;
 import pt.telaCalculadora.TelaCalculadora;
@@ -43,7 +43,7 @@ public class BarraDeComando extends JPanel implements ActionListener {
 		
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		
-		
+		add(new BotoesCalculadora(leitor));
 		
 		botao.addActionListener(this);
 		leitor.addActionListener(this);
