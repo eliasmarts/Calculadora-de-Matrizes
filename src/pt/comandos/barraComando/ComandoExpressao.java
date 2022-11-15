@@ -29,5 +29,7 @@ public class ComandoExpressao implements Command {
 		String comando = leitor.getText();
 		tela.getAreaResp().insereResposta(visFac.criaVisual(controle.realizarExpressao(comando)));
 		tela.update();
+		
+		leitor.setText("");
 	}
 }

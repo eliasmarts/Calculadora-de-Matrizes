@@ -18,40 +18,38 @@ import pt.comandos.barraComando.ComandoExpressao;
 import pt.controleCalculo.ICalculoMatriz;
 import pt.exceptions.ErroDeCalculo;
 import pt.telaCalculadora.TelaCalculadora;
+import pt.telaCalculadora.util.TextFieldCommand;
 import pt.visual.IVisualFactory;
 
-public class BarraDeComando extends JPanel implements ActionListener {
+public class BarraDeComando extends JPanel  {
 	
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 	private Command comando;
-	private JTextField leitor;
+	private TextFieldCommand leitor;
 	private JButton botao;
 	private JLabel texto;
-	
-	private Color corErro;
 
 
 	public BarraDeComando(TelaCalculadora tela, ICalculoMatriz controle, IVisualFactory visFac) {
 		super();
-		leitor = new JTextField(50);
+		leitor = new TextFieldCommand(50);
 		leitor.setFont(new Font("Arial", Font.BOLD, 15));
 		botao = new JButton("=");
 		
 		
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		
-		add(new BotoesCalculadora(leitor));
+		add(new BotoesCalculadora(leitor, tela));
 		
-		botao.addActionListener(this);
-		leitor.addActionListener(this);
-		
-		// vermelho transparente
-		corErro = new Color(255, 170, 170);
+		botao.addActionListener(leitor);
 		
 		comando = new ComandoExpressao(controle, visFac, leitor, tela);
+		
+		leitor.setComando(comando);
+
 		texto = new JLabel("Digite sua expressao");
 		
 		add(texto);
@@ -67,18 +65,6 @@ public class BarraDeComando extends JPanel implements ActionListener {
 		linhaBaixo.add(botao);
 		
 		return linhaBaixo;
-	}
-
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		try {
-			comando.execute();
-			leitor.setText("");
-			
-			leitor.setBackground(Color.WHITE);
-		} catch (ErroDeCalculo err) {
-			leitor.setBackground(corErro); // vermelho transparente
-		}
 	}
 
 	

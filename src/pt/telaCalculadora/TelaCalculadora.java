@@ -53,11 +53,14 @@ public class TelaCalculadora extends JFrame implements ITelaCalculadora {
 		super.setSize(1000, 500);
 		
 		
+		
 		contentPane = getContentPane();
 		contentPane.setLayout(new BorderLayout());
 		
 		painelDeMatrizes = new PainelDeMatrizes();
 		areaResp = new AreaDeResposta();
+		
+		areaResp.setVisible(true);
 
 		
 		
@@ -90,6 +93,8 @@ public class TelaCalculadora extends JFrame implements ITelaCalculadora {
 		contentPane.add(barra, BorderLayout.SOUTH);
 		
 		contentPane.add(new BotoesLeitores(painelDeMatrizes, controleCalculo), BorderLayout.NORTH);
+		
+
 		setVisible(true);
 	}
 

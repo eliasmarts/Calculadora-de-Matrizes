@@ -6,6 +6,7 @@ import javax.swing.JComponent;
 import javax.swing.JPanel;
 
 public class AreaDeResposta extends JPanel {
+	private static final long serialVersionUID = 1L;
 	private JComponent respAnterior;
 	
 	
@@ -23,7 +24,6 @@ public class AreaDeResposta extends JPanel {
 			remove(respAnterior);
 	
 		add(resposta, BorderLayout.SOUTH);
-		
 		respAnterior = resposta;
 	}
 }

@@ -4,10 +4,12 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import pt.comandos.barraComando.BotaoOperacao;
+import pt.telaCalculadora.TelaCalculadora;
 import pt.telaCalculadora.util.ButtonCommand;
+import pt.telaCalculadora.util.WarningButton;
 
 public class BotoesCalculadora extends JPanel {
-	public BotoesCalculadora(JTextField leitor) {
+	public BotoesCalculadora(JTextField leitor, TelaCalculadora tela) {
 		super();
 		
 		adicionaBotoes(leitor);
