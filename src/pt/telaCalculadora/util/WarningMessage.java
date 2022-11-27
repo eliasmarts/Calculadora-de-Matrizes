@@ -20,20 +20,13 @@ public class WarningMessage extends JLabel {
 	
 	
 	private static String createMsg(String msg) {
-		String resp = "<html> ! ";
+		String resp;
 		
 		if (msg != null) {
-			String linhas[] = msg.split("%n");
-			
-			for (String string : linhas) {
-				resp += string;
-				resp += " <br> ";
-			}
+			resp = msg;
 		}
 		else
-			resp += "Algo insesperado ocorreu";
-		
-		resp += " </html>";
+			resp = "Algo insesperado ocorreu";
 		
 		return resp;
 	}

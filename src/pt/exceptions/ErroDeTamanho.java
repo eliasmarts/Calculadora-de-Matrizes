@@ -15,7 +15,7 @@ public class ErroDeTamanho extends OperacaoInvalida {
 		matriz1 = "";
 		matriz2 = "";
 		tipoOperacao = 0;
-		motivo = "";
+		msg = "";
 	}
 
 
@@ -52,7 +52,7 @@ public class ErroDeTamanho extends OperacaoInvalida {
 			
 		}
 		
-		message += "%n" + motivo;
+		message += "\n" + msg;
 		
 		return message;
 	}

@@ -130,6 +130,11 @@ public class ControleCalculo implements IControleCalculo {
 		
 		return m;
 	}
+	
+	
+	public void criaMatriz(char nome) {
+		matrizes.put(nome, new Matriz());
+	}
 
 
 	private IMatriz pegaMatriz(char charAt) {

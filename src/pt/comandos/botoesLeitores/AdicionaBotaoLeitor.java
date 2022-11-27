@@ -26,7 +26,7 @@ public class AdicionaBotaoLeitor implements Command {
 	public void execute() {
 		String entrada = leitor.getText();
 		if (!Character.isUpperCase(entrada.charAt(0)))
-			throw new ComandoInvalido();
+			throw new ComandoInvalido("Matrizes validas somente de A a Z");
 		botoes.addBotao(entrada.charAt(0));
 		
 		botoes.toggleNovoBotao();

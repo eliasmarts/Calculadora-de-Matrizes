@@ -8,7 +8,7 @@ public class ElementoFactory {
 		return new Numero(Integer.parseInt(representacao));
 		}
 		catch (NumberFormatException e) {
-			throw new ElementoInvalido();
+			throw new ElementoInvalido(representacao);
 		}
 	}
 	

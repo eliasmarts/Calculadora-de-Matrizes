@@ -21,6 +21,9 @@ public interface ICalculoMatriz {
 	public IMatriz getMatriz(char nome);
 	
 	
+	public void criaMatriz(char nome);
+	
+	
 	/**
 	 * armazena uma matriz
 	 * @param nome a letra de 'A' a 'Z' que representa a matriz

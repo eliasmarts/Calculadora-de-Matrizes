@@ -13,6 +13,7 @@ import javax.swing.SwingUtilities;
 
 import pt.Configurations;
 import pt.comandos.Command;
+import pt.exceptions.ErroCalculadora;
 
 public class TextFieldCommand extends JTextField implements ActionListener {
 	private static final PopupFactory pf = new PopupFactory();
@@ -51,20 +52,40 @@ public class TextFieldCommand extends JTextField implements ActionListener {
 				popActive = false;
 			}
 		}
+		catch (ErroCalculadora e) {
+			setBackground(Configurations.COR_ERRO);
+			
+			if (popActive) {
+				pop.hide();
+			}
+			JRootPane root = getRootPane();
+			
+			Point p = SwingUtilities.convertPoint(getParent(), getX(), getY(), root);
+			
+			pop = pf.getPopup(getRootPane(), new WarningMessage(e.getHTMLMessage()), p.x, p.y);
+			
+			pop.show();
+			
+			popActive = true;
+			
+		}
 		catch (Exception e) {
 			setBackground(Configurations.COR_ERRO);
 			
-			if (!popActive) {
-				JRootPane root = getRootPane();
-				
-				Point p = SwingUtilities.convertPoint(getParent(), getX(), getY(), root);
-				
-				pop = pf.getPopup(getRootPane(), new WarningMessage(e.getMessage()), p.x, p.y);
-				
-				pop.show();
-				
-				popActive = true;
+			if (popActive) {
+				pop.hide();
 			}
+			JRootPane root = getRootPane();
+			
+			Point p = SwingUtilities.convertPoint(getParent(), getX(), getY(), root);
+			
+			pop = pf.getPopup(getRootPane(), new WarningMessage(e.getMessage()), p.x, p.y);
+			
+			pop.show();
+			
+			popActive = true;
+			
+			e.printStackTrace();
 		}
 	}
 }

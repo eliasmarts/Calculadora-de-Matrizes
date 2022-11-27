@@ -12,15 +12,18 @@ public class ErroDeTipo extends OperacaoInvalida {
 	public ErroDeTipo(String tipo1) {
 		this(tipo1, "");
 	}
-	
+
+
 	public ErroDeTipo() {
 		this("", "");
 	}
 
+	
 	public void setTipo1(String tipo1) {
 		this.tipo1 = tipo1;
 	}
 
+	
 	public void setTipo2(String tipo2) {
 		this.tipo2 = tipo2;
 	}

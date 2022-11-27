@@ -9,10 +9,8 @@ import java.util.Scanner;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-
-import pt.comandos.IComando;
 import pt.controleCalculo.ICalculoMatriz;
-import pt.exceptions.ErroDeCalculo;
+import pt.exceptions.ErroCalculadora;
 import pt.telaCalculadora.BotoesLeitores.BotoesLeitores;
 import pt.telaCalculadora.barraComando.BarraDeComando;
 import pt.visual.IVisualFactory;

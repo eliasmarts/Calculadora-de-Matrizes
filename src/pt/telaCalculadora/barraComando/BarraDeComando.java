@@ -13,10 +13,9 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import pt.comandos.Command;
-import pt.comandos.IComando;
 import pt.comandos.barraComando.ComandoExpressao;
 import pt.controleCalculo.ICalculoMatriz;
-import pt.exceptions.ErroDeCalculo;
+import pt.exceptions.ErroCalculadora;
 import pt.telaCalculadora.TelaCalculadora;
 import pt.telaCalculadora.util.TextFieldCommand;
 import pt.visual.IVisualFactory;
