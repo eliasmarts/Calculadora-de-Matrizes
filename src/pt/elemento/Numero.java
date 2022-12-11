@@ -1,7 +1,15 @@
 package pt.elemento;
 
 
+
+import java.text.NumberFormat;
+
+import pt.Configurations;
+import pt.exceptions.OperacaoInvalida;
+
 public class Numero extends Elemento {
+	public static final NumberFormat nf = Configurations.getNumberFormatter();
+	
 	private Number numero;
 	private char tipo;
 	
@@ -11,8 +19,14 @@ public class Numero extends Elemento {
 	}
 	
 	public Numero(double valor) {
+		if (valor - Math.floor(valor) == 0) {
+			this.numero = (int) valor;
+			tipo = 'i';
+		}
+		else {
 		this.numero = valor;
 		tipo = 'd';
+		}
 	}
 	
 	
@@ -25,9 +39,9 @@ public class Numero extends Elemento {
 		String representacao = "-";
 	
 		if (tipo == 'i') {
-			representacao = Integer.toString(numero.intValue());
+			representacao = nf.format(numero.intValue());
 		} else if (tipo == 'd') {
-			representacao = Double.toString(numero.doubleValue());
+			representacao = nf.format(numero.doubleValue());
 		}
 		
 		
@@ -57,7 +71,7 @@ public class Numero extends Elemento {
 
 	@Override
 	public IElemento subtrair(IElemento outro) {
-		return outro.subtrair(this).negativo();
+		return outro.subtrair(this);
 	}
 
 	@Override
@@ -99,14 +113,8 @@ public class Numero extends Elemento {
 
 	@Override
 	public IElemento inverso() {
-		Numero inverso = null;
 		
-		if (tipo == 'd')
-			inverso = new Numero(1 / numero.doubleValue());
-		else
-			inverso = new Numero((double) 1 / numero.intValue());
-		
-		return inverso;
+		return new Numero(1 / numero.doubleValue());
 	}
 
 	@Override
@@ -119,6 +127,40 @@ public class Numero extends Elemento {
 			negativo = new Numero(- numero.intValue());
 		
 		return negativo;
+	}
+
+	@Override
+	public IElemento dividir(IElemento outro) {
+		return outro.dividir(this);
+	}
+
+	@Override
+	public IElemento dividir(Numero outro) {
+		Numero resposta;
+		try {
+			double resp = this.getNumero().doubleValue() / outro.getNumero().doubleValue();
+			resposta = new Numero(resp);
+		} catch (ArithmeticException e) {
+			throw new OperacaoInvalida("Divisao por 0");
+		}
+		
+		return resposta;
+	}
+
+	@Override
+	public boolean igual(IElemento outro) {
+		return outro.igual(this);
+	}
+
+	@Override
+	public boolean igual(Numero outro) {
+		return this.getNumero().doubleValue() == outro.getNumero().doubleValue();
+	}
+
+	@Override
+	public IElemento deepClone() {
+		return new Numero(this.numero.doubleValue());
+				
 	}
 
 }

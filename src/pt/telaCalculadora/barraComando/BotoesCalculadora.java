@@ -26,6 +26,7 @@ public class BotoesCalculadora extends JPanel {
 		add(new ButtonCommand("(", new BotaoOperacao(leitor, "(")));
 		add(new ButtonCommand(")", new BotaoOperacao(leitor, ")")));
 		add(new ButtonCommand("det(A)", new BotaoOperacao(leitor, "det(")));
-		add(new ButtonCommand("A²", new BotaoOperacao(leitor, "^(2)")));
+		add(new ButtonCommand("<html>A<sup>2</sup></html>", new BotaoOperacao(leitor, "^(2)")));
+		add(new ButtonCommand("<html>A<sup>-1</sup></html>", new BotaoOperacao(leitor, "^(-1)")));
 	}
 }

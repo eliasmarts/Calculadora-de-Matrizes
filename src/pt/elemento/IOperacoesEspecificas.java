@@ -6,4 +6,8 @@ public interface IOperacoesEspecificas {
 	public IElemento subtrair(Numero outro);
 
 	public IElemento multiplicar(Numero outro);
+	
+	public IElemento dividir(Numero outro);
+	
+	public boolean igual(Numero outro);
 }

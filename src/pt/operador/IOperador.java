@@ -7,20 +7,8 @@ import pt.matriz.IOperavel;
  *
  */
 public interface IOperador {
-	public IOperavel somar(IOperavel op1, IOperavel op2);
+	public IOperavel realizarOperacao(String operacao, IOperavel op);
 	
 	
-	public IOperavel subtrair(IOperavel op1, IOperavel op2);
-	
-	
-	public IOperavel multiplicar(IOperavel op1, IOperavel op2);
-	
-	
-	public IOperavel dividir(IOperavel op1, IOperavel op2);
-	
-	
-	public IOperavel inverso(IOperavel op1);
-	
-	
-	public IOperavel negativo(IOperavel op1);
+	public IOperavel realizarOperacao(String operacao, IOperavel op1, IOperavel op2);
 }

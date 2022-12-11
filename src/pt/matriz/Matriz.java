@@ -90,25 +90,6 @@ public class Matriz implements IMatriz {
 		return colunas;
 	}
 
-	
-	private void recriarMatriz() {
-		IElemento[][] ant = valores;
-		
-		
-		valores = new IElemento[linhas][colunas];
-		
-		// copía os valores anteriores
-		for (int i = 0; i < ant.length && i < linhas; i++)
-			for (int j = 0; j < ant[i].length && j < colunas; j++)
-				valores[i][j] = ant[i][j];
-
-
-		// coloca 0 nas novas posicoes
-		for (int i = ant.length; i < linhas; i++)
-			for (int j = ant[0].length; j < colunas; j++)
-				valores[i][j] = ElementoFactory.criarOperavel(0);
-	}
-
 	@Override
 	public void setElemento(int x, int y, IElemento elemento) {
 		valores[x][y] = elemento;
@@ -153,8 +134,14 @@ public class Matriz implements IMatriz {
 	}
 	
 	
-	public Matriz clone() {
-		return null;
+	public IMatriz deepClone() {
+		IElemento[][] valoresClone = new IElemento[this.linhas][this.colunas];
+		
+		for (int i = 0; i < linhas; i++)
+			for (int j = 0; j < colunas; j++)
+				valoresClone[i][j] = valores[i][j].deepClone();
+		
+		return new Matriz(valoresClone);
 	}
 
 
@@ -171,5 +158,11 @@ public class Matriz implements IMatriz {
 	@Override
 	public void setElemento(int x, int y, String elemento) {
 		valores[x][y] = ElementoFactory.criarOperavel(elemento);
+	}
+
+
+	@Override
+	public IElemento getElemento(int x, int y) {
+		return valores[x][y];
 	}
 }

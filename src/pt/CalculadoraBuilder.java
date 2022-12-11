@@ -26,8 +26,16 @@ public class CalculadoraBuilder {
 		operador = Operador.getInstance();
 		visualFac = VisualFactory.getInstance();
 		connectComponents();
+		
+		configure();
+		
 
 		return tela;
+	}
+	
+	
+	private static void configure() {
+		Configurations.setDecimalPrecision(3);
 	}
 
 	private static void connectComponents() {

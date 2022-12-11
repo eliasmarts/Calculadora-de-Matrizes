@@ -11,8 +11,15 @@ public interface IElemento extends IOperacoesEspecificas, IOperavel {
 	
 	public IElemento multiplicar(IElemento outro);
 	
+	public IElemento dividir(IElemento outro);
+	
+	public boolean igual(IElemento outro);
+	
 	public IElemento inverso();
 	
 	public IElemento negativo();
+	
+	
+	public IElemento deepClone();
 	
 }

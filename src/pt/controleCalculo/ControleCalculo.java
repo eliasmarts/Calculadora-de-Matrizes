@@ -196,9 +196,20 @@ public class ControleCalculo implements IControleCalculo {
 		else if (operacao.equals("*")) {
 			multiplicacao(pilhaOperandos);
 		}
+		else if (operacao.equals("/")) {
+			divisao(pilhaOperandos);
+		}
+		else if (operacao.equals("det")) {
+			determinante(pilhaOperandos);
+		}
+		else if (operacao.equals("^")) {
+			potencia(pilhaOperandos);
+		}
 	}
 
 	
+	
+
 	private void soma(Stack<IOperavel> pilhaOperandos) {
 		IOperavel operando1, operando2;
 		if (pilhaOperandos.size() < 2) {
@@ -209,7 +220,7 @@ public class ControleCalculo implements IControleCalculo {
 		operando2 = pilhaOperandos.pop();
 		operando1 = pilhaOperandos.pop();
 		
-		pilhaOperandos.add(operador.somar(operando1, operando2));
+		pilhaOperandos.add(operador.realizarOperacao("+", operando1, operando2));
 	}
 	
 	
@@ -223,10 +234,10 @@ public class ControleCalculo implements IControleCalculo {
 		
 		operando2 = pilhaOperandos.pop();
 		if (pilhaOperandos.size() == 0) {
-			pilhaOperandos.add(operador.negativo(operando2));
+			pilhaOperandos.add(operador.realizarOperacao("-", operando2));
 		} else {
 			operando1 = pilhaOperandos.pop();
-			pilhaOperandos.add(operador.subtrair(operando1, operando2));
+			pilhaOperandos.add(operador.realizarOperacao("-", operando1, operando2));
 		}
 	}
 	
@@ -241,6 +252,48 @@ public class ControleCalculo implements IControleCalculo {
 		operando2 = pilhaOperandos.pop();
 		operando1 = pilhaOperandos.pop();
 		
-		pilhaOperandos.add(operador.multiplicar(operando1, operando2));
+		pilhaOperandos.add(operador.realizarOperacao("*", operando1, operando2));
+	}
+	
+	
+	private void divisao(Stack<IOperavel> pilhaOperandos) {
+		IOperavel operando1, operando2;
+		if (pilhaOperandos.size() < 2) {
+			OperacaoInvalida erro = new OperacaoInvalida();
+			erro.setMotivo("operacoes desbalanceadas");
+			throw erro;
+		}
+		operando2 = pilhaOperandos.pop();
+		operando1 = pilhaOperandos.pop();
+		
+		pilhaOperandos.add(operador.realizarOperacao("/", operando1, operando2));
+	}
+	
+	
+	private void determinante(Stack<IOperavel> pilhaOperandos) {
+		IOperavel operando;
+		if (pilhaOperandos.size() < 1) {
+			OperacaoInvalida erro = new OperacaoInvalida();
+			erro.setMotivo("operacoes desbalanceadas");
+			throw erro;
+		}
+		
+		operando = pilhaOperandos.pop();
+		
+		pilhaOperandos.add(operador.realizarOperacao("det", operando));
+	}
+	
+	
+	private void potencia(Stack<IOperavel> pilhaOperandos) {
+		IOperavel operando1, operando2;
+		if (pilhaOperandos.size() < 2) {
+			OperacaoInvalida erro = new OperacaoInvalida();
+			erro.setMotivo("operacoes desbalanceadas");
+			throw erro;
+		}
+		operando2 = pilhaOperandos.pop();
+		operando1 = pilhaOperandos.pop();
+		
+		pilhaOperandos.add(operador.realizarOperacao("^", operando1, operando2));
 	}
 }

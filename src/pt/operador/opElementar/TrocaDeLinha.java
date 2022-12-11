@@ -1,7 +1,7 @@
-package pt.operador;
+package pt.operador.opElementar;
 
 import pt.elemento.IElemento;
-import pt.matriz.Matriz;
+import pt.matriz.IMatriz;
 
 public class TrocaDeLinha implements OpElementar {
 	private int linha1, linha2;
@@ -13,7 +13,7 @@ public class TrocaDeLinha implements OpElementar {
 	}
 
 	@Override
-	public void aplicar(Matriz matriz) {
+	public void aplicar(IMatriz matriz) {
 		IElemento[] linhaAux = matriz.getLinha(linha1);
 		
 		matriz.setLinha(linha2, linhaAux);

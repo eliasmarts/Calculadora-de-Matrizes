@@ -1,7 +1,7 @@
-package pt.operador;
+package pt.operador.opElementar;
 
 import pt.elemento.IElemento;
-import pt.matriz.Matriz;
+import pt.matriz.IMatriz;
 
 public class MultiplicaLinha implements OpElementar {
 	private int linha;
@@ -15,7 +15,7 @@ public class MultiplicaLinha implements OpElementar {
 	}
 
 	@Override
-	public void aplicar(Matriz matriz) {
+	public void aplicar(IMatriz matriz) {
 		IElemento[] linhaAux = matriz.getLinha(linha);
 		
 		for (int i = 0; i < linhaAux.length; i++)
@@ -26,13 +26,12 @@ public class MultiplicaLinha implements OpElementar {
 
 	@Override
 	public IElemento aplicarNoDeterminante(IElemento determinante) {
-		return determinante.multiplicar(multiplicador);
+		return determinante.multiplicar(multiplicador.inverso());
 	}
 
 	@Override
 	public OpElementar opInversa() {
-		// TODO Auto-generated method stub
-		return null;
+		return new MultiplicaLinha(linha, multiplicador.inverso());
 	}
 
 }
