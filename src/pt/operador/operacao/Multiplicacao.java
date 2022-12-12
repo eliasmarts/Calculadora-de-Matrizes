@@ -19,7 +19,7 @@ public class Multiplicacao extends Operacao {
 		}
 		
 		
-		private IMatriz multiplicar(IMatriz m1, IMatriz m2) {
+		protected IMatriz multiplicar(IMatriz m1, IMatriz m2) {
 			if (m2.getNumLinhas() != m1.getNumColunas()) {
 				ErroDeTamanho erro = new ErroDeTamanho("*");
 

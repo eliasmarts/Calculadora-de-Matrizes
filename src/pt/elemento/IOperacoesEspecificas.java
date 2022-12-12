@@ -9,5 +9,7 @@ public interface IOperacoesEspecificas {
 	
 	public IElemento dividir(Numero outro);
 	
+	public IElemento potencia(Numero outro);
+	
 	public boolean igual(Numero outro);
 }

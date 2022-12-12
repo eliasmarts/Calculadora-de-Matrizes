@@ -13,6 +13,8 @@ public interface IElemento extends IOperacoesEspecificas, IOperavel {
 	
 	public IElemento dividir(IElemento outro);
 	
+	public IElemento potencia(IElemento outro);
+	
 	public boolean igual(IElemento outro);
 	
 	public IElemento inverso();
@@ -22,4 +24,6 @@ public interface IElemento extends IOperacoesEspecificas, IOperavel {
 	
 	public IElemento deepClone();
 	
+	
+	public void accept(ElementoVisitor v);
 }

@@ -19,7 +19,7 @@ public class Operador implements IOperador {
 				"--", new Negativo(),
 				"/", new Divisao(),
 				"det", new Determinante(),
-				"^", new Inverso()
+				"^", new Potencia()
 				);
 				
 	}

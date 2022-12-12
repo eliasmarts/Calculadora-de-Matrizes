@@ -30,7 +30,12 @@ public class Numero extends Elemento {
 	}
 	
 	
-	protected Number getNumero() {
+	public char getTipo() {
+		return tipo;
+	}
+
+	
+	public Number getNumero() {
 		return numero;
 	}
 
@@ -161,6 +166,21 @@ public class Numero extends Elemento {
 	public IElemento deepClone() {
 		return new Numero(this.numero.doubleValue());
 				
+	}
+
+	@Override
+	public void accept(ElementoVisitor v) {
+		v.visit(this);
+	}
+
+	@Override
+	public IElemento potencia(IElemento outro) {
+		return outro.potencia(this);
+	}
+
+	@Override
+	public IElemento potencia(Numero outro) {
+		return new Numero(Math.pow(numero.doubleValue(), outro.getNumero().doubleValue()));
 	}
 
 }

@@ -17,10 +17,10 @@ public class Avaliador implements IAvaliador {
 
 	
 	private Avaliador() {
-		operacoes = Set.of("+", "-", "*", "/", "det", "^", "inv", "(", ")");
 		prioridadesOperacoes = Map.of(
 										"+", 1,
 										"-", 1,
+										"--", 1,
 										"*", 2,
 										"/", 2,
 										"det", 3,
@@ -29,6 +29,8 @@ public class Avaliador implements IAvaliador {
 										"(", -1,
 										")", -1
 										);
+		
+		operacoes = prioridadesOperacoes.keySet();
 		divisorDecimal = '.';
 	}
 	
@@ -145,6 +147,8 @@ public class Avaliador implements IAvaliador {
 		}
 
 		else if (isOperacao(acumulador)) {
+			if (acumulador.equals("-") && ultimaEntrada.equals("("))
+				acumulador += "-";
 			separou = true;
 		}
 		

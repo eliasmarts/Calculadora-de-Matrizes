@@ -31,7 +31,7 @@ public class Inverso extends Operacao {
 	}
 
 	
-	private IOperavel inverso(IMatriz m) {
+	protected IMatriz inverso(IMatriz m) {
 		if (m.getNumLinhas() != m.getNumColunas()) {
 			throw new OperacaoInvalida("inverso so e valido pra matrizes quadradas");
 		}
@@ -43,8 +43,6 @@ public class Inverso extends Operacao {
 		for (OpElementar opElementar : escalonamento) {
 			opElementar.aplicar(inverso);
 		}
-		
-		// TODO nao ta funcionando
 		
 		return inverso;
 	}

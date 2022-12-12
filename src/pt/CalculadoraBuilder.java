@@ -44,6 +44,5 @@ public class CalculadoraBuilder {
 
 		controle.connect(separador);
 		controle.connect(operador);
-		controle.connect(visualFac);
 	}
 }
