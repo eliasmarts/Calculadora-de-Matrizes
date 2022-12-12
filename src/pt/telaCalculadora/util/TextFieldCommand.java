@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 import javax.swing.JRootPane;
 import javax.swing.JTextField;
@@ -26,6 +28,8 @@ public class TextFieldCommand extends JTextField implements ActionListener {
 	public TextFieldCommand() {
 		super();
 		addActionListener(this);
+		
+		addKeyListener(new KeyListenerCommand(this));
 		popActive = false;
 	}
 	
