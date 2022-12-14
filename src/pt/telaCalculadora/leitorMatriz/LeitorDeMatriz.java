@@ -28,7 +28,7 @@ public class LeitorDeMatriz extends JPanel {
 		
 		telaLeitores = new TelaLeitores(matriz, matriz.getNumLinhas(), matriz.getNumColunas());
 		
-		tamanho = new LeitorDeTamanho(matriz, this, matriz.getNumLinhas(), matriz.getNumColunas());
+		tamanho = new LeitorDeTamanho(matriz, this, matriz.getNumLinhas(), matriz.getNumColunas(), telaLeitores.getFirst());
 		
 		add(tamanho);
 		

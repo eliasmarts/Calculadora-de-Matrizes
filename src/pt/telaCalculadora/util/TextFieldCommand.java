@@ -12,6 +12,7 @@ import javax.swing.JTextField;
 import javax.swing.Popup;
 import javax.swing.PopupFactory;
 import javax.swing.SwingUtilities;
+import javax.swing.text.Caret;
 
 import pt.Configurations;
 import pt.comandos.Command;
@@ -28,8 +29,6 @@ public class TextFieldCommand extends JTextField implements ActionListener {
 	public TextFieldCommand() {
 		super();
 		addActionListener(this);
-		
-		addKeyListener(new KeyListenerCommand(this));
 		popActive = false;
 	}
 	

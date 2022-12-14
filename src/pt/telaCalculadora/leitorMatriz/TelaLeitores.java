@@ -5,6 +5,7 @@ import java.awt.GridLayout;
 import javax.swing.JPanel;
 
 import pt.matriz.IMatriz;
+import pt.telaCalculadora.util.DirectionalKeyAction;
 
 public class TelaLeitores extends JPanel {
 	private IMatriz m;
@@ -24,9 +25,41 @@ public class TelaLeitores extends JPanel {
 				leitores[i][j] = new LeitorElemento(this, i, j);
 				add(leitores[i][j]);
 		}
+		
+		
 	
 		this.linhas = linha;
 		this.colunas = coluna;
+		
+		recreateKeyListeners();
+	}
+	
+	
+	private void recreateKeyListeners() {
+		for (int i = 0; i < linhas; i++) 
+			for (int j = 0; j < colunas; j++) {
+				DirectionalKeyAction dir = new DirectionalKeyAction();
+				if (i - 1 >= 0)
+					dir.setUp(leitores[i - 1][j]);
+				if (i + 1 < linhas) {
+					dir.setDown(leitores[i + 1][j]);
+					dir.setEnter(leitores[i + 1][j]);
+				}
+				if (j - 1 >= 0)
+					dir.setLeft(leitores[i][j - 1]);
+				if (j + 1 < colunas)
+					dir.setRight(leitores[i][j + 1]);
+				
+				if (i + 1 == linhas) {
+					if (j + 1 < colunas)
+						dir.setEnter(leitores[0][j + 1]);
+				}
+				
+				if (leitores[i][j].getKeyListeners().length > 1)
+					leitores[i][j].removeKeyListener(leitores[i][j].getKeyListeners()[1]);
+				
+				leitores[i][j].addKeyListener(dir);
+			}
 	}
 
 
@@ -58,6 +91,8 @@ public class TelaLeitores extends JPanel {
 			for (int j = 0; j < colunas; j++) {
 				add(leitores[i][j]);
 		}
+		
+		recreateKeyListeners();
 		revalidate();
 		repaint();
 	}
@@ -91,6 +126,8 @@ public class TelaLeitores extends JPanel {
 			for (int j = 0; j < colunas; j++) {
 				add(leitores[i][j]);
 		}
+		
+		recreateKeyListeners();
 		revalidate();
 		repaint();
 	}
@@ -119,6 +156,8 @@ public class TelaLeitores extends JPanel {
 		repaint();
 	}
 	
-	
+	public LeitorElemento getFirst() {
+		return leitores[0][0];
+	}
 	
 }

@@ -9,6 +9,7 @@ import javax.swing.JTextField;
 import pt.Configurations;
 import pt.comandos.SetDimensao;
 import pt.matriz.IMatriz;
+import pt.telaCalculadora.util.AnyKeyAction;
 import pt.telaCalculadora.util.TextFieldCommand;
 
 public class LeitorTam extends TextFieldCommand {
@@ -19,6 +20,8 @@ public class LeitorTam extends TextFieldCommand {
 		setComando(new SetDimensao(m, this, lei, direcao));
 		
 		setText(String.valueOf(tamI));
+		
+		addKeyListener(new AnyKeyAction(this));
 	}
 	
 	

@@ -2,10 +2,14 @@ package pt.telaCalculadora.util;
 
 import java.awt.event.*;
 
-public class KeyListenerCommand implements KeyListener {
+public class AnyKeyAction implements KeyListener {
 	private ActionListener observer;
 
-	public KeyListenerCommand(ActionListener observer) {
+	/**
+	 * chama uma acao em observer toda vez que uma tecla é digitada
+	 * @param observer
+	 */
+	public AnyKeyAction(ActionListener observer) {
 		super();
 		this.observer = observer;
 	}
@@ -16,7 +20,8 @@ public class KeyListenerCommand implements KeyListener {
 
 	@Override
 	public void keyReleased(KeyEvent e) {
-		observer.actionPerformed(null);
+		if (e.getKeyChar() != KeyEvent.CHAR_UNDEFINED)
+			observer.actionPerformed(null);
 		
 	}
 

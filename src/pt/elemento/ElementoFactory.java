@@ -33,6 +33,9 @@ public class ElementoFactory {
 		int tipo = INTEIRO;
 		boolean ponto = false;
 		
+		if (representacao.length() == 0)
+			return ERRO;
+		
 		for (int i = 0; i < representacao.length(); i++) {
 			if (representacao.charAt(i) == '.') {
 				tipo = DOUBLE;
