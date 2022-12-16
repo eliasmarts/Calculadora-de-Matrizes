@@ -13,6 +13,7 @@ import pt.controleCalculo.ICalculoMatriz;
 import pt.exceptions.ErroCalculadora;
 import pt.telaCalculadora.BotoesLeitores.BotoesLeitores;
 import pt.telaCalculadora.barraComando.BarraDeComando;
+import pt.telaCalculadora.menu.BarraMenu;
 import pt.visual.IVisualFactory;
 import pt.visual.Visual;
 import pt.visual.VisualFactory;
@@ -66,8 +67,6 @@ public class TelaCalculadora extends JFrame implements ITelaCalculadora {
 		contentPane.add(painelDeMatrizes, BorderLayout.CENTER);
 		
 		contentPane.add(areaResp, BorderLayout.EAST);
-
-		setVisible(true);
 	}
 
 
@@ -91,6 +90,8 @@ public class TelaCalculadora extends JFrame implements ITelaCalculadora {
 		contentPane.add(barra, BorderLayout.SOUTH);
 		
 		contentPane.add(new BotoesLeitores(painelDeMatrizes, controleCalculo), BorderLayout.NORTH);
+		
+		setJMenuBar(new BarraMenu(this));
 		
 
 		setVisible(true);
