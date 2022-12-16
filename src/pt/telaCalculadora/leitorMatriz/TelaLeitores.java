@@ -6,13 +6,14 @@ import javax.swing.JPanel;
 
 import pt.matriz.IMatriz;
 import pt.telaCalculadora.util.DirectionalKeyAction;
+import pt.telaCalculadora.util.PasteDivisor;
 
 public class TelaLeitores extends JPanel {
 	private IMatriz m;
 	private int linhas, colunas;
 	private LeitorElemento[][] leitores;
 	
-	public TelaLeitores(IMatriz matriz, int linha, int coluna) {
+	public TelaLeitores(LeitorDeMatriz lei, IMatriz matriz, int linha, int coluna) {
 		super();
 		
 		setLayout(new GridLayout(linha, coluna, 5, 5));
@@ -32,6 +33,8 @@ public class TelaLeitores extends JPanel {
 		this.colunas = coluna;
 		
 		recreateKeyListeners();
+		
+		leitores[0][0].addKeyListener(new PasteDivisor(leitores[0][0], lei));
 	}
 	
 	

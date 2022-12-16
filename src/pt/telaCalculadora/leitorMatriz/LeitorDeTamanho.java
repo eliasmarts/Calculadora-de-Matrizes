@@ -11,6 +11,16 @@ import pt.telaCalculadora.util.DirectionalKeyAction;
 
 public class LeitorDeTamanho extends JPanel {
 	private LeitorTam tamX, tamY;
+	public LeitorTam getTamX() {
+		return tamX;
+	}
+
+
+	public LeitorTam getTamY() {
+		return tamY;
+	}
+
+
 	private IMatriz matriz;
 	
 	

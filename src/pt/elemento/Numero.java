@@ -6,6 +6,7 @@ import java.text.NumberFormat;
 
 import pt.Configurations;
 import pt.exceptions.OperacaoInvalida;
+import pt.util.FuncoesString;
 
 public class Numero extends Elemento {
 	public static final NumberFormat nf = Configurations.getNumberFormatter();
@@ -48,7 +49,8 @@ public class Numero extends Elemento {
 		} else if (tipo == 'd') {
 			representacao = nf.format(numero.doubleValue());
 		}
-		
+		if (Configurations.getDecimalDivisor() == '.')
+			representacao = FuncoesString.substitute(representacao, ",", ".");
 		
 		return representacao;
 	}

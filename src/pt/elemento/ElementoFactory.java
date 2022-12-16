@@ -1,6 +1,8 @@
 package pt.elemento;
 
+import pt.Configurations;
 import pt.exceptions.ElementoInvalido;
+import pt.util.FuncoesString;
 
 public class ElementoFactory {
 	private static final int INTEIRO = 0, DOUBLE = 1, ERRO = -1;
@@ -11,9 +13,13 @@ public class ElementoFactory {
 		
 		IElemento el = null;
 		
-		switch (tipo) {
-		case ERRO:
+		if (tipo == ERRO)
 			throw new ElementoInvalido(representacao);
+		
+		if (Configurations.getDecimalDivisor() == ',')
+			representacao = FuncoesString.substitute(representacao, ",", ".");
+		
+		switch (tipo) {
 		case INTEIRO:
 			el = new Numero(Integer.parseInt(representacao));
 			break;
@@ -25,6 +31,7 @@ public class ElementoFactory {
 			break;
 		}
 		
+		
 		return el;
 	}
 	
@@ -32,12 +39,13 @@ public class ElementoFactory {
 	private static int getTipo(String representacao) {
 		int tipo = INTEIRO;
 		boolean ponto = false;
+		char decimalDivisor = Configurations.getDecimalDivisor();
 		
 		if (representacao.length() == 0)
 			return ERRO;
 		
 		for (int i = 0; i < representacao.length(); i++) {
-			if (representacao.charAt(i) == '.') {
+			if (representacao.charAt(i) == decimalDivisor) {
 				tipo = DOUBLE;
 				if (ponto) {
 					return ERRO;

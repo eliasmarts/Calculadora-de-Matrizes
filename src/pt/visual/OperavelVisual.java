@@ -18,8 +18,12 @@ public class OperavelVisual extends JLabel implements Visual {
 		
 		
 		setText(op.getRepresentacao());
+		
+		
+		setHorizontalTextPosition(CENTER);
+
+		
 		setVisible(true);
-		setBorder(getBorder());
 		repaint();
 	}
 

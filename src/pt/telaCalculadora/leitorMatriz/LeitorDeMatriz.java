@@ -26,7 +26,7 @@ public class LeitorDeMatriz extends JPanel {
 		
 		add(new JLabel("Matriz " + String.valueOf(m)));
 		
-		telaLeitores = new TelaLeitores(matriz, matriz.getNumLinhas(), matriz.getNumColunas());
+		telaLeitores = new TelaLeitores(this, matriz, matriz.getNumLinhas(), matriz.getNumColunas());
 		
 		tamanho = new LeitorDeTamanho(matriz, this, matriz.getNumLinhas(), matriz.getNumColunas(), telaLeitores.getFirst());
 		
@@ -47,4 +47,18 @@ public class LeitorDeMatriz extends JPanel {
 	}
 	
 
+	public void setLinhas(int valor) {
+		LeitorTam lei = tamanho.getTamX();
+		
+		lei.setText(Integer.toString(valor));
+		lei.actionPerformed(null);
+	}
+	
+	
+	public void setColunas(int valor) {
+		LeitorTam lei = tamanho.getTamY();
+		
+		lei.setText(Integer.toString(valor));
+		lei.actionPerformed(null);
+	}
 }

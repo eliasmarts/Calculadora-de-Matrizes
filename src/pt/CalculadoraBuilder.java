@@ -36,6 +36,7 @@ public class CalculadoraBuilder {
 	
 	private static void configure() {
 		Configurations.setDecimalPrecision(3);
+		Configurations.setDecimalDivisor('.');
 	}
 
 	private static void connectComponents() {
