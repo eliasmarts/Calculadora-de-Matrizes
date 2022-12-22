@@ -5,6 +5,7 @@ import java.awt.FlowLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.text.JTextComponent;
 
 import pt.matriz.IMatriz;
 import pt.telaCalculadora.util.DirectionalKeyAction;
@@ -24,7 +25,7 @@ public class LeitorDeTamanho extends JPanel {
 	private IMatriz matriz;
 	
 	
-	public LeitorDeTamanho(IMatriz matriz, LeitorDeMatriz leitor, int linhaI, int colunaI, JTextField first) {
+	public LeitorDeTamanho(IMatriz matriz, LeitorDeMatriz leitor, int linhaI, int colunaI, JTextComponent first) {
 		super();
 		
 		setLayout(new FlowLayout());

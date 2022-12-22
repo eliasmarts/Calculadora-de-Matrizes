@@ -61,4 +61,9 @@ public class LeitorDeMatriz extends JPanel {
 		lei.setText(Integer.toString(valor));
 		lei.actionPerformed(null);
 	}
+	
+	
+	public void setValor(String valor, int x, int y) {
+		telaLeitores.setValor(valor, x, y);
+	}
 }

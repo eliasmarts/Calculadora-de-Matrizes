@@ -5,6 +5,7 @@ import java.awt.event.*;
 
 
 import javax.swing.JTextField;
+import javax.swing.text.JTextComponent;
 
 
 /**
@@ -14,29 +15,29 @@ import javax.swing.JTextField;
  *
  */
 public class DirectionalKeyAction implements KeyListener {
-	private JTextField actual;
+	private JTextComponent actual;
 	
-	private JTextField up, down, left, right, enter;
+	private JTextComponent up, down, left, right, enter;
 	
 	
 
-	public void setUp(JTextField up) {
+	public void setUp(JTextComponent up) {
 		this.up = up;
 	}
 
-	public void setDown(JTextField down) {
+	public void setDown(JTextComponent down) {
 		this.down = down;
 	}
 
-	public void setLeft(JTextField left) {
-		this.left = left;
+	public void setLeft(JTextComponent leitores) {
+		this.left = leitores;
 	}
 
-	public void setRight(JTextField right) {
+	public void setRight(JTextComponent right) {
 		this.right = right;
 	}
 	
-	public void setEnter(JTextField enter) {
+	public void setEnter(JTextComponent enter) {
 		this.enter = enter;
 	}
 

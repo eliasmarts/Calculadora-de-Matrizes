@@ -3,28 +3,37 @@ package pt.telaCalculadora.leitorMatriz;
 import java.awt.GridLayout;
 
 import javax.swing.JPanel;
+import javax.swing.text.JTextComponent;
 
 import pt.matriz.IMatriz;
 import pt.telaCalculadora.util.DirectionalKeyAction;
-import pt.telaCalculadora.util.PasteDivisor;
 
 public class TelaLeitores extends JPanel {
 	private IMatriz m;
 	private int linhas, colunas;
-	private LeitorElemento[][] leitores;
+	private JTextComponent[][] leitores;
+	private LeitorElemento[][] leit;
+	LeitorElementoDivisor leitorDiv;
 	
 	public TelaLeitores(LeitorDeMatriz lei, IMatriz matriz, int linha, int coluna) {
 		super();
 		
 		setLayout(new GridLayout(linha, coluna, 5, 5));
 		
-		leitores = new LeitorElemento[linha][coluna];
+		leitores = new JTextComponent[linha][coluna];
+		leit = new LeitorElemento[linha][coluna];
 		m = matriz;
+		leitorDiv = new LeitorElementoDivisor(lei, this, 0, 0);
+		leitores[0][0] = leitorDiv;
+		add(leitorDiv);
 		
 		for (int i = 0; i < linha; i++) 
 			for (int j = 0; j < coluna; j++) {
-				leitores[i][j] = new LeitorElemento(this, i, j);
-				add(leitores[i][j]);
+				if (i != 0 || j != 0) {
+					leit[i][j] = new LeitorElemento(this, i, j);
+							leitores[i][j] = leit[i][j];
+					add(leitores[i][j]);
+				}
 		}
 		
 		
@@ -34,7 +43,7 @@ public class TelaLeitores extends JPanel {
 		
 		recreateKeyListeners();
 		
-		leitores[0][0].addKeyListener(new PasteDivisor(leitores[0][0], lei));
+		
 	}
 	
 	
@@ -67,59 +76,65 @@ public class TelaLeitores extends JPanel {
 
 
 	public void setLinhas(int linhas) {
-		LeitorElemento[][] ant = leitores;
+		LeitorElemento[][] ant = leit;
 		
 		removeAll();
 		
 		setLayout(new GridLayout(linhas, colunas, 5, 5));
 		
-		leitores = new LeitorElemento[linhas][colunas];
+		leit = new LeitorElemento[linhas][colunas];
 		
 		for (int i = 0; i < this.linhas && i < linhas; i++) 
 			for (int j = 0; j < this.colunas; j++) { 
-				leitores[i][j] = ant[i][j];
+				leit[i][j] = ant[i][j];
 			}
 		
 
 		if (linhas > this.linhas) {
 			for (int i = this.linhas; i < linhas; i++)
 				for (int j = 0; j < this.colunas; j++) {
-					leitores[i][j] = new LeitorElemento(this, i, j);
+					leit[i][j] = new LeitorElemento(this, i, j);
 				}
 		}
 		
 		this.linhas = linhas;
 		
+		
+		add(leitorDiv);
 		for (int i = 0; i < linhas; i++) 
 			for (int j = 0; j < colunas; j++) {
-				add(leitores[i][j]);
+				if (i != 0 || j != 0)
+					add(leit[i][j]);
 		}
 		
+		recreateLeitor();
 		recreateKeyListeners();
+		
 		revalidate();
 		repaint();
 	}
 
 
+
 	public void setColunas(int colunas) {
-		LeitorElemento[][] ant = leitores;
+		LeitorElemento[][] ant = leit;
 		
 		removeAll();
 		
 		setLayout(new GridLayout(linhas, colunas, 5, 5));
 		
-		leitores = new LeitorElemento[linhas][colunas];
+		leit = new LeitorElemento[linhas][colunas];
 		
 		for (int i = 0; i < this.linhas; i++) 
 			for (int j = 0; j < this.colunas && j < colunas; j++) { 
-				leitores[i][j] = ant[i][j];
+				leit[i][j] = ant[i][j];
 			}
 		
 
 		if (colunas > this.colunas) {
 			for (int i = 0; i < linhas; i++)
 				for (int j = this.colunas; j < colunas; j++) {
-					leitores[i][j] = new LeitorElemento(this, i, j);
+					leit[i][j] = new LeitorElemento(this, i, j);
 				}
 		}
 		
@@ -127,16 +142,32 @@ public class TelaLeitores extends JPanel {
 		
 		for (int i = 0; i < linhas; i++) 
 			for (int j = 0; j < colunas; j++) {
-				add(leitores[i][j]);
+				if (i != 0 || j != 0)
+					add(leit[i][j]);
 		}
 		
+		recreateLeitor();
 		recreateKeyListeners();
+		
 		revalidate();
 		repaint();
 	}
 
 
 	
+
+
+	private void recreateLeitor() {
+		leitores = new JTextComponent[linhas][colunas];
+		
+		leitores[0][0] = leitorDiv;
+		
+		for (int i = 0; i < linhas; i++) 
+			for (int j = 0; j < colunas; j++) {
+				if (i != 0 || j != 0)
+					leitores[i][j] = leit[i][j];
+		}
+	}
 
 
 	public IMatriz getM() {
@@ -149,18 +180,32 @@ public class TelaLeitores extends JPanel {
 			setLinhas(m.getNumLinhas());
 		if (m.getNumColunas() != colunas)
 			setColunas(m.getNumColunas());
+		
+		leitorDiv.atualiza(this, 0, 0);
 	
 		for (int i = 0; i < linhas; i++) 
 			for (int j = 0; j < colunas; j++) {
-				leitores[i][j].atualiza(this, i, j);
+				if (i != 0 || j != 0)
+					leit[i][j].atualiza(this, i, j);
 		}
 		
 		revalidate();
 		repaint();
 	}
 	
-	public LeitorElemento getFirst() {
+	public JTextComponent getFirst() {
 		return leitores[0][0];
+	}
+
+
+	public void setValor(String valor, int x, int y) {
+		if (x != 0 || y != 0) {
+			leit[x][y].setText(valor);
+			leit[x][y].actionPerformed(null);
+		}
+		else {
+			leitorDiv.setText(valor);
+		}
 	}
 	
 }
